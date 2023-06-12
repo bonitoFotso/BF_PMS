@@ -1,0 +1,98 @@
+#!/bin/bash
+# project-system 2016-2019 Ian Dennis Miller
+# http://github.com/iandennismiller/project-system
+
+# This is the default python location
+PYTHON_BIN=/usr/bin/python
+
+# But if another location is detected, prefer that
+if [ -f `which python` ]; then
+    PYTHON_BIN=`which python`
+fi
+
+# Most preferred of all is python 3
+if [ -f `which python3` ]; then
+    PYTHON_BIN=`which python3`
+fi
+
+# Try to detect virtualenvwrapper
+# This is the default location for virtualenvwrapper
+VIRTUALENVWRAPPER_BIN=/usr/local/bin/virtualenvwrapper
+
+# These are alternative settings that can be detected
+if [ -f /usr/local/bin/virtualenvwrapper.sh  ]; then
+    VIRTUALENVWRAPPER_BIN=/usr/local/bin/virtualenvwrapper.sh
+fi
+
+if [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh  ]; then
+    VIRTUALENVWRAPPER_BIN=/usr/share/virtualenvwrapper/virtualenvwrapper.sh
+fi
+
+if [ -f /etc/bash_completion.d/virtualenvwrapper  ]; then
+    VIRTUALENVWRAPPER_BIN=/etc/bash_completion.d/virtualenvwrapper
+fi
+
+function usage() {
+cat <<-EOF
+project-system - http://github.com/iandennismiller/project-system
+
+Usage: project-conf-init
+
+Options:
+
+    -h, --help          output help information
+
+Description:
+
+    project-conf-init creates a basic configuration file
+    in ~/.project-system.conf and will overwrite any file
+    that is already present.
+
+EOF
+}
+
+function conf-init() {
+cat > ~/.project-system.conf <<-EOF
+# project-system
+
+# Command to open a project
+PROJECT_OPEN_CMD=project-open
+# Or, use your own script to open a project:
+# PROJECT_OPEN_CMD=~/bin/project-open
+
+# Location of work directory
+WORK_PATH=~/Work
+
+# Command to enter a virtual environment.
+# Will be invoked with argument: WORK_CMD PROJECT_NAME
+WORK_CMD="workon"
+
+# Command to open an editor focused on the current path
+# Sublime Text
+# EDIT_CMD="subl ."
+# VS Code
+EDIT_CMD="code ."
+# emacs
+# EDIT_CMD="emacs ."
+# vi
+# EDIT_CMD="vi ."
+
+# Global Python interpreter
+PYTHON_BIN=${PYTHON_BIN}
+
+# Location of virtualenvwrapper
+VIRTUALENVWRAPPER_BIN=${VIRTUALENVWRAPPER_BIN}
+EOF
+
+echo "created ~/.project-system.conf"
+}
+
+while test $# -ne 0; do
+    arg=$1; shift
+    case $arg in
+        -h|--help) usage; exit ;;
+    esac
+done
+
+# just do the thing
+conf-init

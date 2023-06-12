@@ -1,0 +1,22 @@
+{% load static %}
+<script src="{% static 'assets/bundles/libscripts.bundle.js'%}"></script> 
+<script src="{% static 'assets/bundles/vendorscripts.bundle.js'%}"></script> 
+<script src="{% static 'assets/bundles/jvectormap.bundle.js'%}"></script> 
+<script src="{% static 'assets/bundles/sparkline.bundle.js'%}"></script> 
+<script src="{% static 'assets/bundles/c3.bundle.js'%}"></script>
+<script src="{% static 'assets/bundles/mainscripts.bundle.js'%}"></script>
+<script src="{% static 'assets/js/pages/index.js'%}"></script>
+
+<script src="{% static 'assets/js/select2/select2.min.js'%}"></script>
+
+<script src="{% static 'assets/fonts/webfont.min.js'%}"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], 
+			urls: [" {% static 'assets/css/fonts.min.css'%}"]},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>

@@ -1,0 +1,29 @@
+<li class="nav-item active {% if 'index' in segment %} active {% endif %}">
+    <a data-toggle="collapse" href="#Taches">
+        <i class="fas fa-bars"></i>
+        <p>Taches</p>
+        <span class="caret"></span>
+    </a>
+    <div class="collapse" id="Taches">
+        <ul class="nav nav-collapse">
+            <li class="item {% if 'index' in segment %} active {% endif %}">
+                <a href=" {% url 'task-list' %} ">
+                    <span class="sub-item">Liste des Taches</span>
+                </a>
+                
+            </li>
+            <li class="item {% if 'index' in segment %} active {% endif %}">
+                <a href=" {% url 'task' %} ">
+                    <span class="sub-item">Creer une Taches</span>
+                </a>
+                
+            </li>
+            
+            <li>
+                <a href="#">
+                    <span class="sub-item">Level 1</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>

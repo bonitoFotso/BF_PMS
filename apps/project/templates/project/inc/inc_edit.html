@@ -1,0 +1,131 @@
+<div class="tab-pane fade" id="todo-add" role="tabpanel">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Editer la tache :{{object.nom}} </h3>
+            <div class="card-options ">
+            </div>
+        </div>
+        <!-- form -->
+        
+        
+        <div class="col-xl">
+            <div class="card mb-4">
+                <!-- div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Basic with Icons</h5>
+                    <small class="text-muted float-end">Merged input group</small>
+                    </!-->
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-label" for="basic-icon-default-fullname">nom de la Tache</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text"
+                                        ><i class="bx bx-user"></i
+                                            ></span>
+                                            <input
+                                            name="nom"
+                                            type="text"
+                                            class="form-control"
+                                            id="basic-icon-default-fullname"
+                                            value="{{object.nom}}"
+                                            />
+                                            
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label class="form-label" for="basic-icon-default-company">Agence</label>
+                                    <div class="input-group input-group-merge">
+                                      <span id="basic-icon-default-company2" class="input-group-text"
+                                        ><i class="bx bx-buildings"></i
+                                      ></span>
+                                      <select class="form-select form-select-solid" name="agence" id="">
+                                        <option value="{{object.agence.id}}"> {{object.agence.name}} </option>
+                                        {% for a in agences %}
+                                        <option value="{{a.id}}"> {{a.name}} </option>
+                                        {% endfor %}
+                                      </select>
+                                    
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <label class="form-label" for="basic-icon-default-company">Appelant</label>
+                                    <div class="input-group input-group-merge">
+                                      <span id="basic-icon-default-company2" class="input-group-text"
+                                        ><i class="bx bx-buildings"></i
+                                      ></span>
+                                      <select class="form-select form-select-solid" name="agence" id="">
+                                        <option value="{{object.appelant.id}}"> {{object.appelant.name}} </option>
+                                        {% for ap in appelant %}
+                                        <option value="{{ap.id}}"> {{ap.name}} </option>
+                                        {% endfor %}
+                                      </select>
+                                    
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-label" for="basic-icon-default-company">Priorite</label>
+                                    <div class="input-group input-group-merge">
+                                      <span id="basic-icon-default-company2" class="input-group-text"
+                                        ><i class="bx bx-buildings"></i
+                                      ></span>
+                                      <select class="form-select form-select-solid" name="agence" id="">
+                                        <option value="{{object.priorite}}"> {{object.priorite}} </option>
+                                        {% for p in prio %}
+                                        <option value="{{p.0}}"> {{p.1}} </option>
+                                        {% endfor %}
+                                      </select>
+                                    
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <label class="form-label" for="basic-icon-default-company">Etat</label>
+                                    <div class="input-group input-group-merge">
+                                      <span id="basic-icon-default-company2" class="input-group-text"
+                                        ><i class="bx bx-buildings"></i
+                                      ></span>
+                                      <select class="form-select form-select-solid" name="etat" id="">
+                                        <option value="{{object.etat}}"> {{object.etat}} </option>
+                                        {% for e in etat %}
+                                        <option value="{{e.nom}}"> {{e}} </option>
+                                        {% endfor %}
+                                      </select>
+                                    
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <label class="form-label" for="basic-icon-default-company">Date de debut</label>
+                                    <div class="input-group input-group-merge">
+                                      <span id="basic-icon-default-company2" class="input-group-text"
+                                        ><i class="bx bx-buildings"></i
+                                      ></span>
+                                      <input class="form-control" type="date" name="date_debut" id="" value="">
+                                    
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <label class="form-label" for="basic-icon-default-company">Date de fin</label>
+                                    <div class="input-group input-group-merge">
+                                      <span id="basic-icon-default-company2" class="input-group-text"
+                                        ><i class="bx bx-buildings"></i
+                                      ></span>
+                                      <input class="form-control" type="date" name="date_fin" id="" value="{{date_fin}}">
+                                    
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                
+                            </div>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+        </div>

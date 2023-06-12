@@ -1,0 +1,100 @@
+{% extends "base/base.html" %}
+
+{% block title %} editer tache {% endblock %} 
+
+{% block content %} 
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header no-bd">
+            <h5 class="modal-title">
+                <span class="fw-mediumbold">
+                    Nouveles</span> 
+                    <span class="fw-light">
+                        Taches
+                    </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="small"> </p>
+                <form method="post" action=" {% url 'taskupdate' object.id %} ">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group form-group-default">
+                                <label>Taches</label>
+                                <input id="title" type="text" class="form-control" value="{{object.title}}" name="title" >
+                            </div>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <div class="form-group form-group-default">
+                                <label for="exampleFormControlSelect1"> agence </label>
+                                <select name="agence" class="form-control" id="exampleFormControlSelect1" >
+                                    <option value="{{object.agence.id}}" selected> {{object.agence}} </option>
+                                    {% for a in agences %}
+                                    
+                                    <option  value=" {{a.id}} " >{{a.name}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group form-group-default">
+                                <label>Prioriter</label>
+                                <select name="priority" name="" id="" class="form-control" id="exampleFormControlSelect1">
+                                    <option value="{{object.priority}}" selected >{{object.priority}}</option>
+                                    {% for i in pri %}
+                                    <option value=" {{i}} ">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-group-default">
+                                
+                                <label>Description</label>
+                                <textarea name="description" class="form-control"  rows="3"> {{object.description}} </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group form-group-default">
+                                <label for="exampleFormControlSelect1"> status </label>
+                                <select name="status" class="form-control" >
+                                    <option value="{{object.status}}" selected >{{object.status}}</option>
+                                    {% for s in status %}
+                                    <option value="{{s.1}}">{{s.1}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-group-default">
+                                <label for="exampleFormControlSelect1" >complet</label>
+                                <input id="complete" class="form-control" type="checkbox" name="complete" id="">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    
+                </form>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

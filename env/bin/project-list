@@ -1,0 +1,10 @@
+#!/bin/bash
+# project-system 2016-2019 Ian Dennis Miller
+# http://github.com/iandennismiller/project-system
+
+if [ ! -f ~/.project-system.conf  ]; then
+    project-conf-init
+fi
+source ~/.project-system.conf
+
+ls -1t "${WORK_PATH}" | head -n15 | awk '{printf "%d\t%s\n", NR, $0}'

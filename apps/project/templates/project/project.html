@@ -1,0 +1,133 @@
+{% extends 'base/base.html' %}
+{% block title %} Task {% endblock title %}
+{% block content %}
+
+
+
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
+                    <h5 class="text-white op-7 mb-2"></h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
+                    <a href="#" class="btn btn-secondary btn-round">Add Customer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-6">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5><b>Todays Income</b></h5>
+                                <p class="text-muted">All Customs Value</p>
+                            </div>
+                            <h3 class="text-info fw-bold">$170</h3>
+                        </div>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-info w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <p class="text-muted mb-0">Change</p>
+                            <p class="text-muted mb-0">75%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title"> Tasks </div>
+                        <div class="card-category">  </div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="px-2 pb-2 pb-md-0 text-center">
+                                <div id="circles-4"></div>
+                                <h6 class="fw-bold mt-3 mb-0"> total </h6>
+                            </div>
+                            <div class="px-2 pb-2 pb-md-0 text-center">
+                                <div id="circles-5"></div>
+                                <h6 class="fw-bold mt-3 mb-0"> accomplie </h6>
+                            </div>
+                            <div class="px-2 pb-2 pb-md-0 text-center">
+                                <div id="circles-6"></div>
+                                <h6 class="fw-bold mt-3 mb-0"> non accomplie </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive rounded mb-3">
+                <table class="data-tables table mb-0 tbl-server-info table-striped">
+                    <thead class="bg-white text-uppercase">
+                        <tr class="ligth ligth-data">
+                            <th>
+                                <div class="checkbox d-inline-block">
+                                    <input type="checkbox" class="checkbox-input" id="checkbox1">
+                                    <label for="checkbox1" class="mb-0"></label>
+                                </div>
+                            </th>
+                            {% for tf in field %}
+                            <th> {{tf}} </th>
+                            {% endfor %}
+                            
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="ligth-body">
+                        {% for t in taches %}
+                        <tr class=" {% if t.complete  %} bg-success {% endif %} " >
+                            <td>
+                                <div class="checkbox d-inline-block">
+                                    <input type="checkbox" class="checkbox-input" id="checkbox2">
+                                    <label for="checkbox2" class="mb-0"></label>
+                                </div>
+                            </td>
+                            <!-- td>
+                                <div class="d-flex align-items-center">
+                                    <img src="../assets/images/table/product/01.jpg" class="img-fluid rounded avatar-50 mr-3" alt="image">
+                                    <div>
+                                        Organic Cream
+                                        <p class="mb-0"><small>This is test Product</small></p>
+                                    </div>
+                                </div>
+                            </!-->
+                            
+                            <td>{{t.createdAt}}</td>
+                            <td>{{t.agence}}</td>
+                            <td> {{t.title}} </td>
+                            <td> {{t.priority}} </td>
+                            <td> {{t.description}} </td>
+                            <td> {{t.status}} </td>
+                            <td>  {% if t.complete %} <i class="fas fa-check"></i> {% else %} <i class="fas fa-times"></i>	{% endif %}  </td>
+                            <td>
+                                <div class="d-flex align-items-center list-action">
+                                    <a href="/tasks/{{t.id}}/detail" class="mr-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
+                                        href="#"><i class="fas fa-eye mr-0"></i></a>
+                                    <!-- a href="/tasks/{{t.id}}/delete" class="mr-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
+                                        href="#"><i class="fas fa-edit mr-"></i></!-->
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock content %}

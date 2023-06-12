@@ -1,0 +1,81 @@
+<div class="tab-pane fade show active" id="todo-list" role="tabpanel">
+    <div class="card">
+        <div class="card">
+            <div class="card-header">
+                <h2><strong>{{object.nom}}</strong></h2>
+            </div>
+            <div class="body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Titre: </small>
+                        <p>{{object.nom}}</p>
+                        <hr>
+                    </div>
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Agence: </small>
+                        <p>{{object.agence.name}}</p>
+                        <hr>
+                    </div>
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Appelant: </small>
+                        <p>{{object.appelant.name}}</p>
+                        <hr>
+                    </div>
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Date: </small>
+                        <p>{{object.createdAt}}</p>
+                        <hr>
+                    </div>
+                    
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Priorite: </small>
+                        <p>{{object.priorite}}</p>
+                        <hr>
+                    </div>
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Etat: </small>
+                        <p>{{object.etat}}</p>
+                        <hr>
+                    </div>
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Date de Debut: </small>
+                        <p>{{object.date_debut}}</p>
+                        <hr>
+                    </div>
+                    <div class="col-lg-3 col-md-3 ">
+                        <small class="text-muted">Date de Fin: </small>
+                        <p>{{object.dete_fin}}</p>
+                        <hr>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 ">
+                        <small class="text-muted">Description: </small>
+                        <p>{{object.description}}</p>
+                        <hr>
+                    </div>
+                    <div class="col-lg-6 col-md-6 ">
+                        <small class="text-muted">Technicien: </small>
+                        <p>{{object.technicien}}</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col ">
+                        <small class="text-muted">Observation: </small>
+                        <p>{{object.observation}}</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+                    <div>{{object.status}}</div>
+                    
+
+            </div>
+        </div>
+    
+</div>

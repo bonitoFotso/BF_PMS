@@ -1,0 +1,83 @@
+#!/bin/bash
+# project-system 2016-2019 Ian Dennis Miller
+# http://github.com/iandennismiller/project-system
+
+if [ ! -f ~/.project-system.conf  ]; then
+    project-conf-init
+fi
+source ~/.project-system.conf
+
+# Try to detect bash completions
+# This is the default location for virtualenvwrapper
+COMPLETION_PATH=/etc/bash_completion.d
+
+# These are alternative settings that can be detected
+if [ -d ~/.local/share/bash-completion/completions  ]; then
+    COMPLETION_PATH=~/.local/share/bash-completion/completions
+fi
+
+if [ -d ~/.completion.d  ]; then
+    COMPLETION_PATH=~/.completion.d
+fi
+
+function usage() {
+cat <<-EOF
+project-system - http://github.com/iandennismiller/project-system
+
+Usage: project-completion-init
+
+Options:
+
+    -h, --help          output help information
+
+Description:
+
+    project-completion-init installs bash command completion.
+
+EOF
+}
+
+function completion-init() {
+cat > ${COMPLETION_PATH}/project_bash_completion <<-EOF
+#!/bin/bash
+
+# Ensure ~/.bashrc contains the following:
+# for bcfile in ${COMPLETION_PATH}/* ; do
+#   [ -f "\$bcfile" ] && . \$bcfile
+# done
+
+_project_completion() {
+    local cur prev opts
+
+    COMPREPLY=()
+    cur="\${COMP_WORDS[COMP_CWORD]}"
+    prev="\${COMP_WORDS[COMP_CWORD-1]}"
+
+    # the available completions are directory names within the Work directory
+    opts="\`ls -1t ${WORK_PATH}\`"
+    COMPREPLY=( \$(compgen -W "\${opts}" -- \${cur}) )
+    return 0
+}
+
+complete -F _project_completion -o default project-workon
+EOF
+
+echo "created ${COMPLETION_PATH}/project_bash_completion"
+echo
+echo "Ensure ~/.bashrc contains the following:"
+echo
+echo "for bcfile in ${COMPLETION_PATH}/* ; do"
+echo "    [ -f "\$bcfile" ] && . \$bcfile"
+echo "done"
+
+}
+
+while test $# -ne 0; do
+    arg=$1; shift
+    case $arg in
+        -h|--help) usage; exit ;;
+    esac
+done
+
+# just do the thing
+completion-init

@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js " lang="en">
+
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+<title>BF {% block title %}{% endblock title %} </title>
+<link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+{% include 'base/css.html' %}
+</head>
+
+<body class="theme-blush">
+
+<!-- Page Loader -->
+{% include 'base/load.html' %}
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Main Search -->
+{% include 'base/s.html' %}
+
+<!-- Right Icon menu Sidebar -->
+{% include 'includes/nav_r.html' %}
+
+<!-- Left Sidebar -->
+{% include 'includes/nav_l.html' %}
+
+<!-- Right Sidebar -->
+{% include 'includes/aside.html' %}
+
+<!-- Main Content -->
+
+<section class="content">
+    <div class="">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Dashboard</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> BF_PMS</a></li>
+                        <li class="breadcrumb-item active"> {{app}} </li>
+                        <li class="breadcrumb-item active"> {{page}} </li>
+                    </ul>
+                    <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">                
+                    <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            {% block content %}
+                
+            {% endblock content %}
+        </div>
+    </div>
+    <div class="row">
+        {% include 'includes/footer.html' %}
+    </div>
+    
+</section>
+
+
+<!-- Jquery Core Js --> 
+{% include 'base/js.html' %}
+
+
+</body>
+
+
+</html>

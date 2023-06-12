@@ -1,0 +1,49 @@
+#!/bin/bash
+# project-system 2016-2019 Ian Dennis Miller
+# http://github.com/iandennismiller/project-system
+
+PROJECT_NAME="$1"
+
+if [ ! -f ~/.project-system.conf  ]; then
+    project-conf-init
+fi
+source ~/.project-system.conf
+
+function usage() {
+cat <<-EOF
+project-system - http://github.com/iandennismiller/project-system
+
+Usage: project-new [project-name]
+
+Options:
+
+    -h, --help          output help information
+
+Description:
+
+    project-new creates a new project environment.
+
+EOF
+}
+
+function project-new() {
+    source "${VIRTUALENVWRAPPER_BIN}"
+    mkdir "${WORK_PATH}/${PROJECT_NAME}"
+    cd "${WORK_PATH}/${PROJECT_NAME}"
+    mkvirtualenv -a . -p ${PYTHON_BIN} "${PROJECT_NAME}"
+    project-git-init "${PROJECT_NAME}"
+    project-workon "${PROJECT_NAME}"
+}
+
+if test $# -lt 1; then
+    usage
+    exit
+fi
+
+while test $# -ne 0; do
+    arg=$1; shift
+    case $arg in
+        -h|--help) usage; exit ;;
+        *) project-new; exit ;;
+    esac
+done

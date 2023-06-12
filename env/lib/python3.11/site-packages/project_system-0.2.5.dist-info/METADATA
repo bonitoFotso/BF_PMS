@@ -1,0 +1,74 @@
+Metadata-Version: 2.1
+Name: project-system
+Version: 0.2.5
+Summary: create and open projects
+Home-page: http://project-system.readthedocs.io
+Author: Ian Dennis Miller
+Author-email: iandennismiller@gmail.com
+License: MIT
+Platform: UNKNOWN
+Requires-Dist: mr.bob (==0.1.2)
+Requires-Dist: virtualenvwrapper
+
+project-system
+==============
+
+Create and open projects.
+Use multiple workstations to work on projects.
+
+.. image:: https://img.shields.io/github/stars/iandennismiller/project-system.svg?style=social&label=GitHub
+    :target: https://github.com/iandennismiller/project-system
+
+.. image:: https://img.shields.io/pypi/v/project-system.svg
+    :target: https://pypi.python.org/pypi/project-system
+
+.. image:: https://readthedocs.org/projects/project-system/badge/?version=latest
+    :target: http://project-system.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
+.. image:: https://travis-ci.org/iandennismiller/project-system.svg?branch=master
+    :target: https://travis-ci.org/iandennismiller/project-system
+
+**Project-System** simplifies the management of projects within a working space.
+Each project consists of a folder and a python virtual environment.
+The folder is initialized for git and it is designed to correspond to a remote git repository.
+
+Quick Start
+-----------
+
+Create a new project
+^^^^^^^^^^^^^^^^^^^^
+
+This makes a new folder, git repo, and Python virtual environment for the project.
+
+::
+
+    project-new my-project
+
+Start working on the project
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open a code editor and new ``tmux`` window for the project.
+
+::
+
+    project-workon my-project
+
+See `Usage <https://project-system.readthedocs.io/en/latest/usage.html>`_ for more.
+
+Installation
+------------
+
+::
+
+    pip install project-system
+
+See `Installation <https://project-system.readthedocs.io/en/latest/install.html>`_ for more.
+
+Online Resources
+----------------
+
+- `Documentation <https://project-system.readthedocs.io>`_
+- `Source Code <https://github.com/iandennismiller/project-system>`_
+
+

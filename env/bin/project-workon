@@ -1,0 +1,49 @@
+#!/bin/bash
+# project-system 2016-2019 Ian Dennis Miller
+# http://github.com/iandennismiller/project-system
+
+PROJECT_NAME="$1"
+
+if [ ! -f ~/.project-system.conf  ]; then
+    project-conf-init
+fi
+source ~/.project-system.conf
+
+function usage() {
+cat <<-EOF
+project-system - http://github.com/iandennismiller/project-system
+
+Usage: project-workon [project-name]
+
+Options:
+
+    -h, --help          output help information
+
+Description:
+
+    project-workon enters a project environment.
+
+EOF
+}
+
+function project-workon {
+    export PROJECT_NAME
+    export WORK_PATH
+    export WORK_CMD
+    export EDIT_CMD
+    export VIRTUALENVWRAPPER_BIN
+    exec ${PROJECT_OPEN_CMD}
+}
+
+if test $# -lt 1; then
+    usage
+    exit
+fi
+
+while test $# -ne 0; do
+    arg=$1; shift
+    case $arg in
+        -h|--help) usage; exit ;;
+        *) project-workon; exit ;;
+    esac
+done

@@ -1,0 +1,20 @@
+#!/bin/bash
+# project-system 2016-2019 Ian Dennis Miller
+# http://github.com/iandennismiller/project-system
+
+# The variables in this script are exported from project-workon
+
+source "${VIRTUALENVWRAPPER_BIN}"
+
+tmux new-window -c "${WORK_PATH}/${PROJECT_NAME}" -n "${PROJECT_NAME}"
+tmux send-keys -t "${PROJECT_NAME}" "${WORK_CMD} ${PROJECT_NAME}" C-m
+tmux send-keys -t "${PROJECT_NAME}" "git status" C-m
+tmux send-keys -t "${PROJECT_NAME}" "${EDIT_CMD}" C-m
+
+tmux split-window -t "${PROJECT_NAME}" -c "${WORK_PATH}/${PROJECT_NAME}"
+tmux send-keys -t "${PROJECT_NAME}" "${WORK_CMD} ${PROJECT_NAME}" C-m
+
+tmux split-window -t "${PROJECT_NAME}" -c "${WORK_PATH}/${PROJECT_NAME}"
+tmux send-keys -t "${PROJECT_NAME}" "${WORK_CMD} ${PROJECT_NAME}" C-m
+
+tmux select-layout -t "${PROJECT_NAME}" even-vertical
