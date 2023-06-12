@@ -33,7 +33,21 @@ class TechnicienListView(ListView):
         context["app"] = 'Technicien'
         context["model"] = 'Technicien'
         context["page"] = 'Liste des technicien'
+        context["fields"] = fieldss
+        context["technicien"] = Technicien.objects.all()
         return context
     
     
-    
+class TechnicienDetailView(DetailView):
+    model = Technicien
+    #template_name = ".html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["q"] = 'qq'
+        context["app"] = 'Technicien'
+        context["model"] = 'Technicien'
+        context["page"] = 'detail du technicien'
+        context["fields"] = fieldss
+        context["technicien"] = Technicien.objects.all()
+        return context

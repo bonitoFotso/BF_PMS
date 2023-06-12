@@ -6,7 +6,7 @@ urlpatterns = [
     #path("<int:pk>/up", EmployerUpdateView.as_view(), name="emp_upd"),
     #path("<int:pk>/del", EmployerDeleteView.as_view(), name="emp_del"),
     path("technicien-list", TechnicienListView.as_view(), name="technicien-list"),
-    #path('<int:pk>/detail',EmployerDetail.as_view(),name='emp_detail'),
+    path('technicien/<int:pk>/detail',TechnicienDetailView.as_view(),name='technicien-detail'),
     #path('<int:pk>/profile',EmployerProfil.as_view(),name='emp_profile')
 
 ]

@@ -79,10 +79,10 @@
                                 </div>
                             </th>
                             
-                            {% for tf in object %}
+                            {% for tf in fields %}
                             <th> {{tf}} </th>
                             {% endfor %}
-                            
+                            <th>action</th>
                             
                         </tr>
                     </thead>
@@ -105,16 +105,15 @@
                                 </div>
                             </!-->
                             
-                            <td>{{t.createdAt}}</td>
-                            <td>{{t.agence}}</td>
-                            <td> {{t.title}} </td>
-                            <td> {{t.priority}} </td>
-                            <td> {{t.description}} </td>
-                            <td> {{t.status}} </td>
-                            <td>  {% if t.complete %} <i class="fas fa-check"></i> {% else %} <i class="fas fa-times"></i>	{% endif %}  </td>
+                            <td>{{t.nom}}</td>
+                            <td>{{t.prenom}}</td>
+                            <td> {{t.tel}} </td>
+                            <td> {{t.sex}} </td>
+                            <td> {{t.matricule}} </td>
+                            <td> {{t.email}} </td>
                             <td>
                                 <div class="d-flex align-items-center list-action">
-                                    <a href="/tasks/{{t.id}}/detail" class="mr-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
+                                    <a href="/technicien/{{t.id}}/detail" class="mr-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
                                         href="#"><i class="fas fa-eye mr-0"></i></a>
                                     <!-- a href="/tasks/{{t.id}}/delete" class="mr-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
                                         href="#"><i class="fas fa-edit mr-"></i></!-->
