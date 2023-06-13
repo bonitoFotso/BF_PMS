@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin import AdminSite
 from .models import *
 
 @admin.register(Tache)
@@ -11,4 +12,11 @@ admin.site.register(Etat)
 admin.site.register(TechnicienTache)
 
 #admin.site.register(UserTask)
+
+admin.site.register(TacheTime)
+
+class TacheTimeInline(admin.TabularInline):
+    model = TacheTime
+    extra = 0
+
 

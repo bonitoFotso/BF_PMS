@@ -13,6 +13,17 @@ prio = [
     ('Elever','Elever'),
 ]
 
+jours = [
+    ('lundi','lundi'),
+    ('mardi','mardi'),
+    ('mercredi','mercredi'),
+    ('jeudi','jeudi'),
+    ('vendredi','vendredi'),
+    ('samedi','samedi'),
+
+    
+]
+
 status = [
 		('En atente', 'En atente'),
 		('En cours', 'En cours'),
@@ -40,10 +51,9 @@ class Tache(models.Model):
     observation = models.CharField(max_length=100, default='observation')
     date_debut = models.DateField(_("date de debut"),blank=True,null=True)
     date_fin = models.DateField(_("date de fin"),blank=True,null=True)
-    technicien = models.ForeignKey(Technicien, verbose_name=_("Tecnicien"), on_delete=models.CASCADE)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
-    #tec = models.ForeignKey("TechnicienTache", verbose_name=_(""), on_delete=models.CASCADE)
+    
     
     def __str__(self) -> str:
         return self.nom
@@ -55,8 +65,19 @@ class Tache(models.Model):
         ordering = ['createdAt']
         
 class TechnicienTache(models.Model):
-    technicien = models.ManyToManyField(Technicien,blank=True)
-    #tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
+    nom = models.CharField(_("equipe"), max_length=50)
+    technicien = models.ForeignKey(Technicien, verbose_name=_("techniciens"), on_delete=models.CASCADE)
+    tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('technicien', 'tache', 'nom'),)
 
     def __str__(self):
-        return self.technicien.nom
+        tec = Technicien.objects.get(id=self.technicien_id)
+        ta = Tache.objects.get(id=self.tache_id)
+        
+        return '%s : %s' % (ta.nom, tec.nom)
+    
+class TacheTime(models.Model):
+    technicientache  = models.ForeignKey('TechnicienTache', on_delete=models.CASCADE)
+    jour = models.CharField(_("jour"),choices=jours, max_length=50)

@@ -4,7 +4,7 @@ from django.conf import settings
 # Create your models here.
 
 class Technicien(models.Model):
-    photo = models.ImageField(_("profile"), upload_to='profile', )
+    photo = models.ImageField(_("profile"), upload_to='media/profile', )
     nom  = models.CharField(_("nom"), max_length=50)
     prenom = models.CharField(_("prenom"), max_length=50)
     tel = models.CharField(_("telephone"),max_length=20)

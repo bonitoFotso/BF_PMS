@@ -1,8 +1,8 @@
-<li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Technicien</span></a>
-    <ul class="ml-menu">
-        <li><a href=" {% url 'technicien-list' %} ">Liste des Technicien</a></li>
-        <li><a href="taskboard.html">Taskboard</a></li>
-        <li><a href="ticket-list.html">Ticket List</a></li>
-        <li><a href="ticket-detail.html">Ticket Detail</a></li>
+<li class="dropdown">
+    <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Techniciens</span></a>
+    <ul class="dropdown-menu">
+        <li><a class="nav-link" href="{% url 'technicien-list' %}">Liste des Techniciens</a></li>
+        <li><a class="nav-link" href="{% url 'technicien-create' %}">Crer un technicien</a></li>
+        
     </ul>
 </li>

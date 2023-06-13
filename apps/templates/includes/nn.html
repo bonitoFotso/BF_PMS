@@ -1,126 +1,151 @@
-<li class="active open"><a href="index.html"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>App</span></a>
-                <ul class="ml-menu">
-                    <li><a href="mail-inbox.html">Email</a></li>
-                    <li><a href="chat.html">Chat Apps</a></li>
-                    <li><a href="events.html">Calendar</a></li>
-                    <li><a href="contact.html">Contact</a></li>                    
-                </ul>
-            </li>
-<li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-folder"></i><span>File Manager</span></a>
-    <ul class="ml-menu">
-        <li><a href="file-dashboard.html">All File</a></li>
-        <li><a href="file-documents.html">Documents</a></li>
-        <li><a href="file-images.html">Images</a></li>
-        <li><a href="file-media.html">Media</a></li>
+<nav class="navbar navbar-expand-lg main-navbar sticky">
+    <div class="form-inline mr-auto">
+      <ul class="navbar-nav mr-3">
+        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+                                collapse-btn"> <i data-feather="align-justify"></i></a></li>
+        <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+            <i data-feather="maximize"></i>
+          </a></li>
+        <li>
+          <form class="form-inline mr-auto">
+            <div class="search-element">
+              <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="200">
+              <button class="btn" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </li>
+      </ul>
+    </div>
+    <ul class="navbar-nav navbar-right">
+      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+          class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
+          <span class="badge headerBadge1">
+            6 </span> </a>
+        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+          <div class="dropdown-header">
+            Messages
+            <div class="float-right">
+              <a href="#">Mark All As Read</a>
+            </div>
+          </div>
+          <div class="dropdown-list-content dropdown-list-message">
+            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
+                                        text-white"> <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle">
+              </span> <span class="dropdown-item-desc"> <span class="message-user">John
+                  Deo</span>
+                <span class="time messege-text">Please check your mail !!</span>
+                <span class="time">2 Min Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                <img alt="image" src="assets/img/users/user-2.png" class="rounded-circle">
+              </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
+                  Smith</span> <span class="time messege-text">Request for leave
+                  application</span>
+                <span class="time">5 Min Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                <img alt="image" src="assets/img/users/user-5.png" class="rounded-circle">
+              </span> <span class="dropdown-item-desc"> <span class="message-user">Jacob
+                  Ryan</span> <span class="time messege-text">Your payment invoice is
+                  generated.</span> <span class="time">12 Min Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                <img alt="image" src="assets/img/users/user-4.png" class="rounded-circle">
+              </span> <span class="dropdown-item-desc"> <span class="message-user">Lina
+                  Smith</span> <span class="time messege-text">hii John, I have upload
+                  doc
+                  related to task.</span> <span class="time">30
+                  Min Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                <img alt="image" src="assets/img/users/user-3.png" class="rounded-circle">
+              </span> <span class="dropdown-item-desc"> <span class="message-user">Jalpa
+                  Joshi</span> <span class="time messege-text">Please do as specify.
+                  Let me
+                  know if you have any query.</span> <span class="time">1
+                  Days Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                <img alt="image" src="assets/img/users/user-2.png" class="rounded-circle">
+              </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
+                  Smith</span> <span class="time messege-text">Client Requirements</span>
+                <span class="time">2 Days Ago</span>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-footer text-center">
+            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+          class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
+        </a>
+        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+          <div class="dropdown-header">
+            Notifications
+            <div class="float-right">
+              <a href="#">Mark All As Read</a>
+            </div>
+          </div>
+          <div class="dropdown-list-content dropdown-list-icons">
+            <a href="#" class="dropdown-item dropdown-item-unread"> <span
+                class="dropdown-item-icon bg-primary text-white"> <i class="fas
+                                            fa-code"></i>
+              </span> <span class="dropdown-item-desc"> Template update is
+                available now! <span class="time">2 Min
+                  Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="far
+                                            fa-user"></i>
+              </span> <span class="dropdown-item-desc"> <b>You</b> and <b>Dedik
+                  Sugiharto</b> are now friends <span class="time">10 Hours
+                  Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-success text-white"> <i
+                  class="fas
+                                            fa-check"></i>
+              </span> <span class="dropdown-item-desc"> <b>Kusnaedi</b> has
+                moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">12
+                  Hours
+                  Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-danger text-white"> <i
+                  class="fas fa-exclamation-triangle"></i>
+              </span> <span class="dropdown-item-desc"> Low disk space. Let's
+                clean it! <span class="time">17 Hours Ago</span>
+              </span>
+            </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="fas
+                                            fa-bell"></i>
+              </span> <span class="dropdown-item-desc"> Welcome to Otika
+                template! <span class="time">Yesterday</span>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-footer text-center">
+            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown"><a href="#" data-toggle="dropdown"
+          class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
+            class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+        <div class="dropdown-menu dropdown-menu-right pullDown">
+          <div class="dropdown-title">Hello Sarah Smith</div>
+          <a href="profile.html" class="dropdown-item has-icon"> <i class="far
+                                    fa-user"></i> Profile
+          </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
+            Activities
+          </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
+            Settings
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </div>
+      </li>
     </ul>
-</li>
-<li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-blogger"></i><span>Blog</span></a>
-    <ul class="ml-menu">
-        <li><a href="blog-dashboard.html">Dashboard</a></li>
-        <li><a href="blog-post.html">Blog Post</a></li>
-        <li><a href="blog-list.html">List View</a></li>
-        <li><a href="blog-grid.html">Grid View</a></li>
-        <li><a href="blog-details.html">Blog Details</a></li>
-    </ul>
-</li>
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart"></i><span>Ecommerce</span></a>
-    <ul class="ml-menu">
-        <li><a href="ec-dashboard.html">Dashboard</a></li>
-        <li><a href="ec-product.html">Product</a></li>
-        <li><a href="ec-product-List.html">Product List</a></li>
-        <li><a href="ec-product-detail.html">Product detail</a></li>
-    </ul>
-</li>
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-swap-alt"></i><span>Components</span></a>
-    <ul class="ml-menu">
-        <li><a href="ui_kit.html">Aero UI KIT</a></li>                    
-        <li><a href="alerts.html">Alerts</a></li>                    
-        <li><a href="collapse.html">Collapse</a></li>
-        <li><a href="colors.html">Colors</a></li>
-        <li><a href="dialogs.html">Dialogs</a></li>                    
-        <li><a href="list-group.html">List Group</a></li>
-        <li><a href="media-object.html">Media Object</a></li>
-        <li><a href="modals.html">Modals</a></li>
-        <li><a href="notifications.html">Notifications</a></li>                    
-        <li><a href="progressbars.html">Progress Bars</a></li>
-        <li><a href="range-sliders.html">Range Sliders</a></li>
-        <li><a href="sortable-nestable.html">Sortable & Nestable</a></li>
-        <li><a href="tabs.html">Tabs</a></li>
-        <li><a href="waves.html">Waves</a></li>
-    </ul>
-</li>
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-flower"></i><span>Font Icons</span></a>
-    <ul class="ml-menu">
-        <li><a href="icons.html">Material Icons</a></li>
-        <li><a href="icons-themify.html">Themify Icons</a></li>
-        <li><a href="icons-weather.html">Weather Icons</a></li>
-    </ul>
-</li>
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Forms</span></a>
-    <ul class="ml-menu">
-        <li><a href="basic-form-elements.html">Basic Form</a></li>
-        <li><a href="advanced-form-elements.html">Advanced Form</a></li>
-        <li><a href="form-examples.html">Form Examples</a></li>
-        <li><a href="form-validation.html">Form Validation</a></li>
-        <li><a href="form-wizard.html">Form Wizard</a></li>
-        <li><a href="form-editors.html">Editors</a></li>
-        <li><a href="form-upload.html">File Upload</a></li>
-        <li><a href="form-summernote.html">Summernote</a></li>
-    </ul>
-</li>
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Tables</span></a>
-    <ul class="ml-menu">
-        <li><a href="normal-tables.html">Normal Tables</a></li>
-        <li><a href="jquery-datatable.html">Jquery Datatables</a></li>
-        <li><a href="editable-table.html">Editable Tables</a></li>
-        <li><a href="footable.html">Foo Tables</a></li>
-        <li><a href="table-color.html">Tables Color</a></li>
-    </ul>
-</li>            
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-chart"></i><span>Charts</span></a>
-    <ul class="ml-menu">
-        <li><a href="c3.html">C3 Chart</a></li>
-        <li><a href="morris.html">Morris</a></li>
-        <li><a href="flot.html">Flot</a></li>
-        <li><a href="chartjs.html">ChartJS</a></li>
-        <li><a href="sparkline.html">Sparkline</a></li>
-        <li><a href="jquery-knob.html">Jquery Knob</a></li>
-    </ul>
-</li>            
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-delicious"></i><span>Widgets</span></a>
-    <ul class="ml-menu">
-        <li><a href="widgets-app.html">Apps Widgets</a></li>
-        <li><a href="widgets-data.html">Data Widgets</a></li>
-    </ul>
-</li>
-<li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-lock"></i><span>Authentication</span></a>
-    <ul class="ml-menu">
-        <li><a href="sign-in.html">Sign In</a></li>
-        <li><a href="sign-up.html">Sign Up</a></li>
-        <li><a href="forgot-password.html">Forgot Password</a></li>
-        <li><a href="404.html">Page 404</a></li>
-        <li><a href="500.html">Page 500</a></li>
-        <li><a href="page-offline.html">Page Offline</a></li>
-        <li><a href="locked.html">Locked Screen</a></li>
-    </ul>
-</li>
-<li class="open_top"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-copy"></i><span>Sample Pages</span></a>
-    <ul class="ml-menu">
-        <li><a href="blank.html">Blank Page</a></li>
-        <li><a href="image-gallery.html">Image Gallery</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="timeline.html">Timeline</a></li>
-        <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="invoices.html">Invoices</a></li>
-        <li><a href="invoices-list.html">Invoices List</a></li>
-        <li><a href="search-results.html">Search Results</a></li>
-    </ul>
-</li>
-<li class="open_top"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-map"></i><span>Maps</span></a>
-    <ul class="ml-menu">
-        <li><a href="google.html">Google Map</a></li>
-        <li><a href="yandex.html">YandexMap</a></li>
-        <li><a href="jvectormap.html">jVectorMap</a></li>
-    </ul>
-</li>
+  </nav>

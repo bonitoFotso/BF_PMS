@@ -1,8 +1,8 @@
-<li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Projets Et Taches</span></a>
-    <ul class="ml-menu">
-        <li><a href=" {% url 'task-list' %} ">Liste des taches</a></li>
-        <li><a href="{% url 'task' %}">Creer une tache</a></li>
-        <li><a href="ticket-list.html">  </a></li>
-        <li><a href="ticket-detail.html"></a></li>
+<li class="dropdown">
+    <a href="#" class="menu-toggle nav-link has-dropdown"><i
+    data-feather="briefcase"></i><span>Taches</span></a>
+    <ul class="dropdown-menu">
+        <li><a class="nav-link" href="{% url 'task-list' %}">Liste des Taches</a></li>
+        <li><a class="nav-link" href="{% url 'task' %}">Creer une Tache</a></li>
     </ul>
 </li>

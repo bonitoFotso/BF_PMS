@@ -100,7 +100,13 @@
                             <td> {{t.date_debut}}</td>
                             <td> {{t.technicien.nom}} </td>
                             <td> {{t.date_fin}}</td>
-                            <td> {{n_OS}} </td>
+                            <td> {{t.n_OS}} </td>
+                            <td> {{t.tec}} 
+                                {% for s in t.tec %}
+                                {{s.technicien.nom}}
+                                {% endfor %}
+                            </td>
+                            
 
                             <!-- td>  {% if t.ok %} <i class="fas fa-check"></i> {% else %} <i class="fas fa-times"></i>	{% endif %}  </!-->
                             td

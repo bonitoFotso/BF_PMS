@@ -15,7 +15,7 @@ User =get_user_model()
 #class Task(models.Model):
 #    pass
 
-fields = ('date d ajout','agence','appelant','tache','priorite','description','etat','date_debut','technicient','date_fin','n_OS',)
+fields = ('date d ajout','agence','appelant','tache','priorite','description','etat','date_debut','technicient','date_fin','n_OS','tec',)
 tache_fields = ('agence','appelant','nom','priorite','description','etat','date_debut','technicient',)
 # Create your views here.
 
@@ -48,7 +48,7 @@ pri = (1,2,3,4,5,6,7,8,9,10)
 class TaskCreate(CreateView):
     model = Tache
     #template_name = "project/add_task.html"
-    fields = ('agence','appelant','n_OS','ok','observation','nom','priorite','description','etat','date_debut','technicien',)
+    fields = ('agence','appelant','n_OS','ok','observation','nom','priorite','description','etat','date_debut',)
     success_url = 'task-list'
     
     def get_context_data(self, **kwargs):
@@ -60,7 +60,9 @@ class TaskCreate(CreateView):
         
         context = super().get_context_data(**kwargs)
         context["agences"] = Agence.objects.all()
-        #context["clients"] = Client.objects.all()
+        context["appelants"] = Appelant.objects.all()
+        context["etat"] = Etat.objects.all()
+        context["clients"] = Client.objects.all()
         #context["tasks"] = Task.objects.all()
         #context["ta"] =  Task.objects.all().count()
         #context["ta_comp"] =  Task.objects.filter(complete = 'True').count()
@@ -70,7 +72,7 @@ class TaskCreate(CreateView):
         #context["cl_field"] =  ('name','responsable','email','phone','address','city',)
         #context["ta_field"] = ('agence', 'title','priority', 'description', 'status', 'complete',)
         context["status"]   = status
-        context["pri"]   = pri
+        context["pri"]   = prio
         return context
 
 
@@ -102,14 +104,18 @@ class TacheListView(ListView):
         return context
 
 
-class TaskDetail(DetailView):
+class TaskDetail(DetailView,UpdateView):
     model = Tache
-    #template_name = 'project/tache_detail.html'
+    fields = ('agence','appelant','n_OS','ok','observation','nom','priorite','description','etat','date_debut','date_fin',)
     
-    def form_valid(self, form):
-        return super().form_valid(form)
+    template_name = 'project/tache_detail.html'
+    
+    success_url = reverse_lazy('task-list')
     
     def get_context_data(self, **kwargs):
+        
+
+        
         context = super().get_context_data(**kwargs)
         context["agences"] = Agence.objects.all()
         context["clients"] = Client.objects.all()

@@ -5,7 +5,7 @@ from .forms import UserAdminCreationForm, UserAdminChangeForm
 # Register your models here.
 from .models import User
 
-admin.site.site_header = "BF_GRH"
+admin.site.site_header = "BF_PMS"
 
 
 class UserAdmin(BaseUserAdmin):
