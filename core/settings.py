@@ -38,16 +38,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'jquery',
+
     
     'apps.clients',
     'apps.project',
     'apps.dashboard',
     'apps.authentication',
     'apps.ressource',
-    #'apps.admins',
+    
+    
+    'chartjs',
     #'apps.adminss',
     
 ]
+
+AUTH_USER_MODEL = 'authentication.User'
+
+LOGIN_URL = 'accounts/login/'
+LOGIN_REDIRECT_URL = 'home'
+
+#LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
+#LOGOUT_REDIRECT_URL = "home"
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

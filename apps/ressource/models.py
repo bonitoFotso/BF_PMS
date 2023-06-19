@@ -1,9 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from apps.authentication.models import User 
 # Create your models here.
 
 class Technicien(models.Model):
+    user = models.OneToOneField(User, verbose_name=_("User"), on_delete=models.CASCADE)
     photo = models.ImageField(_("profile"), upload_to='media/profile', )
     nom  = models.CharField(_("nom"), max_length=50)
     prenom = models.CharField(_("prenom"), max_length=50)

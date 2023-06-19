@@ -1,9 +1,196 @@
 {% extends 'base/body.html' %}
-
+{% load static %}
 {% block title %} Dashboard {% endblock title %}
+{% load static %}
+{% if user %} {{ user.technicien.nom }} {% else %} non user {% endif %}
 
 {% block body %}
 
 
+<div class="section-body">
+    <div class="row mt-sm-4">
+      <div class="col-12 col-md-12 col-lg-4">
+        <div class="card author-box">
+          <div class="card-body">
+            <div class="author-box-center">
+              <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle author-box-picture">
+              <div class="clearfix"></div>
+              <div class="author-box-name">
+                <a href="#">{{ user.technicien.nom }}  </a>
+              </div>
+              <div class="author-box-job">Technicien</div>
+            </div>
+            <div class="text-center">
+              <div class="author-box-description">
+                <p>
+                    {{ user.technicien.description }}
+                </p>
+              </div>
+              <div class="mb-2 mt-3">
+                <div class="text-small font-weight-bold">Follow {{ user.technicien.nom }}</div>
+              </div>
+              <a href="#" class="btn btn-social-icon mr-1 btn-facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="btn btn-social-icon mr-1 btn-twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="btn btn-social-icon mr-1 btn-github">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#" class="btn btn-social-icon mr-1 btn-instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <div class="w-100 d-sm-none"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h4>Information Personnel</h4>
+          </div>
+          <div class="card-body">
+            <div class="py-4">
+              <p class="clearfix">
+                <span class="float-left">
+                  Date de Naissance
+                </span>
+                <span class="float-right text-muted">
+                    {{ user.technicien.ddn }}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Tel
+                </span>
+                <span class="float-right text-muted">
+                    {{ user.technicien.tel }}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Mail
+                </span>
+                <span class="float-right text-muted">
+                    {{ user.technicien.email }}
+                </span>
+              </p>
+              <!-- p class="clearfix">
+                <span class="float-left">
+                  Facebook
+                </span>
+                <span class="float-right text-muted">
+                  <a href="#">John Deo</a>
+                </span>
+              </!-->
+              <!-- p class="clearfix">
+                <span class="float-left">
+                  Twitter
+                </span>
+                <span class="float-right text-muted">
+                  <a href="#">@johndeo</a>
+                </span>
+              </!-->
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-12 col-md-12 col-lg-8">
+        <div class="card full-height">
+          <div class="card-body">
+            <div class="card-title"></div>
+            <div class="card-category"></div>
+            <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+              <div class="px-2 pb-2 pb-md-0 text-center">
+                <div id="circles-1"></div>
+                <h6 class="fw-bold mt-3 mb-0">Tache</h6>
+              </div>
+              <div class="px-2 pb-2 pb-md-0 text-center">
+                <div id="circles-2"></div>
+                <h6 class="fw-bold mt-3 mb-0">En Cour</h6>
+              </div>
+              <div class="px-2 pb-2 pb-md-0 text-center">
+                <div id="circles-3"></div>
+                <h6 class="fw-bold mt-3 mb-0">Effectuer</h6>
+              </div>
+            </div>
+            <div id="chart1"></div>
+          </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+              <h4>Mes Taches <div class="badge badge-info"> {{tn}} </div> </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-md">
+                  <tr>
+                    
+                    <th>Nom</th>
+                    <th>Cree le</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                  {% for tache in taches %}
+                  <tr>
+                    
+                    <td> {{tache.tache.nom}} </td>
+                    <td> {{tache.tache.createdAt}} </td>
+                    <td>
+                      <div class="badge {% if tache.tache.etat.nom == 'En cours' %} badge-Success {% elif tache.tache.etat.nom == 'En atente' %} badge-warning {% elif tache.tache.etat.nom == 'En arret' %} badge-danger {% endif %} "> {{tache.tache.etat.nom}} </div>
+                    </td>
+                    <td><a href="#" class="btn btn-primary">Detail</a></td>
+                  </tr>
+                  {% endfor %}
+                  
+                
+                </table>
+              </div>
+            </div>
+            
+          </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-6">
+            <div class="card">
+              <div class="card-header">
+                <h4>Bar CHart</h4>
+              </div>
+              <div class="card-body">
+                <div class="recent-report__chart">
+                  
+
+                  <canvas id="myChart" width="50" height="40"></canvas>
+
+
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
 
 {% endblock body %}
+
+{% block js %}
+<script src="{% static 'ind.js' %}"></script>
+<!-- script src="{% static 'demo.js' %}"></!-->
+<script src="{% static 'assets/js/circles.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script type="text/javascript">
+    $.get('{% url "line_chart_json" %}', function(data) {
+      alert(data.datasets);
+      
+        
+        var ctx = $("#myChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'bar', data: data
+        });
+    });
+</script>
+
+{% endblock js %}

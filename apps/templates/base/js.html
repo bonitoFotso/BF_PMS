@@ -1,6 +1,7 @@
 {% load static %}
 
-<!-- script src="{% static 'assets/bundles/libscripts.bundle.js'%}"></
+{% comment %}
+	<!-- script src="{% static 'assets/bundles/libscripts.bundle.js'%}"></
 <script src="{% static 'assets/bundles/vendorscripts.bundle.js'%}"></script> 
 <script src="{% static 'assets/bundles/jvectormap.bundle.js'%}"></script> 
 <script src="{% static 'assets/bundles/sparkline.bundle.js'%}"></script> 
@@ -28,11 +29,17 @@
 <script src="{% static 'assets/js/widgets.js'%}"></script>
 <script src="{% static 'lib/bootstrap/js/bootstrap.min.js'%}"></script>-->
 
-<script src="{% static 'assets/js/app.min.js'%}"></script>
-<script src="{% static 'assets/js/custom.js'%}"></script>
-<script src="{% static 'assets/js/scripts.js'%}"></script>
-<script src="{% static 'assets/bundles/apexcharts/apexcharts.min.js'%}"></script>
-<script src="{% static 'assets/js/page/index.js'%}"></script>
+<!-- script src="{% static 'assets/bundles/apexcharts/apexcharts.min.js'%}"></!-->
 
-<script src="{% static 'assets/fullcalendar/fullcalendar.bundle.js'%}"></script>
-<script src="{% static 'assets/js/cal.js'%}"></script>
+<!-- script src="{% static 'assets/js/page/chart-apexcharts.js'%}"></!-->
+<!-- script src="{% static 'assets/bundles/chartjs/chart.min.js'%}"></!-->
+<!-- script src="{% static 'assets/fullcalendar/fullcalendar.bundle.js'%}"></!-->
+<!-- script src="{% static 'assets/js/scripts.bundle.js'%}"></!-->
+<!-- script src="{% static 'assets/js/custom.js'%}"></!-->
+{% endcomment %}
+	
+
+
+<script src="{% static 'assets/js/app.min.js'%}"></script>
+
+<script src="{% static 'assets/js/scripts.js'%}"></script>

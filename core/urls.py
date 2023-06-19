@@ -25,7 +25,7 @@ urlpatterns = [
     path('', include('apps.project.urls')),
     path('', include('apps.dashboard.urls')),
     path('', include('apps.ressource.urls')),
-    #path('', include('apps.admins.urls')),
+    path('', include('apps.authentication.urls')),
     #path('', include('apps.adminss.urls')),
 ]
 if bool(settings.DEBUG):

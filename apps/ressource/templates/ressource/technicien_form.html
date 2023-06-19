@@ -65,35 +65,13 @@
                         <div class="card-body">
                             <form id="formAccountSettings" method="POST" >
                                 {% csrf_token %}
-                                <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="id_nom">Nom :</label>
-                                        <input type="text" name="nom" value="" maxlength="50" required id="id_nom">
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="id_prenom">Prenom :</label>
-                                        <input type="text" name="prenom" value="" maxlength="50" required id="id_prenom">
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="id_tel">Telephone :</label>
-                                        <input type="text" name="tel" value="" maxlength="20" required id="id_tel">
-                                        
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="id_matricule">Matricule :</label>
-                                        <input type="text" name="matricule" value="" maxlength="20" required id="id_matricule">
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="id_email">Email :</label>
-                                        <input type="email" name="email" value="" maxlength="254" required id="id_email">
-                                    </div>
-                                </div>
+                                
+                                {{form.as_p}}
                                 
                                 
                                 
-                                </div>
                                 <div class="mt-2">
-                                    <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                                    <button type="submit" class="btn btn-primary me-2">Save</button>
                                     <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                                 </div>
                             </form>

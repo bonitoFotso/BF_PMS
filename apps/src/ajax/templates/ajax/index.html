@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Django</title>
+</head>
+<body>
+<h1>Django Example</h1>
+
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="a" id="a"> + <input type="text" name="b" id="b">
+    <input id="fetch-call" type="submit" value="Calculer">
+</form>
+
+<p id="operation">
+
+</p>
+
+<script>
+
+document.querySelector("#fetch-call").addEventListener("click", event => {
+    event.preventDefault();
+
+    let form = new FormData();
+
+    form.append("a", document.querySelector("#a").value);
+    form.append("b", document.querySelector("#b").value);
+
+    let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    let request = new Request("{% url 'compute' %}", {method: 'POST',
+                                                      body: form,
+                                                      headers: {"X-CSRFToken": csrfTokenValue}})
+    fetch(request)
+        .then(response => response.json())
+        .then(result => {
+            let resultParagraph = document.querySelector("#operation");
+            resultParagraph.innerHTML = result["operation_result"];
+        })
+})
+
+</script>
+
+</body>
+</html>

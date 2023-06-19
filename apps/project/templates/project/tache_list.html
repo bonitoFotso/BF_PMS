@@ -98,7 +98,7 @@
                             <td> {{t.description}} </td>
                             <td> {{t.etat}} </td>
                             <td> {{t.date_debut}}</td>
-                            <td> {{t.technicien.nom}} </td>
+                            <td> {{ass.technicien.t.id}} </td>
                             <td> {{t.date_fin}}</td>
                             <td> {{t.n_OS}} </td>
                             <td> {{t.tec}} 
@@ -127,6 +127,7 @@
                 
                 </div>
             </div>
-        
+        </div>
+        {% include 'project/assign table.html' %}
 
 {% endblock body %}

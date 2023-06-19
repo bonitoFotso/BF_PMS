@@ -7,7 +7,7 @@ fieldss = ('nom','prenom','tel','sexe', 'matricule',  'email', )
 class TechnicienCreateView(CreateView):
     model = Technicien
     #template_name = "ressource/add_techicien.html"
-    fields = ('nom','prenom','tel', 'matricule',  'email', )
+    fields = ('nom','prenom','tel', 'matricule',  'email','user')
 
     success_url = reverse_lazy('technicien-list')
     def get_context_data(self, **kwargs):

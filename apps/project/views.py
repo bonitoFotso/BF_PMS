@@ -90,12 +90,15 @@ class TacheListView(ListView):
     tec = TechnicienTache.objects.all()
             
     def get_context_data(self, **kwargs):
+        s = TacheTime.objects.all()
+        print(s)
         context = super().get_context_data(**kwargs)
         context["app"] = 'Tache'
         context["page"] = 'Liste des Taches'
         context["field"] = self.fields
         context["t_f"] = self.t_f
-        context["te"] =  self.tec
+        context["tt"] =  TacheTime.objects.all()
+        context['ass'] = TechnicienTache.objects.all()
         context["taches"]    =  Tache.objects.all().order_by('createdAt')
         context["total"]     =  Tache.objects.count()
         context["complet"]   =  Tache.objects.filter(ok = 'True').count()

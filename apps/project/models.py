@@ -68,6 +68,7 @@ class TechnicienTache(models.Model):
     nom = models.CharField(_("equipe"), max_length=50)
     technicien = models.ForeignKey(Technicien, verbose_name=_("techniciens"), on_delete=models.CASCADE)
     tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
+    
 
     class Meta:
         unique_together = (('technicien', 'tache', 'nom'),)
@@ -81,3 +82,13 @@ class TechnicienTache(models.Model):
 class TacheTime(models.Model):
     technicientache  = models.ForeignKey('TechnicienTache', on_delete=models.CASCADE)
     jour = models.CharField(_("jour"),choices=jours, max_length=50)
+    
+
+#class Etat(models.Model):
+#    nom = models.CharField(_("etat"), max_length=50)
+#    class EtatTache(models.Model):
+#        #        tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
+#        #        techniciantache = models.ForeignKey('TechnicienTache', on_delete
+#        #=models.CASCADE)
+        
+        

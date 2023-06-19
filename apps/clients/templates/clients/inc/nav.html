@@ -1,0 +1,13 @@
+{% if user.is_helpdesk %}
+<li class="dropdown">
+    <a href="#" class="menu-toggle nav-link has-dropdown"><i
+    data-feather="briefcase"></i><span>Agence et Client</span></a>
+    <ul class="dropdown-menu">
+        <li><a class="nav-link" href="{% url 'client-list' %}">Liste des client</a></li>
+        <li><a class="nav-link" href="{% url 'client' %}">Creer un client</a></li>
+        <li><a class="nav-link" href="{% url 'agence' %}">agence</a></li>
+        <li><a class="nav-link" href="{% url 'client' %}">Creer une Tache</a></li>
+        
+    </ul>
+</li>
+{% endif %}

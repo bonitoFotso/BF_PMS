@@ -122,7 +122,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('name', 'email', 'password', 'active', 'admin', 'is_company',)
+        fields = ('name', 'email', 'password', 'active', 'admin', 'is_helpdesk','is_technicien',)
         #widgets = {'password': forms.HiddenInput()}
 
     def clean_password(self):

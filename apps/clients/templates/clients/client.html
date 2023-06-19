@@ -1,8 +1,8 @@
-{% extends 'layouts/base.html' %}
+{% extends 'base/body.html' %}
 
 {% block title %} Clients {% endblock title %}
 
-{% block content %}
+{% block body %}
 <div class="content">
     clients
     <div class="row">
@@ -11,7 +11,7 @@
                 <h4 class="page-title"> {{page}} </h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
-                        <a href=" {% url 'home' %} ">
+                        <a href="  ">
                             <i class="flaticon-home"></i>
                         </a>
                     </li>
@@ -142,4 +142,4 @@
         
     </div>
     
-{% endblock content %}
+{% endblock body %}

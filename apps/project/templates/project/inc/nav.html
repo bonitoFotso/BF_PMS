@@ -3,6 +3,9 @@
     data-feather="briefcase"></i><span>Taches</span></a>
     <ul class="dropdown-menu">
         <li><a class="nav-link" href="{% url 'task-list' %}">Liste des Taches</a></li>
-        <li><a class="nav-link" href="{% url 'task' %}">Creer une Tache</a></li>
+        {% if user.is_helpdesk %}
+<li><a class="nav-link" href="{% url 'task' %}">Creer une Tache</a></li>
+{% endif %}
     </ul>
 </li>
+

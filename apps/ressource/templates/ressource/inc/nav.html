@@ -1,3 +1,8 @@
+
+
+{% if user.is_technicien %}
+
+{% else %}
 <li class="dropdown">
     <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Techniciens</span></a>
     <ul class="dropdown-menu">
@@ -6,3 +11,4 @@
         
     </ul>
 </li>
+{% endif %}
