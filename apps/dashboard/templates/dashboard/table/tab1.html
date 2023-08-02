@@ -113,7 +113,7 @@
             <!--end::Menu-->
           </td>
         </tr>
-        {% include 'dashboard/table/m2.html' %}
+        {% include 'dashboard/table/m.html' %}
       <script>
 
       </script>
@@ -207,4 +207,76 @@ function displayMessage(message, type) {
   })
 
   };
+      // Function to handle the form submission and AJAX request
+      function atts1(nom) {
+        var element = document.getElementById('form_att_'+nom);
+        var ta = document.getElementById(nom+'_id').value;
+        var tec = document.querySelector('[name=tec_'+nom+']').value;
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'att' %}",
+            data: {
+                'tec': tec,
+                'ta': ta,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function(data) {
+                alert(data.message);
+                // Fermer la fenêtre modale si l'attribution est réussie
+                $('#kt_modal_'+nom).modal('hide');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                const errors = JSON.parse(xhr.responseText).message;
+                alert("Une erreur s'est produite lors de l'attribution:\n" + errors);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        // Ajouter un gestionnaire d'événement pour le clic sur les onglets
+        $('.tab-link').click(function(e) {
+            e.preventDefault();
+            var target = $(this).attr('data-bs-target');
+
+            // Charger le contenu de l'onglet si celui-ci n'a pas déjà été chargé
+            if ($(target).find('form').length === 0) {
+                // Vous pouvez effectuer un appel AJAX ici pour récupérer le contenu de l'onglet
+                // et l'insérer dans la div correspondante
+                // Exemple :
+                // $.ajax({
+                //     type: 'GET',
+                //     url: 'url_pour_recuperer_contenu_onglet',
+                //     success: function(response) {
+                //         $(target).html(response);
+                //     },
+                //     error: function(xhr, status, error) {
+                //         console.error(error);
+                //     }
+                // });
+            }
+        });
+
+        // Gestionnaire d'événement lorsque la fenêtre modale est affichée
+        $('#kt_modal_{{t.nom}}').on('shown.bs.modal', function() {
+            // Charger le contenu du premier onglet lors de l'affichage de la fenêtre modale
+            var firstTab = $('.tab-link').first().attr('data-bs-target');
+            if ($(firstTab).find('form').length === 0) {
+                // Vous pouvez effectuer un appel AJAX ici pour récupérer le contenu du premier onglet
+                // et l'insérer dans la div correspondante
+                // Exemple :
+                // $.ajax({
+                //     type: 'GET',
+                //     url: 'url_pour_recuperer_contenu_premier_onglet',
+                //     success: function(response) {
+                //         $(firstTab).html(response);
+                //     },
+                //     error: function(xhr, status, error) {
+                //         console.error(error);
+                //     }
+                // });
+            }
+        });
+    });
 </script>
