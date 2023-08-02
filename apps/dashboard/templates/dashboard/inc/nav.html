@@ -1,3 +1,47 @@
-<li class="dropdown {% if dashboard == segment %} active {% else %}  {% endif %}">
-    <a href="{% url 'dashboard' %}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard  </span></a>
-  </li>
+
+  <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item {% if dashboard in app %} here {% endif %} show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+    <!--begin:Menu link-->
+    <span class="menu-link">
+        <span class="menu-title">Dashboards</span>
+        <span class="menu-arrow d-lg-none"></span>
+    </span>
+    <!--end:Menu link-->
+    <!--begin:Menu sub-->
+    <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-100 w-lg-600px">
+        <!--begin:Dashboards menu-->
+        <div class="menu-state-bg menu-extended overflow-hidden overflow-lg-visible py-6" data-kt-menu-dismiss="true">
+            <!--begin:Row-->
+            <div class="row px-5">
+                <!--begin:Col-->
+                <div class="col-lg-6 py-1">
+                    <!--begin:Menu item-->
+                    <div class="menu-item p-0 m-0">
+                        <!--begin:Menu link-->
+                        <a href="{% url 'dashboard' %}" class="menu-link  {% if dashboard in app %} active {% endif %}">
+                            <span class="menu-custom-icon d-flex flex-center flex-shrink-0 rounded w-40px h-40px me-3">
+                                <i class="ki-duotone ki-basket text-primary fs-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                </i>
+                            </span>
+                            <span class="d-flex flex-column">
+                                <span class="d-flex align-items-center fs-6 fw-semibold text-gray-800">Dashboard</span>
+                                <span class="fs-7 fw-semibold text-muted">statistics</span>
+                            </span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                </div>
+                <!--end:Col-->
+                <!--begin:Col-->
+                <!--end:Col-->
+            </div>
+            <!--end:Row-->
+        </div>
+        <!--end:Dashboards menu-->
+    </div>
+    <!--end:Menu sub-->
+</div>

@@ -1,0 +1,143 @@
+{% load static %}
+<div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_add_user_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bold">Creer un Client</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <i class="ki-duotone ki-cross fs-1">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <!--begin::Form-->
+                <form id="kt_modal_add_user_form" class="form" action="" method="">
+                    {% csrf_token %}
+                    
+                    <!--begin::Scroll-->
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                        
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">nom du Client</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="nom" id="nom" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Nom" value="nom" />
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Responsable</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="responsable" id="responsable" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="prenom" value="responsable" />
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Telephone</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="tel" id="tel" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="telephone" value="tel" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Email</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="email" name="email" id="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" value="smith@kpmg.com" />
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Address</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="address" id="address" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="matricule" value="address" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        
+                        <!--end::Input group-->
+                    </div>
+                    <!--end::Scroll-->
+                    <!--begin::Actions-->
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" id="cancel1">Discard</button>
+                        <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit"  >
+                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-progress">Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
+
+<script>
+    function canc(){
+        
+            $("kt_modal_add_user").hide();
+    };
+    //$("cancel1").click(function(){
+    //    $("kt_modal_add_user").hide();
+    //  });
+    const element = document.getElementById('kt_modal_add_user');
+    const forms = element.querySelector('#kt_modal_add_user_form');
+
+
+    document.querySelector("#kt_modal_add_user_form").addEventListener("submit", event => {
+        event.preventDefault();
+        let form = new FormData();
+        let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+        form.append('csrfmiddlewaretoken',csrfTokenValue);
+        form.append('nom',$('#nom').val());
+        form.append('prenom',$('#prenom').val());
+        form.append('email',$('#email').val());
+        form.append('tel',$('#tel').val());
+        form.append('matricule',$('#matricule').val());
+        form.append('photo',$('#photo').val());
+        let request = new Request("{% url 'technicien-create' %}", {method: 'POST',
+                                                    body: form,
+                                                    headers: {"X-CSRFToken": csrfTokenValue}
+                                                    })
+        fetch(request)
+            .then(response => {
+                alert(response["body"]);
+            })
+            .then(result => {
+                alert(result["as"]);
+            })
+        
+
+    });
+
+
+
+
+</script>

@@ -1,0 +1,87 @@
+{%load static%}
+<script src="{% static 'assets/plugins/DataTables/datatables.js' %}"></script>
+<script>
+
+    function getClient(id)
+    {
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'ag' %}",
+            data: {'id':id,
+            'csrfmiddlewaretoken': '{{csrf_token}}',
+                    },
+
+        })
+        .done(function(data){
+            //alert(data.a['1']['nom']);
+                let c = new Array();
+                let dt = new Array();
+                let i=0;
+                    for(d in data.a){
+                        c[i] = data.a[d];
+                        for(a in data.a[d]){
+                            c[i][a] = data.a[d][a];
+                            
+                    //$("#tab_client").prepend("<tr id='table-" + datas.a[d][a] + "'>\n\
+                    //    <th>" + a.a[d]['nom']  + "</th><td>" + data.a[d][datas] + "</td><td>" + datas.search + "</td>\n\
+                    //    <th>" + a.email + "</th><td>" + datas.telephone + "</td>\n\
+                    //    <th>" + a.created_at + "</th><td><a class='btn btn-sm btn-warning'><span class='fa fa-edit'></span>Edit</a>\n\
+                    //    <a class='btn btn-sm btn-danger delete' data-id='" + datas.id + "'><span class='fa fa-trash'></span> Delete</a> </td></tr>");
+                        };
+                        i++;
+                        
+
+                    }
+                        console.log(c);
+                        for(i in c){
+                            alert(c[i]);
+                            for(j in c[i]){
+                            alert(c[i][j]);
+                            //$("#tab_client").prepend(
+                            //    "<tr> <td>"c[i][j]
+                            //);
+                        }};
+
+        
+                    
+                
+
+            
+        })
+
+    };
+
+   
+    
+    var tab =document.getElementById('tab_client');
+    
+    
+    {% for a in clients %}
+    let a{{a.id}} = document.querySelector('#act{{a.id}}');
+    let ag{{a.id}} = document.querySelector('#ag_{{a.id}}');
+    {% endfor %}
+    //let act = document.querySelector('#act{{client.id}}');
+    //const tab = document.querySelector('#');
+    //a.addEventListener('click', e => {
+    //    e.preventDefault();
+    //    let form = new FormData();
+    //    form.append("id",1);
+    //    let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+//
+    //    // Validate form before submit
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: "{% url 'ag' %}",
+    //        data: {'id':1,
+    //        'csrfmiddlewaretoken': '{{csrf_token}}',
+    //                },
+//
+    //    })
+    //    .done(function(data){
+    //        alert(data.a);
+    //    })
+//
+    //    
+    //    
+    //});
+</script>

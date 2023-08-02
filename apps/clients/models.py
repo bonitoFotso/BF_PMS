@@ -57,5 +57,8 @@ class Appelant(models.Model):
     def __str__(self):
         return '{0} {1}'.format(self.agence,self.name)
         
-
+    @receiver(post_save, sender=Agence)
+    def create_appelant(sender, instance, created, **kwargs):
+        if created:
+            Appelant.objects.create(name = instance.responsable,agence = instance)
 

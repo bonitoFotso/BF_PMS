@@ -1,0 +1,386 @@
+{% extends 'base/body.html' %}
+{% load static %}
+{% block title %} details client {% endblock title %}
+{% block body %}
+
+<div id="kt_app_content" class="app-content pb-0">
+    <!--begin::Navbar-->
+    <div class="card mb-5 mb-xl-10">
+        <div class="card-body pt-9 pb-0">
+            <!--begin::Details-->
+            <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                <!--begin: Pic-->
+                <div class="me-7 mb-4">
+                    <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                        <img src="{% static object.photo %}" alt="{{object.nae}}" />
+                        <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
+                    </div>
+                </div>
+                <!--end::Pic-->
+                <!--begin::Info-->
+                <div class="flex-grow-1">
+                    <!--begin::Title-->
+                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                        <!--begin::User-->
+                        <div class="d-flex flex-column">
+                            <!--begin::Name-->
+                            <div class="d-flex align-items-center mb-2">
+                                <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"> {{object.name}} </a>
+                                <a href="#">
+                                    <i class="ki-duotone ki-verify fs-1 text-primary">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-light-success fw-bold ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan"></a>
+                            </div>
+                            <!--end::Name-->
+                            <!--begin::Info-->
+                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                <i class="ki-duotone ki-profile-circle fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>{{object.responsable}}</a>
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                <i class="ki-duotone ki-geolocation fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>{{object.address}}</a>
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                <i class="ki-duotone ki-sms fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>{{object.email}}</a>
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::User-->
+                        <!--begin::Actions-->
+                        <div class="d-flex my-4">
+                            <a href="#" class="btn btn-sm btn-light me-2" id="kt_user_follow_button">
+                                <i class="ki-duotone ki-check fs-3 d-none"></i>
+                                <!--begin::Indicator label-->
+                                <span class="indicator-label">#</span>
+                                <!--end::Indicator label-->
+                                <!--begin::Indicator progress-->
+                                <span class="indicator-progress">#
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                <!--end::Indicator progress-->
+                            </a>
+                            <a href="#" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">#</a>
+                            <!--begin::Menu-->
+
+                            <!--end::Menu-->
+                        </div>
+                        <!--end::Actions-->
+                    </div>
+                    <!--end::Title-->
+                    <!--begin::Stats-->
+                    <div class="d-flex flex-wrap flex-stack">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column flex-grow-1 pe-8">
+                            <!--begin::Stats-->
+                            <div class="d-flex flex-wrap">
+                                <!--begin::Stat-->
+                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{% for i in object.appelant_set.all %}
+                                        {{i.tache_set.all.count}}
+                                        {% endfor %}" data-kt-countup-prefix="">0</div>
+                                        
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-semibold fs-6 text-gray-400">Taches</div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Stat-->
+                                <!--begin::Stat-->
+                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{object.technicientache_set.all.count}}">0</div>
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-semibold fs-6 text-gray-400">En Cour</div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Stat-->
+                                <!--begin::Stat-->
+                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{object.technicientache_set.all.count}}" data-kt-countup-prefix="%">0</div>
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-semibold fs-6 text-gray-400">efectuer</div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Stat-->
+                            </div>
+                            <!--end::Stats-->
+                        </div>
+                        <!--end::Wrapper-->
+                        <!--begin::Progress-->
+                        <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
+                            <div class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                <span class="fw-semibold fs-6 text-gray-400">Productiviter</span>
+                                <span class="fw-bold fs-6"> {{object.productivite}} </span>
+                            </div>
+                            <div class="h-5px mx-3 w-100 bg-light mb-3">
+                                <div class="bg-success rounded h-5px" role="progressbar" style="width: 50%;" aria-valuenow="{{object.productivite}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <!--end::Progress-->
+                    </div>
+                    <!--end::Stats-->
+                </div>
+                <!--end::Info-->
+            </div>
+            <!--end::Details-->
+            <!--begin::Navs-->
+            <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                <!--begin::Nav item-->
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="/technicien/{{object.id}}/detail">Detail</a>
+                </li>
+                <!--end::Nav item-->
+            </ul>
+            <!--begin::Navs-->
+        </div>
+    </div>
+    <!--end::Navbar-->
+    <!--begin::details View-->
+    <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+        <!--begin::Card header-->
+        <div class="card-header cursor-pointer">
+            <!--begin::Card title-->
+            <div class="card-title m-0">
+                <h3 class="fw-bold m-0">Details de l'agence </h3>
+            </div>
+            <!--end::Card title-->
+            <!--begin::Action-->
+            <button type="button" class="btn btn-primary btn-sm align-self-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                <i class="ki-duotone ki-plus fs-2"></i>Editer l'agence</button>
+            
+            <!--end::Action-->
+        </div>
+        <!--begin::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body p-9">
+            <!--begin::Row-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Nom </label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800"> {{object.name}} {{object.prenom}}</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-3 fw-semibold text-muted">Siege
+                <span class="ms-1" data-bs-toggle="tooltip" title="Phone number must be active">
+                    <i class="ki-duotone ki-information fs-7">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                    </i>
+                </span></label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-3 d-flex align-items-center">
+                    <span class="fw-bold fs-6 text-gray-800 me-2">{{object.siege}}</span>
+                    <span class="badge badge-success">.</span>
+                </div>
+                <label class="col-lg-3 fw-semibold text-muted">responsble
+                    <span class="ms-1" data-bs-toggle="tooltip" title="Phone number must be active">
+                        <i class="ki-duotone ki-information fs-7">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                        </i>
+                    </span></label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-3 d-flex align-items-center">
+                        <span class="fw-bold fs-6 text-gray-800 me-2">{{object.responsable}}</span>
+                        <span class="badge badge-success">.</span>
+                    </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Contact</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">{{object.email}}, {{object.phone}}</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+
+            <!--end::Notice-->
+        </div>
+        <!--end::Card body-->
+    </div>
+    <!--end::details View-->
+    <!--begin::Row-->
+    <div class="row gy-5 g-xl-10">
+        <!--begin::Col-->
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-xl">
+            <!--begin::Table Widget 5-->
+            <div class="card card-flush h-xl-100">
+                <!--begin::Card header-->
+                <div class="card-header pt-7">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold text-dark">Liste des Agence</span>
+                        <span class="text-gray-400 mt-1 fw-semibold fs-6"></span>
+                    </h3>
+                    <!--end::Title-->
+                    <!--begin::Actions-->
+                    <div class="card-toolbar">
+                        <!--begin::Filters-->
+                        <div class="d-flex flex-stack flex-wrap gap-4">
+                            <!--begin::Destination-->
+                            <div class="d-flex align-items-center fw-bold">
+                                <!--begin::Label-->
+                                <div class="text-muted fs-7 me-2">Cateogry</div>
+                                <!--end::Label-->
+                                <!--begin::Select-->
+                                <select class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option">
+                                    <option></option>
+                                    <option value="Show All" selected="selected">Show All</option>
+                                    <option value="a">Category A</option>
+                                    <option value="b">Category B</option>
+                                </select>
+                                <!--end::Select-->
+                            </div>
+                            <!--end::Destination-->
+                            <!--begin::Status-->
+                            <div class="d-flex align-items-center fw-bold">
+                                <!--begin::Label-->
+                                <div class="text-muted fs-7 me-2">Status</div>
+                                <!--end::Label-->
+                                <!--begin::Select-->
+                                <select class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option" data-kt-table-widget-5="filter_status">
+                                    <option></option>
+                                    <option value="Show All" selected="selected">Show All</option>
+                                    <option value="In Stock">In Stock</option>
+                                    <option value="Out of Stock">Outd of Stock</option>
+                                    <option value="Low Stock">Lowd Stock</option>
+                                </select>
+                                <!--end::Select-->
+                            </div>
+                            <!--end::Status-->
+                            <!--begin::Search-->
+                            <a href="../dist/apps/ecommerce/catalog/products.html" class="btn btn-light btn-sm">View Stock</a>
+                            <!--end::Search-->
+                        </div>
+                        <!--begin::Filters-->
+                    </div>
+                    <!--end::Actions-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body">
+                    <!--begin::Table-->
+                    <table class="table align-middle table-row-dashed fs-6 gy-3 table-striped table-striped-columns" id="tach">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-150px">Tache</th>
+                                <th class="min-w-150px">Appelant</th>
+                                <th class="min-w-150px">agence</th>
+                                <th class="text-end pe-3 min-w-100px">responsable</th>
+                                
+                                
+                                
+                            </tr>
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                                {% for i in object.appelant_set.all %}
+                                    {% for ts in i.tache_set.all %}
+                                    
+                                    <tr class=" {% if ts.ok %} bg-success {% endif %} ">
+                                        <!--begin::Item-->
+                                        <td>
+                                            <a href="#" class="text-dark text-hover-primary">{{ts.nom}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-dark text-hover-primary">{{ts.appelant.name}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="/client/{{t.id}}/detail" class="text-dark text-hover-primary">{{i.name}}</a>
+                                        </td>
+                                        <!--end::Item-->
+                                        <!--begin::Product ID-->
+                                        <td class="text-end"> {{i.agence}} </td>
+                                        
+                                        <!--end::Product ID-->
+                                        <!--begin::Date added-->
+                                        
+                                        <!--end::Status-->
+                                        <!--begin::Qty-->
+                                        
+                                        <!--end::Qty-->
+                                    </tr>
+
+                                    {% endfor %}
+                                {% endfor %}
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Table Widget 5-->
+        </div>
+        <!--end::Col-->
+        
+    </div>
+    
+
+    <!--end::Row-->
+</div> 
+<script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
+<script src="{% static 'assets/plugins/DataTables/datatables.js' %}"></script>
+
+<script>
+    $("#tach").DataTable();
+</script>
+                    
+{% endblock body %}

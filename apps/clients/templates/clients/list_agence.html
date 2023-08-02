@@ -1,0 +1,83 @@
+{% extends 'base/body.html' %}
+{% load static %}
+
+{% block title %} Liste des client {% endblock title %}
+
+{% block body %}
+
+<div id="kt_app_content" class="app-content pb-0">
+    <!--begin::Card-->
+    <div class="card table-responsive rounded mb-3">
+        <!--begin::Card header-->
+        <div class="card-header border-0 pt-6">
+            <!--begin::Card toolbar-->
+            <div class="card-toolbar">
+                <!--begin::Toolbar-->
+                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                    <!--begin::Filter-->
+                    <!--begin::Add user-->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                    <i class="ki-duotone ki-plus fs-2"></i>Creer une Agence</button>
+                    <!--end::Add user-->
+                </div>
+                <!--end::Toolbar-->
+                <!--begin::Group actions-->
+
+                <!--end::Group actions-->
+                <!--begin::Modal - Adjust Balance-->
+                {% include 'clients/form_agence.html' %}
+                <!--end::Modal - New Card-->
+                <!--begin::Modal - Add task-->
+                
+                <!--end::Modal - Add task-->
+            </div>
+            <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body py-4">
+            <h3>Liste des Agence</h3>
+    <table class="table align-middle table-row-dashed fs-6 gy-5" id="ag_tab">
+        <thead>
+            
+                
+                
+            </tr>
+        </thead>
+    </table>
+            <!--begin::Table-->
+            
+            <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+    </div>
+    <!--end::Card-->
+</div>
+
+<script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+<script src="{% static 'assets/plugins/DataTables/datatables.js' %}"></script>
+
+<script>
+
+    $(document).ready(function() {
+        AjaxDatatableViewUtils.initialize_table(
+            $('#ag_tab'),
+            "{% url 'ag_ajax' %}",
+            {
+                // extra_options (example)
+                processing: true,
+                autoWidth: false,
+                full_row_select: true,
+                scrollX: true,
+                
+            }, {
+                // extra_data
+                // ...
+            },
+        );
+    });
+
+</script>
+
+{% endblock body %}

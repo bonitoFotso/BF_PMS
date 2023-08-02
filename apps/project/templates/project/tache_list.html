@@ -1,4 +1,5 @@
 {% extends 'base/body.html' %}
+{% load static %}
 {% block title %} Task {% endblock title %}
 {% block body %}
 
@@ -7,127 +8,109 @@
 
     <div class="page-inner mt--5">
         <div class="row clearfix">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card state_w1">
-                    <div class="body d-flex justify-content-between">
-                        <div>
-                            <h5>{{total}}</h5>
-                            <span>Total des Taches</span>
-                        </div>
-                        <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#FFC107">5,2,3,7,6,4,8,1</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card state_w1">
-                    <div class="body d-flex justify-content-between">
-                        <div>                                
-                            <h5> {{complet}} </h5>
-                            <span>taches Achever </span>
-                        </div>
-                        <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#46b6fe">8,2,6,5,1,4,4,3</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card state_w1">
-                    <div class="body d-flex justify-content-between">
-                        <div>
-                            <h5> {{ incomplet }} </h5>
-                            <span> inachever </span>
-                        </div>
-                        <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#ee2558">4,4,3,9,2,1,5,7</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card state_w1">
-                    <div class="body d-flex justify-content-between">
-                        <div>                            
-                            <h5> {{pourcent}}% </h5>
-                            <span> pourcentage </span>
-                        </div>
-                        <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#04BE5B">7,5,3,8,4,6,2,9</div>
-                    </div>
-                </div>
-            </div>
+            <div class="col" id="orderStatisticsChart"></div>
+            <div class="col" id="priorityChart"></div>
+            
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive rounded mb-3">
-                <table class="table table-hover c_table theme-color table-striped " >
-                    <thead class="bg-white text-uppercase">
-                        <tr class="ligth ligth-data">
-                            <th>
-                                <div class="checkbox d-inline-block">
-                                    <input type="checkbox" class="checkbox-input" id="checkbox1">
-                                    <label for="checkbox1" class="mb-0"></label>
-                                </div>
-                            </th>
-                            {% for tf in field %}
-                            <th> {{tf}} </th>
-                            {% endfor %}
-                            
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="ligth-body">
-                        {% for t in taches %}
-                        <tr class=" {% if t.ok  %} bg-success {% endif %} " >
-                            <td>
-                                <div class="checkbox d-inline-block">
-                                    <input type="checkbox" class="checkbox-input" id="checkbox2" {% if t.ok  %} checked {% endif %}>
-                                    <label for="checkbox2" class="mb-0"></label>
-                                </div>
-                            </td>
-                            <!-- td>
-                                <div class="d-flex align-items-center">
-                                    <img src="../assets/images/table/product/01.jpg" class="img-fluid rounded avatar-50 mr-3" alt="image">
-                                    <div>
-                                        Organic Cream
-                                        <p class="mb-0"><small>This is test Product</small></p>
-                                    </div>
-                                </div>
-                            </!-->
-                            
-                            <td>{{t.createdAt}}</td>
-                            <td>{{t.agence.name}}</td>
-                            <td>{{t.appelant.name}}</td>
-                            <td> {{t.nom}} </td>
-                            <td> {{t.priorite}} </td>
-                            <td> {{t.description}} </td>
-                            <td> {{t.etat}} </td>
-                            <td> {{t.date_debut}}</td>
-                            <td> {{ass.technicien.t.id}} </td>
-                            <td> {{t.date_fin}}</td>
-                            <td> {{t.n_OS}} </td>
-                            <td> {{t.tec}} 
-                                {% for s in t.tec %}
-                                {{s.technicien.nom}}
-                                {% endfor %}
-                            </td>
-                            
+    </div>
+        
+        
 
-                            <!-- td>  {% if t.ok %} <i class="fas fa-check"></i> {% else %} <i class="fas fa-times"></i>	{% endif %}  </!-->
-                            td
-                            <td>
-                                <div class="d-flex align-items-center list-action">
-                                    <a href="/tasks/{{t.id}}/detail" class="mr-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
-                                        href="#"><i class="fas fa-eye mr-0"></i></a>
-                                    <!-- a href="/tasks/{{t.id}}/delete" class="mr-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
-                                        href="#"><i class="fas fa-edit mr-"></i></!-->
-                                    
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        
-                    </tbody>
-                </table>
-                
-                </div>
-            </div>
-        </div>
         {% include 'project/assign table.html' %}
+        <script src="{% static 'assets/js/apexcharts.js' %}"></script>
+<script>
+        const chartOrderStatistics = document.querySelector('#orderStatisticsChart'),
+    orderChartConfig = {
+      chart: {
+        height: 200,
+        width: 200,
+        type: 'pie'
+      },
+      labels: ['en cour', 'effectuer', ],
+      series: [{{ incomplet }} , {{complet}},],
+      //colors: [config.colors.primary, config.colors.secondary, config.colors.info, config.colors.success],
+      stroke: {
+        width: 0,
+        //colors: cardColor
+      },
+      dataLabels: {
+        enabled: false,
+        formatter: function (val, opt) {
+          return parseInt(val) + '%';
+        }
+      },
+      legend: {
+        show: false
+      },
+      grid: {
+        padding: {
+          top: 0,
+          bottom: 0,
+          right: 15
+        }
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '75%',
+            labels: {
+              show: true,
+              value: {
+                fontSize: '1.5rem',
+                fontFamily: 'Public Sans',
+                //color: headingColor,
+                offsetY: -15,
+                formatter: function (val) {
+                  return parseInt(val) + '';
+                }
+              },
+              name: {
+                offsetY: 20,
+                fontFamily: 'Public Sans'
+              },
+              total: {
+                show: true,
+                fontSize: '0.8125rem',
+                //color: axisColor,
+                label: 'pourcentage',
+                formatter: function (w) {
+                  return '{{pourcent}}%';
+                }
+              }
+            }
+          }
+        }
+      }
+    };
+  if (typeof chartOrderStatistics !== undefined && chartOrderStatistics !== null) {
+    const statisticsChart = new ApexCharts(chartOrderStatistics, orderChartConfig);
+    statisticsChart.render();
+  };
 
+const chartPriority = document.querySelector('#priorityChart');
+
+const priorityChartConfig = {
+  chart: {
+    height: 200,
+    width:200,
+    type: 'bar',
+  },
+  xaxis: {
+    categories: ['Bas', 'Moyen', 'Elever',], // Ajoutez les catégories en fonction de vos priorités
+  },
+  series: [{
+    name: 'Nombre de tâches',
+    data: [{{ nb_tasks_bas }}, {{ nb_tasks_moyen }}, {{ nb_tasks_elever }},], // Ajoutez le nombre de tâches pour chaque priorité
+  }],
+  colors: ['#2ecc71', '#3498db','#f96332', ],
+};
+
+if (chartPriority) {
+  const priorityChart = new ApexCharts(chartPriority, priorityChartConfig);
+  priorityChart.render();
+}
+
+
+</script>
+        
 {% endblock body %}

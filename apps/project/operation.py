@@ -1,14 +1,11 @@
 from .models import *
 
-def pourcent(m):
-    if m:
-        comp  = m.objects.filter(ok = 'True').count()
-        total = m.objects.all().count()
-        if comp == 0 or total == 0:
-            p = 0
-        else:
-            p = "{:.2f}".format((100*comp)/total)
-        
-        print(comp, total, p)
-        return p
-
+def pourcent():
+    #total_taches = Tache.objects.count()
+    #if total_taches == 0:
+        return 0
+    
+    #taches_completes = Tache.objects.filter(ok=True).count()
+    #pourcentage = (taches_completes / total_taches) * 100
+    
+    #return round(pourcentage, 2)

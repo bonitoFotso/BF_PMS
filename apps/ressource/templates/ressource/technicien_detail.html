@@ -1,267 +1,498 @@
 {% extends "base/body.html" %}
-
+{% load static %}
 {% block title %} {{page}} {% endblock %} 
 
-{% block body %}
-
-<div class="main-content">
-    <section class="section">
-        <div class="section-body">
-            <div class="row mt-sm-4">
-                <div class="col-12 col-md-12 col-lg-4">
-                    <div class="card author-box">
-                        <div class="card-body">
-                            <div class="author-box-center">
-                                <img alt="image de {{object.nom}}" src="{{object.photo}}" class="rounded-circle author-box-picture">
-                                <div class="clearfix"></div>
-                                <div class="author-box-name">
-                                    <a href="#"> {{object.nom}} </a>
-                                </div>
-                                <div class="author-box-job">Technicien</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="author-box-description">
-                                    <p>
-                                        {{object.apropos}}
-                                    </p>
-                                </div>
-                                <div class="mb-2 mt-3">
-                                    <div class="text-small font-weight-bold">Follow {{object.nom}}</div>
-                                </div>
-                                <a href="#" class="btn btn-social-icon mr-1 btn-facebook">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a href="#" class="btn btn-social-icon mr-1 btn-twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="btn btn-social-icon mr-1 btn-github">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="btn btn-social-icon mr-1 btn-instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <div class="w-100 d-sm-none"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Information personnel</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="py-4">
-                                <p class="clearfix">
-                                    <span class="float-left">
-                                        Date de naissance
-                                    </span>
-                                    <span class="float-right text-muted">
-                                        30-05-1998
-                                    </span>
-                                </p>
-                                <p class="clearfix">
-                                    <span class="float-left">
-                                        Tel
-                                    </span>
-                                    <span class="float-right text-muted">
-                                        {{object.tel}}
-                                    </span>
-                                </p>
-                                <p class="clearfix">
-                                    <span class="float-left">
-                                        Mail
-                                    </span>
-                                    <span class="float-right text-muted">
-                                        {{object.mail}}
-                                    </span>
-                                </p>
-                                <p class="clearfix">
-                                    <span class="float-left">
-                                        Facebook
-                                    </span>
-                                    <span class="float-right text-muted">
-                                        <a href="#">#</a>
-                                    </span>
-                                </p>
-                                <p class="clearfix">
-                                    <span class="float-left">
-                                        Twitter
-                                    </span>
-                                    <span class="float-right text-muted">
-                                        <a href="#">#</a>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Competence</h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
-                                <li class="media">
-                                    <div class="media-body">
-                                        <div class="media-title">#</div>
-                                    </div>
-                                    <div class="media-progressbar p-t-10">
-                                        <div class="progress" data-height="6">
-                                            <div class="progress-bar bg-primary" data-width="70%"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="media-body">
-                                        <div class="media-title">#</div>
-                                    </div>
-                                    <div class="media-progressbar p-t-10">
-                                        <div class="progress" data-height="6">
-                                            <div class="progress-bar bg-warning" data-width="80%"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="media-body">
-                                        <div class="media-title">#</div>
-                                    </div>
-                                    <div class="media-progressbar p-t-10">
-                                        <div class="progress" data-height="6">
-                                            <div class="progress-bar bg-green" data-width="48%"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+{% block body %}    
+<div id="kt_app_content" class="app-content pb-0">
+    <!--begin::Navbar-->
+    <div class="card mb-5 mb-xl-10">
+        <div class="card-body pt-9 pb-0">
+            <!--begin::Details-->
+            <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                <!--begin: Pic-->
+                <div class="me-7 mb-4">
+                    <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                        <img src="{% static object.photo %}" alt="{{object.nom}}" />
+                        <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                     </div>
                 </div>
-                <div class="col-12 col-md-12 col-lg-8">
-                    <div class="card">
-                        <div class="padding-20">
-                            <ul class="nav nav-tabs" id="myTab2" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab"
-                                    aria-selected="true">A Propos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings" role="tab"
-                                    aria-selected="false">Configuration</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content tab-bordered" id="myTab3Content">
-                                <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab2">
-                                    <div class="row">
-                                        <div class="col-md-3 col-6 b-r">
-                                            <strong>Nom Complet</strong>
-                                            <br>
-                                            <p class="text-muted">{{object.nom}} {{object.prenom}}</p>
-                                        </div>
-                                        <div class="col-md-3 col-6 b-r">
-                                            <strong>Telephone</strong>
-                                            <br>
-                                            <p class="text-muted">{{object.tel}}</p>
-                                        </div>
-                                        <div class="col-md-3 col-6 b-r">
-                                            <strong>Email</strong>
-                                            <br>
-                                            <p class="text-muted">{{object.email}}</p>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <strong>Adresse</strong>
-                                            <br>
-                                            <p class="text-muted">{{object.adress}}</p>
-                                        </div>
-                                    </div>
-                                    <p class="m-t-30">
-                                        {{object.apropos}}
-                                    </p>
-                                    <div class="section-title">Education</div>
-                                    <ul> {% for ec in object.ecole %}
-                                        <li> {{ec.annee}} {{ec.diplome}} {{ec.etablissement}} </li>
-                                        
-                                        {% endfor %}
-                                    </ul>
-                                    <div class="section-title">Experience</div>
-                                    <ul>
-                                        {% for ex in object.exp %}
-                                        
-                                        <li> {{ex.annee}} {{ex.societe}} {{ex.detail}} </li>
-                                        
-                                        {% endfor %}
-                                        
-                                    </ul>
-                                </div>
-                                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="profile-tab2">
-                                    <form method="post" class="needs-validation">
-                                        {% csrf_token %}
-                                        <div class="card-header">
-                                            <h4>Editer le Profile</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="form-group col-md-6 col-12">
-                                                    <label>Nom</label>
-                                                    <input name="nom" type="text" class="form-control" value="{{object.nom}}">
-                                                    <div class="invalid-feedback">
-                                                        Entrez le Nom
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-6 col-12">
-                                                    <label>Prenom</label>
-                                                    <input name="prenom" type="text" class="form-control" value="{{object.prenom}}">
-                                                    <div class="invalid-feedback">
-                                                        entrez le Prenom
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-md-7 col-12">
-                                                        <label>Email</label>
-                                                        <input name="email" type="email" class="form-control" value="{{object.email}}">
-                                                        <div class="invalid-feedback">
-                                                            Please fill in the email
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-5 col-12">
-                                                        <label>tel</label>
-                                                        <input name="tel" type="text" class="form-control" value="{{object.tel}}">
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-md-5 col-12">
-                                                        <label>matricule</label>
-                                                        <input name="matricule" type="text" class="form-control" value="{{object.matricule}}">
-                                                    </div>
-                                                    <div class="form-group col-12">
-                                                        <label>Bio</label>
-                                                        <textarea
-                                                        class="form-control summernote-simple">{{object.bio}}</textarea>
-                                                    </div>
-                                                </div>
-                                                <!-- div class="row">
-                                                    <div class="form-group mb-0 col-12">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" name="remember" class="custom-control-input" id="newsletter">
-                                                            <label class="custom-control-label" for="newsletter">Subscribe to newsletter</label>
-                                                            <div class="text-muted form-text">
-                                                                You will get new information about products, offers and promotions
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    </!-->
-                                                </div>
-                                                <div class="card-footer text-right">
-                                                    <button class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                <!--end::Pic-->
+                <!--begin::Info-->
+                <div class="flex-grow-1">
+                    <!--begin::Title-->
+                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                        <!--begin::User-->
+                        <div class="d-flex flex-column">
+                            <!--begin::Name-->
+                            <div class="d-flex align-items-center mb-2">
+                                <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"> {{object.nom}} {{stat.do}}
+                                    <script>
+                                        let tab = []
+                                        let nm = []
+                                        let id = []
+                                    {% for i in stat.do %}
+                                    
+                                    console.log('{{i}}');
+                                    {% for ii in fields %}{% endfor %}
+                                    //tab['{{i}}'] = "{{i}}";
+                                    //tab['{{i}}'] = "{{i.id}}";
+                                    console.log('{{ii}}');
+                                    {% endfor %}
+                                        console.log(tab);
+                                    
+                                </script>   
+                                </a>
+                                <a href="#">
+                                    <i class="ki-duotone ki-verify fs-1 text-primary">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </a>
+                                
                             </div>
+                            <!--end::Name-->
+                            <!--begin::Info-->
+                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                <i class="ki-duotone ki-profile-circle fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>{{object.role}}</a>
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                <i class="ki-duotone ki-geolocation fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>{{object.address}}</a>
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                <i class="ki-duotone ki-sms fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>{{object.email}}</a>
+                            </div>
+                            <!--end::Info-->
                         </div>
+                        <!--end::User-->
+                        <!--begin::Actions-->
+                        
+                        <!--end::Actions-->
                     </div>
+                    <!--end::Title-->
+                    <!--begin::Stats-->
+                    <div class="d-flex flex-wrap flex-stack">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column flex-grow-1 pe-8">
+                            <!--begin::Stats-->
+                            <div class="d-flex flex-wrap">
+                                <!--begin::Stat-->
+                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{object.technicientache_set.all.count}}" data-kt-countup-prefix="">0</div>
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-semibold fs-6 text-gray-400">Taches</div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Stat-->
+                                <!--begin::Stat-->
+                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{object.technicientache_set.all.count}}">0</div>
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-semibold fs-6 text-gray-400">En Cour</div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Stat-->
+                                <!--begin::Stat-->
+                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{object.technicientache_set.all.count}}" data-kt-countup-prefix="%">0</div>
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-semibold fs-6 text-gray-400">efectuer</div>
+                                    <!--end::Label-->
+                                </div>
+                                
+                                <!--end::Stat-->
+                            </div>
+                            <!--end::Stats-->
+                        </div>
+                        <!--end::Wrapper-->
+                        <!--begin::Progress-->
+                        
+                        <!--end::Progress-->
+                    </div>
+                    <!--end::Stats-->
+                    
+                </div>
+                <!--end::Info-->
+            </div>
+            <div class="d-flex">
+                
+            </div>
+            <!--end::Details-->
+            <!--begin::Navs-->
+            <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                <!--begin::Nav item-->
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="/technicien/{{object.id}}/detail">Detail</a>
+                </li>
+                <!--end::Nav item-->
+            </ul>
+            <!--begin::Navs-->
         </div>
-    </section>
-    
-</div>
+        
+    </div>
+    <!--end::Navbar-->
+    <!--begin::details View-->
+    <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+        <!--begin::Card header-->
+        <div class="card-header cursor-pointer">
+            <!--begin::Card title-->
+            <div class="card-title m-0">
+                <h3 class="fw-bold m-0">Details du Profile </h3>
+            </div>
+            <!--end::Card title-->
+            <!--begin::Action-->
+            <button type="button" class="btn btn-primary btn-sm align-self-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                <i class="ki-duotone ki-plus fs-2"></i>Editer le Profile</button>
+            
+            <!--end::Action-->
+        </div>
+        <!--begin::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body p-9">
+            <!--begin::Row-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Nom Complet</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800"> {{object.nom}} {{object.prenom}}</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">TelePhone
+                <span class="ms-1" data-bs-toggle="tooltip" title="Phone number must be active">
+                    <i class="ki-duotone ki-information fs-7">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                    </i>
+                </span></label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8 d-flex align-items-center">
+                    <span class="fw-bold fs-6 text-gray-800 me-2">{{object.tel}}</span>
+                    <span class="badge badge-success">Verifier</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Contact</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">{{object.email}},</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+
+            <!--end::Notice-->
+        </div>
+        <!--end::Card body-->
+    </div>
+    <!--end::details View-->
+    <!--begin::Row-->
+    <div class="row gy-5 g-xl-10">
+        <!--begin::Col-->
+        <div class="col-xl-4">
+            <!--begin::List widget 5-->
+            <div class="card card-flush h-xl-100">
+                <!--begin::Header-->
+                <div class="card-header pt-7">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold text-dark">Competence </span>
+                        <span class="text-gray-400 mt-1 fw-semibold fs-6"></span>
+                    </h3>
+                    <!--end::Title-->
+                    <!--begin::Toolbar-->
+                    <div class="card-toolbar">
+                        <a href="#" class="btn btn-sm btn-light">#</a>
+                    </div>
+                    <!--end::Toolbar-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Scroll-->
+                    <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
+                        <!--begin::Item-->
+                        {# for comp in {{object.competense}} %}
+                        <div class="border border-dashed border-gray-300 rounded px-7 py-3 mb-6">
+                            <!--begin::Info-->
+                            <div class="d-flex flex-stack mb-3">
+                                <!--begin::Wrapper-->
+                                <div class="me-3">
+                                    <!--begin::Icon-->
+                                    <img src="assets/media/stock/ecommerce/210.gif" class="w-50px ms-n1 me-1" alt="" />
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <a href="#" class="text-gray-800 text-hover-primary fw-bold">{{object.}}</a>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Action-->
+                                <div class="m-0">
+                                    <!--begin::Menu-->
+                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                        <i class="ki-duotone ki-dots-square fs-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                        </i>
+                                    </button>
+                                    <!--begin::Menu 2-->
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">#</div>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu separator-->
+                                        <div class="separator mb-3 opacity-75"></div>
+                                        <!--end::Menu separator-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3">New Ticket</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3">New Customer</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                                            <!--begin::Menu item-->
+                                            <a href="#" class="menu-link px-3">
+                                                <span class="menu-title">New Group</span>
+                                                <span class="menu-arrow"></span>
+                                            </a>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu sub-->
+                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">Admin Group</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">Staff Group</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">Member Group</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                            </div>
+                                            <!--end::Menu sub-->
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3">New Contact</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu separator-->
+                                        <div class="separator mt-3 opacity-75"></div>
+                                        <!--end::Menu separator-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <div class="menu-content px-3 py-3">
+                                                <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
+                                            </div>
+                                        </div>
+                                        <!--end::Menu item-->
+                                    </div>
+                                    <!--end::Menu 2-->
+                                    <!--end::Menu-->
+                                </div>
+                                <!--end::Action-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Customer-->
+                            <div class="d-flex flex-stack">
+                                <!--begin::Name-->
+                                <span class="text-gray-400 fw-bold">To:
+                                <a href="#" class="text-gray-800 text-hover-primary fw-bold">Jason Bourne</a></span>
+                                <!--end::Name-->
+                                <!--begin::Label-->
+                                <span class="badge badge-light-success">Delivered</span>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Customer-->
+                        </div>
+                        <!--end::Item-->
+                        {% endfor %#}
+                    </div>
+                    <!--end::Scroll-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::List widget 5-->
+        </div>
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-xl-8">
+            <!--begin::Table Widget 5-->
+            <div class="card card-flush h-xl-100">
+                <!--begin::Card header-->
+                <div class="card-header pt-7">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold text-dark">Liste des Taches</span>
+                        <span class="text-gray-400 mt-1 fw-semibold fs-6"></span>
+                    </h3>
+                    <!--end::Title-->
+                    <!--begin::Actions-->
+                    <div class="card-toolbar">
+                        <!--begin::Filters-->
+                        <div class="d-flex flex-stack flex-wrap gap-4">
+                            <!--begin::Destination-->
+                            <div class="d-flex align-items-center fw-bold">
+                                <!--begin::Label-->
+                                <div class="text-muted fs-7 me-2">Cateogry</div>
+                                <!--end::Label-->
+                                <!--begin::Select-->
+                                <select class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option">
+                                    <option></option>
+                                    <option value="Show All" selected="selected">Show All</option>
+                                    <option value="a">Category A</option>
+                                    <option value="b">Category B</option>
+                                </select>
+                                <!--end::Select-->
+                            </div>
+                            <!--end::Destination-->
+                            <!--begin::Status-->
+                            <div class="d-flex align-items-center fw-bold">
+                                <!--begin::Label-->
+                                <div class="text-muted fs-7 me-2">Status</div>
+                                <!--end::Label-->
+                                <!--begin::Select-->
+                                <select class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option" data-kt-table-widget-5="filter_status">
+                                    <option></option>
+                                    <option value="Show All" selected="selected">Show All</option>
+                                    <option value="In Stock">In Stock</option>
+                                    <option value="Out of Stock">Outd of Stock</option>
+                                    <option value="Low Stock">Lowd Stock</option>
+                                </select>
+                                <!--end::Select-->
+                            </div>
+                            <!--end::Status-->
+                            <!--begin::Search-->
+                            <a href="../dist/apps/ecommerce/catalog/products.html" class="btn btn-light btn-sm">View Stock</a>
+                            <!--end::Search-->
+                        </div>
+                        <!--begin::Filters-->
+                    </div>
+                    <!--end::Actions-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body">
+                    <!--begin::Table-->
+                    <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-150px">Tache</th>
+                                <th class="text-end pe-3 min-w-100px">Appelant</th>
+                                <th class="text-end pe-3 min-w-150px">Date Added</th>
+                                <th class="text-end pe-3 min-w-100px">etat</th>
+                                <th class="text-end pe-3 min-w-100px">Status</th>
+                                
+                            </tr>
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                            {% for t in object.technicientache_set.all %}
+                            <tr {% if t.tache.ok %} class="bg-success" {% endif %} >
+                                <!--begin::Item-->
+                                <td>
+                                    <a href="#" class="text-dark text-hover-primary">{{t.tache.nom}}</a>
+                                </td>
+                                <!--end::Item-->
+                                <!--begin::Product ID-->
+                                <td class="text-end"> {{t.tache.appelant}} </td>
+                                <!--end::Product ID-->
+                                <!--begin::Date added-->
+                                <td class="text-end">{{t.tache.createdAt}}</td>
+                                <!--end::Date added-->
+                                <!--begin::Price-->
+                                <td class="text-end">{{t.tache.etat}}</td>
+                                <!--end::Price-->
+                                <!--begin::Status-->
+                                <td class="text-end">
+                                    <span class="badge py-3 px-4 fs-7 badge-light-primary">{{t.tache.priorite}}</span>
+                                </td>
+                                <!--end::Status-->
+                                <!--begin::Qty-->
+                                
+                                <!--end::Qty-->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Table Widget 5-->
+        </div>
+        <!--end::Col-->
+    </div>
+    <!--end::Row-->
+</div>            
+scr
+{% include 'ressource/ed_tec.html' %}
+{% endblock body %}
+
                     
-                    
-                    {% endblock body %}

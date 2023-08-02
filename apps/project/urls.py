@@ -17,4 +17,12 @@ urlpatterns = [
     path('tasks/<int:pk>/delete',TaskDelete.as_view(),name='taskdelete'),
     path('tasks/<int:pk>/detail',TaskDetail.as_view(),name='taskdetail'),
     
+    #path('ajax_datatable/permissions/', PermissionAjaxDatatableView.as_view(), name="ajax_datatable_permissions"),
+    path('t',t, name='tt'),
+    path('att',att, name='att'),
+    
+    path('tache_lists',TacheAjax.as_view(),name='tache_ajax'),
+    
+    path('create_task/', CreateTaskView.as_view(), name='create_task'),
+
 ]

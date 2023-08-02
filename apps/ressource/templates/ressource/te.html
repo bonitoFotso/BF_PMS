@@ -1,0 +1,38 @@
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="a" id="a"> + <input type="text" name="b" id="b">
+    <input id="fetch-call" type="submit" value="Calculer">
+</form>
+
+<p id="operation">
+
+</p>
+
+<script>
+
+document.querySelector("#f").addEventListener("click", event => {
+    event.preventDefault();
+
+    let form = new FormData();
+    form.append('nom',$('#nom').val());
+    form.append('prenom',$('#prenom').val());
+    form.append('email',$('#email').val());
+    form.append('tel',$('#tel').val());
+    form.append('matricule',$('#matricule').val());
+    form.append('photo',$('#photo').val());
+    form.append("s", document.querySelector("#a").value);
+    form.append("b", document.querySelector("#b").value);
+    let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    let request = new Request("{% url 'c' %}", {method: 'POST',
+                                                body: form,
+                                                headers: {"X-CSRFToken": csrfTokenValue}
+                                                })
+    fetch(request)
+        .then(response => response.json())
+        .then(result => {
+            let resultParagraph = document.querySelector("#operation");
+            resultParagraph.innerHTML = result["operation_result"];
+        })
+})
+
+</script>

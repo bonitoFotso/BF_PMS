@@ -1,13 +1,64 @@
 {% if user.is_helpdesk %}
-<li class="dropdown">
-    <a href="#" class="menu-toggle nav-link has-dropdown"><i
-    data-feather="briefcase"></i><span>Agence et Client</span></a>
-    <ul class="dropdown-menu">
-        <li><a class="nav-link" href="{% url 'client-list' %}">Liste des client</a></li>
-        <li><a class="nav-link" href="{% url 'client' %}">Creer un client</a></li>
-        <li><a class="nav-link" href="{% url 'agence' %}">agence</a></li>
-        <li><a class="nav-link" href="{% url 'client' %}">Creer une Tache</a></li>
+
+<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item {% if Technicien in app %} here {% endif %}  menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+    <!--begin:Menu link-->
+    <span class="menu-link">
+        <span class="menu-title">Client</span>
+        <span class="menu-arrow d-lg-none"></span>
+    </span>
+    <!--end:Menu link-->
+    <!--begin:Menu sub-->
+    <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+        <!--begin:Menu item-->
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {% if creer_tech in page %} active {% endif %} " href="{% url 'client-list' %}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Liste Des Clients</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+        <!--end:Menu item-->
+        <!--begin:Menu item-->
         
-    </ul>
-</li>
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link" href="{% url 'client' %}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Creer Un client</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {% if creer_tech in page %} active {% endif %} " href="{% url 'agence-list' %}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Liste Des Agences</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+        <!--end:Menu item-->
+        <!--begin:Menu item-->
+        
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link" href="{% url 'agence' %}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Creer Une agence</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+        
+        <!--end:Menu item-->
+    </div>
+    <!--end:Menu sub-->
+</div>
 {% endif %}

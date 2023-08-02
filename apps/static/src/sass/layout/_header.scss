@@ -1,0 +1,99 @@
+//
+// Header Customization
+//
+
+
+// Genaral
+.app-header {
+    // Header primary
+    .app-header-primary {
+        background-color: var(--#{$prefix}page-bg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        background-image: url('../media/misc/layout/header-bg.png');
+    } 
+
+    // Header secondary
+    .app-header-secondary {
+        .menu {
+            > .menu-item {
+                @include menu-link-default-state( 
+                    $title-color: var(--#{$prefix}gray-600), 
+                    $icon-color: null, 
+                    $bullet-color: null, 
+                    $arrow-color: null,
+                    $bg-color: null,
+                    $all-links: false
+                );
+                
+                @include menu-link-hover-state( 
+                    $title-color: var(--#{$prefix}gray-900), 
+                    $icon-color: null, 
+                    $bullet-color: null, 
+                    $arrow-color: null, 
+                    $bg-color: null,
+                    $all-links: false
+                );
+                
+                @include menu-link-show-state( 
+                    $title-color: var(--#{$prefix}gray-900), 
+                    $icon-color: null, 
+                    $bullet-color: null, 
+                    $arrow-color: null, 
+                    $bg-color: null,
+                    $all-links: false
+                );
+
+                @include menu-link-here-state( 
+                    $title-color: var(--#{$prefix}gray-900), 
+                    $icon-color: null,
+                    $bullet-color: null, 
+                    $arrow-color: null,
+                    $bg-color: var(--#{$prefix}gray-200), 
+                    $all-links: false
+                );
+
+                @include menu-link-active-state( 
+                    $title-color: var(--#{$prefix}gray-900), 
+                    $icon-color: null, 
+                    $bullet-color: null, 
+                    $arrow-color: null, 
+                    $bg-color: var(--#{$prefix}gray-200), 
+                    $all-links: false
+                );  
+                
+                >.menu-link {  
+                    .menu-title {
+                        font-size: 1.15rem;
+                        font-weight: $font-weight-bold; 
+                        padding: 0.15rem 0.25rem;                           
+                    }
+                }  
+            }         
+        }  
+    } 
+}
+
+// Tablet & mobile modes
+@include media-breakpoint-down(lg) {
+    .app-header {
+        .app-header-secondary {
+            .menu {
+                > .menu-item {  
+                    .menu-link {
+                        padding: 0.5rem 0.9rem !important;                         
+
+                        .menu-title {
+                            font-size: 1.1rem;                                                        
+                        }
+                    }  
+                }         
+            }  
+        } 
+
+        .header-nav {
+            display: none !important;
+        }
+    }     
+}

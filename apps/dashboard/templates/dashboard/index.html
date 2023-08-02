@@ -2,9 +2,10 @@
 {% load static %}
 {% block title %} Dashboard {% endblock title %}
 {% load static %}
-{% if user %} {{ user.technicien.nom }} {% else %} non user {% endif %}
+
 
 {% block body %}
+
 
 
 <div class="section-body">
@@ -13,7 +14,7 @@
         <div class="card author-box">
           <div class="card-body">
             <div class="author-box-center">
-              <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle author-box-picture">
+              <!-- img alt="image" src="{% static user.technicien.photo %}" class="rounded-circle author-box-picture"-->
               <div class="clearfix"></div>
               <div class="author-box-name">
                 <a href="#">{{ user.technicien.nom }}  </a>
@@ -42,7 +43,20 @@
                 <i class="fab fa-instagram"></i>
               </a>
               <div class="w-100 d-sm-none"></div>
-            </div>
+            </div><p>
+            <ul class="list-unstyled mt-3 d-flex">
+              <li class="mr-3"><strong>Total:- </strong> {{total}} </li>
+              <li class="mr-3"><strong>En cour:- </strong>{{en_cour}} </li>
+              <li><strong>Effectuer:- </strong>{{effectuer}} </li>
+          </ul></p>
+          <div class="progress-container progress-success">
+              <span class="progress-badge">Statestics</span>
+              <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{pourcent}}%;">
+                      <span class="progress-value">90%</span>
+                  </div>
+              </div>
+          </div>
           </div>
         </div>
         <div class="card">
@@ -94,33 +108,16 @@
             </div>
           </div>
         </div>
-        
+        <div class="body">
+          <div id="chart-donut" class="c3_chart"></div>
+      </div>
       </div>
       <div class="col-12 col-md-12 col-lg-8">
         <div class="card full-height">
-          <div class="card-body">
-            <div class="card-title"></div>
-            <div class="card-category"></div>
-            <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-              <div class="px-2 pb-2 pb-md-0 text-center">
-                <div id="circles-1"></div>
-                <h6 class="fw-bold mt-3 mb-0">Tache</h6>
-              </div>
-              <div class="px-2 pb-2 pb-md-0 text-center">
-                <div id="circles-2"></div>
-                <h6 class="fw-bold mt-3 mb-0">En Cour</h6>
-              </div>
-              <div class="px-2 pb-2 pb-md-0 text-center">
-                <div id="circles-3"></div>
-                <h6 class="fw-bold mt-3 mb-0">Effectuer</h6>
-              </div>
-            </div>
-            <div id="chart1"></div>
-          </div>
         </div>
         <div class="card">
             <div class="card-header">
-              <h4>Mes Taches <div class="badge badge-info"> {{tn}} </div> </h4>
+              <h4>Mes Taches <div class="badge badge-info"> {{total}} </div> </h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -182,8 +179,46 @@
 <script src="{% static 'assets/js/circles.min.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 <script type="text/javascript">
+  $(function() {
+    "use strict";
+    setTimeout(function(){
+        $(document).ready(function(){
+            var chart = c3.generate({
+                bindto: '#chart-donut', // id of chart wrapper
+                data: {
+                    columns: [
+                        // each columns data
+                        ['data1', 22.5],
+                        ['data2', 60],
+                        ['data3', 17.5],
+                    ],
+                    type: 'donut', // default type of chart
+                    colors: {
+                        'data1': Aero.colors["teal"],
+                        'data2': Aero.colors["lime"],
+                        'data3': Aero.colors["orange"],
+                    },
+                    names: {
+                        // name of each serie
+                        'data1': 'Open',
+                        'data2': 'Close',
+                        'data3': 'In Progress',
+                    }
+                },
+                axis: {
+                },
+                legend: {
+                    show: true, //hide legend
+                },
+                padding: {
+                    bottom: 0,
+                    top: 0
+                },
+            });
+        });
+    }, 500);
+});
     $.get('{% url "line_chart_json" %}', function(data) {
-      alert(data.datasets);
       
         
         var ctx = $("#myChart").get(0).getContext("2d");

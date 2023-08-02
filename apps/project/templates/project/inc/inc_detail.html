@@ -60,7 +60,12 @@
                     </div>
                     <div class="col-lg-6 col-md-6 ">
                         <small class="text-muted">Technicien: </small>
-                        <p>{{object.technicien}}</p>
+                        <p>
+                            {% for i in object.technicientache_set.all %}
+                                
+                            {{i.technicien.nom}},
+                            {% endfor %} </td>
+                        </p>
                         <hr>
                     </div>
                 </div>
