@@ -1,66 +1,123 @@
+from django.db.models import F
 from django.db import models
-#from apps.authentication.models import User    
 from django.utils.translation import gettext_lazy as _
-from django.core.validators import MaxValueValidator, MinValueValidator 
-from django.db.models.signals import post_save,pre_save,pre_delete
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models.signals import post_save, pre_save, pre_delete
+from django.db.utils import IntegrityError
+
 from django.dispatch import receiver
 from apps.clients.models import *
 from apps.ressource.models import *
 from datetime import date
 from datetime import timedelta
 from django.utils import timezone
+from django.utils.text import slugify
+#importation des signaux personaliser
 
-# Create your models here.
-prio = [
-    ('Bas','Bas'),
-    ('Moyen','Moyen'),
-    ('Elever','Elever'),
-]
+
+# Créez un signal personnalisé
+
+class Donnee_jour(models.Model):
+    date = models.DateField()
+
+
 
 jours = [
-    ('lundi','lundi'),
-    ('mardi','mardi'),
-    ('mercredi','mercredi'),
-    ('jeudi','jeudi'),
-    ('vendredi','vendredi'),
-    ('samedi','samedi'),
+    ('lundi', 'lundi'),
+    ('mardi', 'mardi'),
+    ('mercredi', 'mercredi'),
+    ('jeudi', 'jeudi'),
+    ('vendredi', 'vendredi'),
+    ('samedi', 'samedi'),
 ]
 
-status = [
-		('En atente', 'En atente'),
-		('En cours', 'En cours'),
-		('En arret', 'En arret'),
-		('En facturation', 'En facturation')
-		]
 
-class Etat(models.Model):
-    nom = models.CharField(_("nom de l'etat"), choices=status,max_length=20)
-    description = models.CharField(_("des criprion de l'etat"), max_length=50)
-    motif = models.CharField(_("motif de l'etat"), max_length=50,default='RAS')
-    def __str__(self):
-        return '{0}:{1}'.format(self.nom,self.motif)
-    
+
 class Tache(models.Model):
-    nom = models.CharField(_("name"), max_length=50)
-    appelant = models.ForeignKey(Appelant, verbose_name=_(" celui qui appel "), on_delete=models.CASCADE)
-    priorite = models.CharField(choices=prio, max_length=20, )
-    description = models.CharField(max_length=500,null=False, default='description')
-    n_OS = models.CharField(_("numero d OS"), max_length=50,null=True,blank=True)
-    etat = models.ForeignKey("Etat", verbose_name=_("etat"), on_delete=models.CASCADE)
-    ok = models.BooleanField(default=False)
-    observation = models.CharField(max_length=100, default='observation')
-    date_debut = models.DateField(_("date de debut"),blank=True,null=True)
-    date_fin = models.DateField(_("date de fin"),blank=True,null=True)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    updatedAt = models.DateTimeField(auto_now=True)
+    # Choix pour le champ 'intervention'
+    INTERVENTION_CHOICES = [
+        ('maintenance', 'Maintenance'),
+        ('installation', 'Installation'),
+        ('incident', 'Incident'),
+        ('survey', 'Enquête'),
+        ('extension', 'Extension'),
+        ('migration', 'Migration'),
+    ]
+
+    # Choix pour le champ 'type_intervention'
+    TYPE_INTERVENTION_CHOICES = [
+        ('videosurveillance', 'Vidéosurveillance'),
+        ('controle_acces', 'Contrôle d\'accès'),
+        ('systeme_incendie', 'Système incendie'),
+        ('intrusion', 'Intrusion'),
+        ('dab', 'DAB (Distributeur automatique de billets)'),
+    ]
+
+    # Choix pour le champ 'status'
+    STATUS_CHOICES = [
+        ('En attente', 'En attente'),
+        ('En cours', 'En cours'),
+        ('En arrêt', 'En arrêt'),
+        ('En facturation', 'En facturation'),
+    ]
+    PRIORITE_CHOICES = [
+    ('Bas', 'Bas'),
+    ('Moyen', 'Moyen'),
+    ('Élevé', 'Élevé'),
+]
+
+
+    nom = models.CharField(_("n"), max_length=50, null=True)
+    intervention = models.CharField(choices=INTERVENTION_CHOICES, max_length=20)  # Choix d'intervention
+    status = models.CharField(choices=STATUS_CHOICES, max_length=20, default="En attente")  # Choix de statut
+    type_intervention = models.CharField(choices=TYPE_INTERVENTION_CHOICES, max_length=20)  # Choix de type d'intervention
+    appelant = models.ForeignKey(Appelant, verbose_name=_("Celui qui appelle"), on_delete=models.CASCADE)
+    priorite = models.CharField(choices=PRIORITE_CHOICES, max_length=20)  # Choix de priorité
+    description = models.CharField(max_length=500, null=False, default='description')
+    n_OS = models.CharField(_("Numéro d'OS"), max_length=50, null=True, blank=True)
+    ok = models.BooleanField(default=False)  # Champ pour indiquer si la tâche est terminée
+    date_debut = models.DateField(_("Date de début"), blank=True, null=True)
+    date_fin = models.DateField(_("Date de fin"), blank=True, null=True)
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
+    updatedAt = models.DateTimeField(auto_now_add=True)  # Date de mise à jour automatique
+
+    def update_status(self):
+        if self.technicientache_set.exists():
+            self.status = 'En cours'
+        else:
+            self.status = 'En attente'
+        self.save()
+        
+    def save(self, *args, **kwargs):
+        # Définition du champ "nom" en fonction des valeurs des champs "intervention", "type_intervention" et "createdAt"
+        self.n = f"{self.intervention} - {self.type_intervention} - {self.appelant}"
+        if not self.nom:
+            self.nom = slugify(self.n)
+        super(Tache, self).save(*args, **kwargs)
+        
+    def __str__(self):
+        return self.nom  # Renvoie le nom unique de la tâche comme représentation en chaîne
+
+
     def get_agence(self):
         agence = self.appelant.agence
         return agence
+
+    agence = property(get_agence)
+
+
+
+    def update_dates(self, date_debut, date_fin):
+        if not self.ok:
+            self.date_debut = date_debut
+            self.date_fin = date_fin
+            self.save()
+
+    def is_done(self):
+        return self.ok
     
-    agence = get_agence
-    
-    def __str__(self) -> str:
-        return self.nom
+    def is_active(self):
+        return not self.status or (self.status != 'En arret' and timezone.now().date() <= self.date_fin)
     
     def get_progression(self):
         if self.is_active():
@@ -69,101 +126,202 @@ class Tache(models.Model):
             return min(100, (elapsed_days / total_days) * 100)
         else:
             return 0
-        
+
     @property
     def duree_estimee(self):
         if self.date_debut and self.date_fin:
             return self.date_fin - self.date_debut
         else:
             return timedelta(days=0)
-        
+
     def get_taches_effectuees(self):
         return TacheEffectuee.objects.filter(tache=self)
     
+    def get_taches_attribuees(self):
+        return TacheAttribuee.objects.filter(tache=self)
+
     @property
     def is_overdue(self):
-        return self.etat.nom == 'En cours' and timezone.now().date() > self.date_fin
+        return self.status == 'En cours' and timezone.now().date() > self.date_fin
 
     def is_active(self):
-        
-        return not self.etat.exists() or (self.etat.nom != 'En arret' and timezone.now().date() <= self.date_fin)
+        return not self.status.exists() or (self.etat.nom != 'En arret' and timezone.now().date() <= self.date_fin)
+
     class Meta:
-        #db_table = 'Task'
         verbose_name = _("Tache")
         verbose_name_plural = _("Taches")
         ordering = ['createdAt']
-        
-        
+
+def update_ok_status(sender, instance, **kwargs):
+    # Mise à jour du champ 'ok' de la tâche en fonction des TechnicienTache associés
+    technicien_taches = TechnicienTache.objects.filter(tache=instance, ok=True)
+    instance.ok = any(technicien_tache.ok for technicien_tache in technicien_taches)
+    instance.save()
+
 class TechnicienTache(models.Model):
-    technicien = models.ForeignKey(Technicien, verbose_name=_("techniciens"), on_delete=models.CASCADE,blank=True,null=True)
+    technicien = models.ForeignKey(Technicien, verbose_name=_("techniciens"), on_delete=models.CASCADE, blank=True, null=True)
     tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
-    ok = models.BooleanField(_("tache effectuer"),default=False)
-    #date_fin = models.DateTimeField(auto_now=False, auto_now_add=False,null = 1)
+    ok = models.BooleanField(_("tache effectuer"), default=False)
+    date_debut = models.DateField(_("Date de début"), null=True, blank=True)
+    date_fin = models.DateField(_("Date de fin"), null=True, blank=True)
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
+
     class Meta:
         unique_together = (('technicien', 'tache'),)
-        
+
     def __str__(self):
-        tec = Technicien.objects.get(id=self.technicien_id)
-        ta = Tache.objects.get(id=self.tache_id)
-        return '%s : %s' % (ta.nom, tec.nom)
-    
+        try:
+            tec = self.technicien.nom
+            ta = self.tache.nom
+            return '%s : %s' % (ta, tec)
+        except (Technicien.DoesNotExist, Tache.DoesNotExist):
+            return 'TechnicienTache ID: %s' % self.id
+
+
+
     @property
     def get_duree(self):
         if self.tache.date_debut and self.tache.date_fin:
             return self.tache.date_fin - self.tache.date_debut
         else:
             return timedelta(days=0)
-    
+        
+# Modèle Action
+
+
+
+# Modèle EnregistrementJournalier mis à jour
+
+
 
 class Rapport(models.Model):
-    techtache = models.ForeignKey(TechnicienTache, on_delete=models.CASCADE)
-    corp = models.TextField(_("rapport"))
-    
+    technicien_tache = models.ForeignKey(TechnicienTache, verbose_name=_("Tâche effectuée par le technicien"), on_delete=models.CASCADE)
+    rapport_text = models.TextField(_("Rapport"))
+    date_creation = models.DateTimeField(auto_now_add=True)
+    technicien_list = models.CharField(_("liste des technicien"), max_length=250,null=True)
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
+
     def __str__(self):
-        return self.techtache
-    
+        return f"Rapport pour {self.technicien_tache.tache.nom} - {self.technicien_tache.technicien.nom}"
+
 class EnregistrementJournalier(models.Model):
-    tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
     date = models.DateField()
-    description = models.TextField()
-    date_import = models.DateTimeField(auto_now_add=True)  # Nouveau champ pour la date d'importation
+    taches_creees_count = models.PositiveIntegerField(default=0)
+    taches_attribuees_count = models.PositiveIntegerField(default=0)
+    taches_effectuees_count = models.PositiveIntegerField(default=0)
+    tache_totals = models.PositiveIntegerField(default=0)
+    tache_att_total = models.PositiveIntegerField(default=0)
+    tache_eff_total = models.PositiveIntegerField(default=0)
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
 
     def __str__(self):
-        return f"{self.tache} - {self.date}"
-
-# Signal pour créer automatiquement un enregistrement journalier lorsqu'une tâche est mise à jour
+        return f"{self.date}"
+    
 @receiver(post_save, sender=Tache)
-def create_enregistrement_journalier(sender, instance, **kwargs):
-    if instance:
-        # Créer un nouvel enregistrement journalier uniquement si la tâche est active
-        enregistrement = EnregistrementJournalier(tache=instance, date=date.today(), description="Tâche mise à jour")
-        enregistrement.save()
+def create_or_update_enregistrement_journalier(sender, instance, created, **kwargs):
+    today = date.today()
+    
+    try:
+        enregistrement = EnregistrementJournalier.objects.get(date=today)
+    except EnregistrementJournalier.DoesNotExist:
+        enregistrement = EnregistrementJournalier(date=today)
+    
+    if created:
+        enregistrement.taches_creees_count += 1
+        enregistrement.tache_totals = Tache.objects.all().count()
+        enregistrement.tache_att_total = Tache.objects.all().count()
+        enregistrement.tache_eff_total = Tache.objects.all().count()
+    else:
+        try:
+            taches_effectuees = TacheEffectuee.objects.all()
+            taches_effectuees_uniques = set(tache_effectuee.tache for tache_effectuee in taches_effectuees)
+            taches_effectuees_filtrees = list(taches_effectuees_uniques)
+            
+            previous_instance = Tache.objects.get(id=instance.id)
+            if previous_instance.ok != instance.ok:
+                enregistrement.taches_effectuees_count += 1
+            
+            if previous_instance.status == 'En cours':
+                enregistrement.taches_attribuees_count += 1
+        except Tache.DoesNotExist:
+            pass  # Gérer le cas où la tâche précédente n'existe pas
+    enregistrement.save()
+
+
 
 class TacheAttribuee(models.Model):
     technicien = models.ForeignKey(Technicien, verbose_name=_("Technicien"), on_delete=models.CASCADE)
     tache = models.ForeignKey(Tache, verbose_name=_("Tâche attribuée"), on_delete=models.CASCADE)
-    date_attribuee = models.DateTimeField(_("Date d'attribution"), auto_now_add=True)
+    date_attribuee = models.DateField(_("Date d'attribution"), auto_now=True)
     date_debut = models.DateField(_("Date de début"), null=True, blank=True)
     date_fin = models.DateField(_("Date de fin"), null=True, blank=True)
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
 
     def __str__(self):
         return f"{self.technicien.nom} - {self.tache.nom}"
-    
+
+    class Meta:
+        unique_together = (('technicien', 'tache'),)
+
+
+@receiver(post_save, sender=TechnicienTache)
 def create_tache_attribuee(sender, instance, created, **kwargs):
-    if created:
-        TacheAttribuee.objects.create(technicien=instance.technicien, tache=instance.tache)
+    try:
+        if created:
+            date_attribuee = timezone.now()
+            tache_attribuee = TacheAttribuee.objects.create(
+                technicien=instance.technicien,
+                tache=instance.tache,
+                date_attribuee=date_attribuee,
+                date_debut=instance.date_debut,
+                date_fin=instance.date_fin
+            ).save()
+            print(f'TacheAttribuee créée pour la tâche {instance.tache.nom}')
+    except IntegrityError as e:
+        print(f'Erreur lors de la création de TacheAttribuee : {str(e)}')
+    except Exception as e:
+        print(f'Une erreur s\'est produitess : {str(e)}')
+@receiver(post_save, sender=TechnicienTache)
+def update_status_tache(sender, instance, created, **kwargs):
+    try:
+        if created:
+            tache = instance.tache
+            tache.date_debut = instance.date_debut
+            tache.status = 'En cours'
+            tache.save()
+            print(f'Tache update {instance.tache.nom}')
+    except IntegrityError as e:
+        print(f'Erreur lors de la maj : {str(e)}')
+    except Exception as e:
+        print(f'Une erreur s\'est produite : {str(e)}')
 
 # Connecter le signal à la fonction de gestionnaire de signal
-post_save.connect(create_tache_attribuee, sender=TechnicienTache)
 class TacheEffectuee(models.Model):
-    technicien = models.ForeignKey(Technicien, verbose_name=_("Technicien"), on_delete=models.CASCADE)
     tache = models.ForeignKey(Tache, verbose_name=_("Tâche effectuée"), on_delete=models.CASCADE)
-    date = models.DateField(_("Date d'effectuation"),auto_now_add=True)
-    # Ajoutez d'autres champs pour les informations supplémentaires sur la tâche effectuée
+    date = models.DateField(_("Date d'effectuation"), auto_now_add=True)
+    rapport = models.ForeignKey(Rapport, verbose_name=_("Rapport"), on_delete=models.CASCADE, blank=True, null=True)
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
 
     def __str__(self):
-        return f"{self.technicien.nom} - {self.tache.nom} - {self.date}"
-    
+        return f"{self.tache.nom} effectuer le {self.date}"
+
+    def get_team(self):
+        try:
+            team = TechnicienTache.objects.filter(tache=self.tache)
+            return team
+        except TechnicienTache.DoesNotExist:
+            return []  # Retourner une liste vide en cas d'absence d'équipe
+        except Exception as e:
+            # Gérer d'autres exceptions si nécessaire
+            return None  # Retourner None ou une valeur par défaut en cas d'erreur
+
+    class Meta:
+        verbose_name = _("Tâche effectuée")
+        verbose_name_plural = _("Tâches effectuées")
+
+
+
+# Mise à jour des statistiques du technicien lors de la création ou de la suppression de TacheAttribuee et TacheEffectuee
 @receiver(post_save, sender=TacheAttribuee)
 @receiver(pre_delete, sender=TacheAttribuee)
 @receiver(post_save, sender=TacheEffectuee)
@@ -172,40 +330,128 @@ def update_technicien_stats(sender, instance, **kwargs):
     technicien = instance.technicien
     taches_attribuees = TacheAttribuee.objects.filter(technicien=technicien)
     taches_effectuees = TacheEffectuee.objects.filter(technicien=technicien)
-
-    # Calculez la vitesse d'exécution et l'efficacité et mettez à jour les champs dans le modèle Technicien
-    # Exemple de calcul :
+    # Calculer la vitesse d'exécution et l'efficacité et mettre à jour les champs dans le modèle Technicien
     vitesse_execution = len(taches_effectuees) / len(taches_attribuees) if len(taches_attribuees) > 0 else 0.0
-    technicien.vitesse_execution = vitesse_execution
+    technicien.vitesse_execution = round(vitesse_execution, 2)
 
     efficacite = len(taches_effectuees) / len(taches_attribuees) if len(taches_attribuees) > 0 else 0.0
-    technicien.efficacite = efficacite
+    technicien.efficacite = round(efficacite, 2)
+
 
     technicien.save()
-
-@receiver(post_save, sender=TechnicienTache)
-def create_tache_attribuee(sender, instance, created, **kwargs):
-    if created:
-        TacheAttribuee.objects.create(technicien=instance.technicien, tache=instance.tache)
+# Signal pour la création de tâche
 
 
-post_save.connect(create_tache_attribuee, sender=TechnicienTache)
+# Création automatique d'une tâche effectuée lorsqu'un rapport ou TechnicienTache est créé avec ok=True
 
-@receiver(post_save, sender=TechnicienTache)
+
+@receiver(post_save, sender=Tache)
 def create_tache_effectuee(sender, instance, **kwargs):
-    if instance.ok and kwargs.get('created', False):
-        TacheEffectuee.objects.create(technicien=instance.technicien, tache=instance.tache)
+    if instance.ok:
+        tache_effectuee, created = TacheEffectuee.objects.get_or_create(tache=instance)
+        if created:
+            # Définir d'autres champs si nécessaire
+            tache_effectuee.save()
+            
+@receiver(post_save, sender=TacheEffectuee)
+def update_tache_attribuee(sender, instance, created, **kwargs):
+    if created:
+        # Récupérer toutes les occurrences de TacheAttribuee ayant la même tâche
+        Tech_taches = TechnicienTache.objects.filter(tache=instance.tache)
+        
+        # Mettre à jour le champ 'ok' de toutes les occurrences de TacheAttribuee
+        for tech_tache in Tech_taches:
+            tech_tache.ok = True
+            tech_tache.save()
+
+# Mettre à jour le champ 'ok' de la tâche associée chaque fois qu'une TacheEffectuee est créée
+@receiver(post_save, sender=TacheEffectuee)
+def update_tache_dates(sender, instance, created, **kwargs):
+    if created:
+        tache_effectuee = instance.tache
+        tache_effectuee.date_fin = instance.date
+        tache_effectuee.ok = True
+        tache_effectuee.save()
+        # Mettre à jour tous les TechnicienTache associés
+        TechnicienTache.objects.filter(tache=instance.tache).update(ok=True)
+
+            
+class Action(models.Model):
+    TACHE_ACTION_CHOICES = [
+        ('creation', 'Création'),
+        ('attribution', 'Attribution'),
+        ('effectuation', 'Effectuation'),
+    ]
+
+    tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
+    action_type = models.CharField(
+        verbose_name=_("Type d'action"),
+        choices=TACHE_ACTION_CHOICES,
+        max_length=20
+    )
+    date = models.DateField(_("Date d'action"), auto_now_add=True)
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
+
+    def __str__(self):
+        return f"{self.get_action_type_display()} - {self.tache.nom}"
+
+    class Meta:
+        verbose_name = _("Action")
+        verbose_name_plural = _("Actions")
+
+
+# Constantes pour les types d'actions
+CREATION_ACTION = 'creation'
+ATTRIBUTION_ACTION = 'attribution'
+EFFECTUATION_ACTION = 'effectuation'
+
+
+@receiver(post_save, sender=Tache)
+def create_tache_action(sender, instance, created, **kwargs):
+    if created:
+        Action.objects.create(tache=instance, action_type=CREATION_ACTION)
+
+
+@receiver(post_save, sender=TacheAttribuee)
+def create_tache_attribuee_action(sender, instance, created, **kwargs):
+    if created:
+        Action.objects.create(tache=instance.tache, action_type=ATTRIBUTION_ACTION)
+
 
 @receiver(post_save, sender=TacheEffectuee)
-def update_technicien_taches(sender, instance, **kwargs):
-    if kwargs.get('created', False):
-        # Récupérer la tâche effectuée
-        tache_effectuee = instance.tache
+def create_tache_effectuee_action(sender, instance, created, **kwargs):
+    if created:
+        Action.objects.create(tache=instance.tache, action_type=EFFECTUATION_ACTION)
 
-        # Récupérer tous les TechnicienTache associés à cette tâche
-        technicien_taches = TechnicienTache.objects.filter(tache=tache_effectuee)
 
-        # Mettre à jour le champ 'ok' de chaque TechnicienTache associé à True
-        for technicien_tache in technicien_taches:
-            technicien_tache.ok = True
-            technicien_tache.save()
+class DonneesTechnicien(models.Model):
+    technicien = models.ForeignKey(Technicien, on_delete=models.CASCADE)
+    date = models.DateField(default=timezone.now)
+    taches_attribuees = models.PositiveIntegerField(default=0)
+    taches_effectuees = models.PositiveIntegerField(default=0)
+    createdAt = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['technicien', 'date']
+
+    def __str__(self):
+        return f"Données pour {self.technicien.nom} le {self.date}"
+
+@receiver(post_save, sender=TacheAttribuee)
+@receiver(post_save, sender=TacheEffectuee)
+def update_donnees_technicien(sender, instance, **kwargs):
+    try:
+        technicien = instance.technicien
+        date = timezone.now().date()
+
+        donnees, created = DonneesTechnicien.objects.get_or_create(technicien=technicien, date=date)
+
+        if sender == TacheAttribuee:
+            donnees.taches_attribuees = TacheAttribuee.objects.filter(technicien=technicien, date_attribuee=date).count()
+        elif sender == TacheEffectuee:
+            donnees.taches_effectuees = TacheEffectuee.objects.filter(technicien=technicien, date=date).count()
+
+        donnees.save()
+    except Exception as e:
+        # Gérer l'exception, par exemple, en journalisant l'erreur ou en prenant une autre action appropriée
+        pass

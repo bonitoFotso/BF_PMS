@@ -38,11 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'simple_history',
     #'jquery',
 
-    'crispy_forms',
-    'ajax_datatable',
         
     'apps.clients',
     'apps.project',
@@ -76,7 +73,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'

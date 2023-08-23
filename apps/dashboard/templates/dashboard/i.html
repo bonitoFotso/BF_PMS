@@ -143,19 +143,60 @@
 </div>
 <script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
 <script src="{% static 'assets/plugins/DataTables/datatables.js' %}"></script>
+<script src="{% static 'assets/js/apexcharts.js' %}"></script>
+
+
 
 <script>
 $("#clients_table").DataTable({
   paging: false,
   scrollY: 400,
   ordering: true,
-  autoFill: true
+  
 });
 $("#tech").DataTable({
   paging: false,
   scrollY: 400,
   ordering: true,
-})
+
+});
+function getQuantitativeAnalysis() {
+  $.ajax({
+      type: 'GET',
+      url: '{% url "ans" %}',  // Remplacez '/url/vers/votre/vue/analyse/quantitative/' par l'URL appropriée
+      dataType: 'json',
+      success: function(data) {
+          // Traitez ici les données renvoyées par la vue Django
+          //console.log(data);
+          // Par exemple, pour afficher le nombre total de tâches effectuées :
+          //$('#nombre_total_taches_effectuees').text(data.nombre_total_taches_effectuees);
+
+          // Pour parcourir les résultats par type d'intervention :
+          data.taches_par_type.forEach(function(item) {
+              console.log(item.type_intervention, item.count,);
+              // Vous pouvez afficher ces données ou les utiliser selon vos besoins
+          });
+
+          // Pour parcourir les résultats par statut :
+          data.nombre_taches_par_statut.forEach(function(item) {
+              console.log(item.status, item.count);
+              // Vous pouvez afficher ces données ou les utiliser selon vos besoins
+          });
+
+          // Pour afficher la durée moyenne des tâches effectuées :
+          // Vous pouvez afficher cette donnée ou l'utiliser selon vos besoins
+
+      },
+      error: function(xhr, status, error) {
+          console.error(error);
+          // Traitez ici les erreurs en cas de problème avec l'appel AJAX
+      }
+  });
+  
+};
+getQuantitativeAnalysis();
+
+
 </script>
 {% include 'dashboard/inc/js.html' %}
 {% endblock %}

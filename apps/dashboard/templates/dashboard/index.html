@@ -1,231 +1,655 @@
-{% extends 'base/body.html' %}
+{% extends "base/body.html" %}
 {% load static %}
-{% block title %} Dashboard {% endblock title %}
-{% load static %}
+{% block title %} {{page}} {% endblock %} 
 
+{% block body %}    
+<div id="kt_app_content" class="app-content pb-0">
+    <!--begin::Navbar-->
+    <div class="row card mb-5 mb-xl-10">
+        <div class="card-body pt-9 pb-0">
+            <!--begin::Details-->
+            <div class="row d-flex   mb-3">
+                <!--begin: Pic-->
+                <div class="col-2 me-7 mb-4">
+                    <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                        <img src="{% static user.technicien.photo %}" alt="{{user.technicien.nom}}" />
+                        <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
+                    </div>
+                </div>
+                <!--end::Pic-->
+                <!--begin::Info-->
+                <div class="col-2 flex-grow-1  ">
+                    <!--begin::Title-->
+                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2 ">
+                        <!--begin::User-->
+                        <div class="d-flex flex-column">
+                            <!--begin::Name-->
+                            <div class="d-flex align-items-center mb-2 bg-danger">
+                                <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"> {{user.technicien.nom}}</a>
+                                <a href="#">
+                                    <i class="ki-duotone ki-verify fs-1 text-primary">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </a>
+                                <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{user.technicien.tacheattribuee_set.all.count}}">0</div>
 
-{% block body %}
-
-
-
-<div class="section-body">
-    <div class="row mt-sm-4">
-      <div class="col-12 col-md-12 col-lg-4">
-        <div class="card author-box">
-          <div class="card-body">
-            <div class="author-box-center">
-              <!-- img alt="image" src="{% static user.technicien.photo %}" class="rounded-circle author-box-picture"-->
-              <div class="clearfix"></div>
-              <div class="author-box-name">
-                <a href="#">{{ user.technicien.nom }}  </a>
-              </div>
-              <div class="author-box-job">Technicien</div>
-            </div>
-            <div class="text-center">
-              <div class="author-box-description">
-                <p>
-                    {{ user.technicien.description }}
-                </p>
-              </div>
-              <div class="mb-2 mt-3">
-                <div class="text-small font-weight-bold">Follow {{ user.technicien.nom }}</div>
-              </div>
-              <a href="#" class="btn btn-social-icon mr-1 btn-facebook">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="btn btn-social-icon mr-1 btn-twitter">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="btn btn-social-icon mr-1 btn-github">
-                <i class="fab fa-github"></i>
-              </a>
-              <a href="#" class="btn btn-social-icon mr-1 btn-instagram">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <div class="w-100 d-sm-none"></div>
-            </div><p>
-            <ul class="list-unstyled mt-3 d-flex">
-              <li class="mr-3"><strong>Total:- </strong> {{total}} </li>
-              <li class="mr-3"><strong>En cour:- </strong>{{en_cour}} </li>
-              <li><strong>Effectuer:- </strong>{{effectuer}} </li>
-          </ul></p>
-          <div class="progress-container progress-success">
-              <span class="progress-badge">Statestics</span>
-              <div class="progress">
-                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{pourcent}}%;">
-                      <span class="progress-value">90%</span>
-                  </div>
-              </div>
-          </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h4>Information Personnel</h4>
-          </div>
-          <div class="card-body">
-            <div class="py-4">
-              <p class="clearfix">
-                <span class="float-left">
-                  Date de Naissance
-                </span>
-                <span class="float-right text-muted">
-                    {{ user.technicien.ddn }}
-                </span>
-              </p>
-              <p class="clearfix">
-                <span class="float-left">
-                  Tel
-                </span>
-                <span class="float-right text-muted">
-                    {{ user.technicien.tel }}
-                </span>
-              </p>
-              <p class="clearfix">
-                <span class="float-left">
-                  Mail
-                </span>
-                <span class="float-right text-muted">
-                    {{ user.technicien.email }}
-                </span>
-              </p>
-              <!-- p class="clearfix">
-                <span class="float-left">
-                  Facebook
-                </span>
-                <span class="float-right text-muted">
-                  <a href="#">John Deo</a>
-                </span>
-              </!-->
-              <!-- p class="clearfix">
-                <span class="float-left">
-                  Twitter
-                </span>
-                <span class="float-right text-muted">
-                  <a href="#">@johndeo</a>
-                </span>
-              </!-->
-            </div>
-          </div>
-        </div>
-        <div class="body">
-          <div id="chart-donut" class="c3_chart"></div>
-      </div>
-      </div>
-      <div class="col-12 col-md-12 col-lg-8">
-        <div class="card full-height">
-        </div>
-        <div class="card">
-            <div class="card-header">
-              <h4>Mes Taches <div class="badge badge-info"> {{total}} </div> </h4>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered table-md">
-                  <tr>
+                            </div>
+                            <!--end::Name-->
+                            <!--begin::Info-->
+                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2 ">
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                <i class="ki-duotone ki-profile-circle fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>{{user.name}}</a>
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                <i class="ki-duotone ki-geolocation fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>{{user.technicien.address}}</a>
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                <i class="ki-duotone ki-sms fs-4 me-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>{{user.technicien.email}}</a>
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::User-->
+                        <!--begin::Actions-->
+                        
+                        <!--end::Actions-->
+                    </div>
+                    <!--end::Title-->
+                    <!--begin::Stats-->
+                    <div class="card-chart  bg-danger">
+                        <div id="stats"></div>
+                    </div>
+                    <!--end::Stats-->
                     
-                    <th>Nom</th>
-                    <th>Cree le</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                  {% for tache in taches %}
-                  <tr>
-                    
-                    <td> {{tache.tache.nom}} </td>
-                    <td> {{tache.tache.createdAt}} </td>
-                    <td>
-                      <div class="badge {% if tache.tache.etat.nom == 'En cours' %} badge-Success {% elif tache.tache.etat.nom == 'En atente' %} badge-warning {% elif tache.tache.etat.nom == 'En arret' %} badge-danger {% endif %} "> {{tache.tache.etat.nom}} </div>
-                    </td>
-                    <td><a href="#" class="btn btn-primary">Detail</a></td>
-                  </tr>
-                  {% endfor %}
-                  
+                </div>
+                <!--end::Info-->
+                <div class="col-6 d-flex ">
+                    <div class="container">
+                        <h1>evolution</h1>
+                        <div id="technicien-chart-container">
+                            <div id="intervention" width="40" height="30"></div>
+                        </div>
+                    </div>
                 
-                </table>
-              </div>
+                </div>
+            </div>
+           
+            <!--end::Details-->
+            <!--begin::Navs-->
+            <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                <!--begin::Nav item-->
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Detail</a>
+                </li>
+                <!--end::Nav item-->
+            </ul>
+            <!--begin::Navs-->
+        </div>
+        <div class="col">
+            
+        </div>
+    </div>
+    <!--end::Navbar-->
+    <!--begin::details View-->
+    <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+        <!--begin::Card header-->
+        <div class="card-header cursor-pointer">
+            <!--begin::Card title-->
+            <div class="card-title m-0">
+                <h3 class="fw-bold m-0">repartition </h3>
+            </div>
+            <!--end::Card title-->
+            <!--begin::Action-->
+            <!-- button type="button" class="btn btn-primary btn-sm align-self-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                <i class="ki-duotone ki-plus fs-2"></i>Editer le Profile</!-->
+            
+            <!--end::Action-->
+        </div>
+        <!--begin::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body p-9">
+            <!--begin::Row-->
+            <!-- div id="loader" class="loader"></!-->
+            <div class="row">
+                <div class="col">
+                    <div id="l1" class="chart"></div>
+                </div>
+                <div class="col">
+                    <div id="l2"  class="chart"></div>
+                </div>
             </div>
             
-          </div>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-6">
-            <div class="card">
-              <div class="card-header">
-                <h4>Bar CHart</h4>
-              </div>
-              <div class="card-body">
-                <div class="recent-report__chart">
-                  
+            
+            <div id="intervention_type" class="chart"></div>
+            <!-- div id="daily-attributed-tasks-chart" class="chart"></!-->
+            <!-- div id="daily-performed-tasks-chart" class="chart"></!-->
 
-                  <canvas id="myChart" width="50" height="40"></canvas>
+            <!--end::Input group-->
 
-
-                </div>
-              </div>
-            </div>
+            <!--end::Notice-->
         </div>
+        <!--end::Card body-->
     </div>
-  </div>
+    <!--end::details View-->
+    <!--begin::Row-->
+    <div class="row gy-5 g-xl-10">
+        <!--begin::Col-->
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-xl-8">
+            <!--begin::Table Widget 5-->
+            <div class="card card-flush h-xl-100">
+                <!--begin::Card header-->
+                <div class="card-header pt-7">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold text-dark">Liste des Taches</span>
+                        <span class="text-gray-400 mt-1 fw-semibold fs-6"></span>
+                    </h3>
+                    <!--end::Title-->
+                    <!--end::Actions-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body table-responsive">
+                    <!--begin::Table-->
+                    <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-15px">Tache</th>
+                                <th class="text-end pe-3 min-w-10px">Appelant</th>
+                                <th class="text-end pe-3 min-w-15px">Date Added</th>
+                                <th class="text-end pe-3 min-w-10px">etat</th>
+                                <th class="text-end pe-3 min-w-10px">Status</th>
+                                <th>voir</th>
+                            </tr>
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                            {% for t in user.technicien.technicientache_set.all %}
+                            <tr {% if t.ok %} class="bg-success" {% endif %} >
+                                <!--begin::Item-->
+                                <td>
+                                    <a href="/tasks/{{t.tache.id}}/detail" class="text-dark text-hover-primary">{{t.tache.nom}}</a>
+                                </td>
+                                <!--end::Item-->
+                                <!--begin::Product ID-->
+                                <td class="text-end"> {{t.tache.appelant}} </td>
+                                <!--end::Product ID-->
+                                <!--begin::Date added-->
+                                <td class="text-end">{{t.tache.createdAt}}</td>
+                                <!--end::Date added-->
+                                <!--begin::Price-->
+                                <td class="text-end">{{t.tache.status}}</td>
+                                <!--end::Price-->
+                                <!--begin::Status-->
+                                <td class="text-end">
+                                    <span class="badge py-3 px-4 fs-7 badge-light-primary">{{t.tache.priorite}}</span>
+                                </td>
+                                <!--end::Status-->
+                                <td><div class="menu-item px-3">
+                                  <button type="button" class="btn menu-link px-3 btn-active-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_check_{{t.nom}}">
+                                   ok <i class="fas fa-eye mr-0 menu-link px-3"></i>
+                                </button>
+                                </div></td>
+                            </tr>
+                            {% include 'dashboard/table/m3.html' %}
+                            {% endfor %}
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                    <table id="data-table">
+
+                    </table>
+                    <!--end::Table-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Table Widget 5-->
+        </div>
+        <!--end::Col-->
+    </div>
+    <!--end::Row-->
+</div>            
+
+{% include 'ressource/ed_tec.html' %}
+<script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
+<script src="{% static 'assets/js/apexcharts.js' %}"></script>
 
 
+<!-- JavaScript code for the AJAX function -->
+<script>
+    console.log('1');
 
-{% endblock body %}
+  function submitData(nom,idd) {
+      var isChecked = document.getElementById('check1').checked;
+      var report = document.getElementById('report').value;
+  
+      // Create a new FormData object
+      var formData = new FormData();
+      formData.append('id', idd);
+      formData.append('isChecked', isChecked);
+      formData.append('report', report);
+  
+      // Replace the URL below with the actual URL for submitting data
+      var url = "/submit-data"; // Replace with the actual URL
+  
+      // AJAX POST request using FormData
+      $.ajax({
+          type: 'POST',
+          url: url,
+          data: formData,
+          processData: false,
+          contentType: false,
+          dataType: 'json',
+          success: function (response) {
+              // Handle the success response from the server
+              alert("Data submitted successfully!");
+              // Optionally, you can close the modal after successful submission
+              $('#kt_modal_check_'+nom).modal('hide');
+          },
+          error: function (xhr, textStatus, errorThrown) {
+              // Handle any errors that occur during the AJAX request
+              alert("Error submitting data: " + errorThrown);
+          }
+      });
+  };
 
-{% block js %}
-<script src="{% static 'ind.js' %}"></script>
-<!-- script src="{% static 'demo.js' %}"></!-->
-<script src="{% static 'assets/js/circles.min.js'%}"></script>
-<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-<script type="text/javascript">
-  $(function() {
-    "use strict";
-    setTimeout(function(){
-        $(document).ready(function(){
-            var chart = c3.generate({
-                bindto: '#chart-donut', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 22.5],
-                        ['data2', 60],
-                        ['data3', 17.5],
-                    ],
-                    type: 'donut', // default type of chart
-                    colors: {
-                        'data1': Aero.colors["teal"],
-                        'data2': Aero.colors["lime"],
-                        'data3': Aero.colors["orange"],
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'Open',
-                        'data2': 'Close',
-                        'data3': 'In Progress',
-                    }
-                },
-                axis: {
-                },
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
-            });
-        });
-    }, 500);
-});
-    $.get('{% url "line_chart_json" %}', function(data) {
-      
         
-        var ctx = $("#myChart").get(0).getContext("2d");
-        new Chart(ctx, {
-            type: 'bar', data: data
-        });
-    });
-</script>
+           console.log('1');
+        function createCharts(data) {
+            console.log('1');
+            var options = {
+                chart: {
+                    type: 'bar',
+                    height: 100,
+                },
+                series: [{
+                    name: 'Vitesse d\'exécution',
+                    data: [data.vitesse_execution]
+                }],
+                xaxis: {
+                    categories: ['Vitesse d\'exécution']
+                }
+            };
+            console.log('1');
+            var vitesseExecutionChart = new ApexCharts(document.querySelector("#vitesse-execution-chart"), options);
+            vitesseExecutionChart.render();
 
-{% endblock js %}
+            options.series[0].name = 'Efficacité';
+            options.series[0].data = [data.efficacite];
+            options.xaxis.categories = ['Efficacité'];
+
+            var efficaciteChart = new ApexCharts(document.querySelector("#efficacite-chart"), options);
+            efficaciteChart.render();
+        };
+
+function fetchDataAndCreateCharts() {
+    console.log(`/ans_t/{{ user.technicien.id }}/detail`);
+
+    fetch(`/ans_t/{{ user.technicien.id }}/detail`)
+        .then(response => response.json())
+        .then(data => {
+            // Créer le graphique "Nombre de tâches par intervention"
+            createCharts(data);
+
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+        });
+};
+
+// Appeler la fonction pour récupérer les données et créer les graphiques
+fetchDataAndCreateCharts();
+document.addEventListener('DOMContentLoaded', function() {
+    var loader = document.getElementById('loader');
+    var charts = document.querySelectorAll('.chart');
+    var lineChartContainer = document.getElementById('line-chart-container');
+// Fonction pour afficher le tableau DataTables
+function renderDataTable(data) {
+    $('#data-table').DataTable({
+        data: data, // Utiliser les données JSON
+        columns: [
+            // Définir les colonnes du tableau
+            { title: 'Date', data: 'date' },
+            { title: 'Tâches attribuées', data: 'taches_attribuees' },
+            { title: 'Tâches effectuées', data: 'taches_effectuees' },
+            { title: 'Tâches en cours', data: 'taches_encours' },
+            { title: 'Total attribuées', data: 'nombre_taches_attribuees' },
+            { title: 'Total effectuées', data: 'nombre_taches_effectuees' },
+            { title: 'Total en cours', data: 'nombre_taches_encours' },
+            // ... Ajouter d'autres colonnes
+        ],
+        paging: true, // Activer la pagination
+        lengthChange: true, // Activer la sélection du nombre d'éléments par page
+        searching: true, // Activer la recherche
+        ordering: true, // Activer le tri
+        info: true, // Afficher les informations sur le nombre d'éléments
+        autoWidth: false, // Désactiver la largeur automatique des colonnes
+        language: {
+            search: 'Rechercher :',
+            lengthMenu: 'Afficher _MENU_ éléments par page',
+            info: 'Affichage de _START_ à _END_ sur _TOTAL_ éléments',
+            paginate: {
+                first: 'Premier',
+                last: 'Dernier',
+                next: 'Suivant',
+                previous: 'Précédent'
+            }
+        }
+    });
+}
+
+
+    fetch('/technicien/1/analytics/')  // Remplacez par l'URL appropriée
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            //renderDataTable(data.td);
+            // Créer les graphiques ici..
+            //$('#data-table').DataTable({
+            //    data: data.td, // Utiliser les données JSON
+            //    columns: [
+            //        // Définir les colonnes du tableau
+            //        { title: 'Date', data: 'date' },
+            //        { title: 'Tâches attribuées', data: 'taches_attribuees' },
+            //        { title: 'Tâches effectuees', data: 'taches_effectuees' },
+            //        // ... Ajouter d'autres colonnes
+            //    ],
+            //    // ... Autres options DataTables
+            //});
+            // Utilisez ApexCharts pour générer vos graphiques
+            function createDonutChart1(containerId, data) {
+                const labels = data.donut_labels_type
+                const counts = data.donut_data_type
+                const total = counts.reduce((acc, val) => acc + val, 0); // Calculer le total des tâches
+                const percentages = counts.map(count => ((count / total) * 100).toFixed(2)); // Calculer les pourcentages
+                const options = {
+                    chart: {
+                        type: 'donut',
+                        height: 300,
+                    },
+                    labels: labels,
+                    series: counts,//percentages,
+                    dataLabels: {
+                        enabled: true,
+                        //formatter: function (val, opts) {
+                        //    return `${val}%`; // Format des étiquettes de données
+                        //}
+                        formatter: function (val, opts) {
+                            return opts.w.config.labels[opts.seriesIndex] + ": " + val.toFixed(2) + "%";
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '85%',
+                                labels: {
+                                    show: true,
+                                    name: {
+                                        offsetY: -15,
+                                        fontFamily: 'Public Sans',
+                                        fontSize: '3rem',
+                                        fontWeight: 600,
+                                        //color: '#333'
+                                    },
+                                    value: {
+                                        fontFamily: 'Public Sans',
+                                        fontSize: '2.5rem',
+                                        fontWeight: 600,
+                                        //color: '#333',
+                                    },
+                                    total: {
+                                        show: true,
+                                        label: 'Total',
+                                        fontSize: '2rem',
+                                        fontWeight: 600,
+                                        //color: '#333',
+                                        formatter: function () {
+                                            return total.toString(); // Afficher le total
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    //colors: colors, // Utilisation de la palette de couleurs personnalisée
+            
+                    // Ajout d'un titre
+                    title: {
+                        text: 'Répartition des Tâches par Type d\'Intervention',
+                        align: 'center',
+                        style: {
+                            fontSize: '16px',
+                            fontWeight: 600,
+                            color: '#333'
+                        }
+                    },
+                    legend: {
+                        position: 'bottom',
+                        horizontalAlign: 'center',
+                        offsetY: 5,
+                        labels: {
+                            colors: '#333'
+                        }
+                    }
+                };
+            
+                const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+                chart.render();
+            };
+            function createDonutChart11(containerId, data) {
+                const labels = data.donut_labels_intervention
+                const counts = data.donut_data_intervention
+                const total = counts.reduce((acc, val) => acc + val, 0); // Calculer le total des tâches
+                const percentages = counts.map(count => ((count / total) * 100).toFixed(2)); // Calculer les pourcentages
+                const options = {
+                    chart: {
+                        type: 'donut',
+                        height: 300,
+                    },
+                    labels: labels,
+                    series: counts,//percentages,
+                    dataLabels: {
+                        enabled: true,
+                        //formatter: function (val, opts) {
+                        //    return `${val}%`; // Format des étiquettes de données
+                        //}
+                        formatter: function (val, opts) {
+                            return opts.w.config.labels[opts.seriesIndex] + ": " + val.toFixed(2) + "%";
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '85%',
+                                labels: {
+                                    show: true,
+                                    name: {
+                                        offsetY: -15,
+                                        fontFamily: 'Public Sans',
+                                        fontSize: '3rem',
+                                        fontWeight: 600,
+                                        //color: '#333'
+                                    },
+                                    value: {
+                                        fontFamily: 'Public Sans',
+                                        fontSize: '2.5rem',
+                                        fontWeight: 600,
+                                        //color: '#333',
+                                    },
+                                    total: {
+                                        show: true,
+                                        label: 'Total',
+                                        fontSize: '2rem',
+                                        fontWeight: 600,
+                                        //color: '#333',
+                                        formatter: function () {
+                                            return total.toString(); // Afficher le total
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    //colors: colors, // Utilisation de la palette de couleurs personnalisée
+            
+                    // Ajout d'un titre
+                    title: {
+                        text: 'Répartition des Tâches par Intervention',
+                        align: 'center',
+                        style: {
+                            fontSize: '16px',
+                            fontWeight: 600,
+                            color: '#333'
+                        }
+                    },
+                    legend: {
+                        position: 'bottom',
+                        horizontalAlign: 'center',
+                        offsetY: 5,
+                        labels: {
+                            colors: '#333'
+                        }
+                    }
+                };
+            
+                const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+                chart.render();
+            };
+            createDonutChart1('l1', data);
+            createDonutChart11('l2', data);
+                var lineChartOptions = {
+                    chart: {
+                        height: 300,
+                        type: 'line',
+                        toolbar: {
+                            show: true,
+                        },
+                    },
+                    colors: ['#FF5733', '#33FFA6'], // Couleurs des lignes
+                    series: [
+                        {
+                            name: 'Ligne 1', // Nom de la première ligne
+                            data: [30, 40, 45, 50, 49, 60, 70, 91, 125] // Données pour la première ligne
+                        },
+                        {
+                            name: 'Ligne 2', // Nom de la deuxième ligne
+                            data: [20, 35, 55, 60, 70, 85, 95, 110, 130] // Données pour la deuxième ligne
+                        }
+                    ],
+                    xaxis: {
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'] // Catégories pour l'axe X
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Valeurs', // Titre de l'axe Y
+                        },
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val) {
+                            return val.toFixed(0);
+                        },
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val.toFixed(0);
+                            },
+                        },
+                    },
+                };
+        
+                var chart = new ApexCharts(document.querySelector("#intervention"), lineChartOptions);
+                chart.render();
+
+            
+            var Options1 = {
+                chart: {
+                    type: 'donut',
+                    height: 300,
+                },
+                labels: data.donut_labels_type,
+                series: data.donut_data_type,
+            };
+            //var iChart = new ApexCharts(document.querySelector('#intervention'), options1);
+            //iChart.render();
+            var options2 = {
+                chart: {
+                    type: 'donut',
+                },
+                labels: data.donut_labels_type,
+                series: data.donut_data_type,
+            };
+            var tChart = new ApexCharts(document.querySelector('#intervention_type'), options2);
+            donutTypeChart.render();
+
+            var lineChartOptions = {
+                chart: {
+                    height: 300,
+                    type: 'line',
+                    toolbar: {
+                        show: true,
+                    },
+                },
+                colors: ['#FF5733', '#33FFA6', '#334DFF', '#FF33EA', '#33D4FF', '#FFEC33'],
+                series: [
+                    {
+                        name: 'Attribuées',
+                        data: data.nombre_taches_attribuees,
+                    },
+                    {
+                        name: 'Effectuées',
+                        data: data.nombre_taches_effectuees,
+                    },
+                ],
+                xaxis: {
+                    categories: data.date,
+                },
+                yaxis: {
+                    title: {
+                        text: 'Nombre de tâches',
+                    },
+                },
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val) {
+                        return val.toFixed(0);
+                    },
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val.toFixed(0);
+                        },
+                    },
+                },
+            };
+
+            // Créer le graphique en ligne pour l'évolution des tâches
+            var lineChart = new ApexCharts(lineChartContainer, lineChartOptions);
+            lineChart.render();
+
+            // Autres graphiques à générer...
+
+            // Afficher les graphiques et masquer le loader
+            
+            
+        });
+});
+
+  </script>
+  {% endblock body %}

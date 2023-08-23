@@ -2,7 +2,6 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,get_object_or_404,redirect
 from apps.project.models import  *
-from ajax_datatable.views import AjaxDatatableView
 from django.contrib.auth.models import Permission
 from .operation import  pourcent
 from apps.clients.models import  *
@@ -43,46 +42,6 @@ def tbb(fi):
         l.append(t)
     print(l)
     return l
-class TacheAjax(AjaxDatatableView):
-    model = Tache
-    initial_order = [["etat", "asc"], ]
-    length_menu = [[-1, 20, 50, 100, -1], [5, 20, 50, 100, 'all']]
-    search_values_separator = '+'
-    
-    column_defs = [
-        AjaxDatatableView.render_row_tools_column_def(),
-        {'name': 'id', 'visible': False, },
-        {'name': 'nom', 'visible': True, },
-        #{'name': 'get_agence', 'visible': True, },
-        {'name': 'appelant', 'visible': True, },
-        {'name': 'priorite', 'visible': True, },
-        {'name': 'description', 'visible': True, },
-        {'name': 'etat', 'visible': True, },
-        {'name': 'date_debut', 'visible': True, },
-        {'name': 'technicient','visible': True, },
-        {'name': 'n_OS', 'visible': True, },
-        {'name': 'date_fin', 'visible': True, },
-        
-        
-        
-        #{
-        #    'name': 'dow',
-        #    'title': 'Action',
-        #    'placeholder': True,
-        #    'searchable': False,
-        #    'orderable': False,
-        #    'className': 'highlighted',
-        #}, 
-        
-    ]
-    def customize_row(self, row, obj):
-        l = []
-        for i in obj.technicientache_set.all():
-            l.append(i.technicien.nom)
-        #days = ['monday', 'tuesday', 'wednesday', 'thyrsday', 'friday', 'saturday', 'sunday']
-        print(l)
-        row['technicient'] = l# '''%s''' %l
-        return
 
 
 class TaskUpdateView(UpdateView):
@@ -104,7 +63,7 @@ class TaskUpdateView(UpdateView):
     #    context["ag_field"] =  ('name','siege','responsable','email','phone','address','city',)
     #    context["cl_field"] =  ('name','responsable','email','phone','address','city',)
     #    context["ta_field"] = ('agence', 'title','priority', 'description', 'status', 'complete',)
-        context["status"]   = status
+        #context["status"]   = status
         context["prio"]   = "gsdsdgsd"
         return context
 
@@ -113,7 +72,18 @@ pri = (1,2,3,4,5,6,7,8,9,10)
 class TaskCreate(CreateView):
     model = Tache
     #template_name = "project/add_task.html"
-    fields = ('appelant','n_OS','observation','nom','priorite','description','etat','date_debut',)
+    fields = [
+    'nom',
+    'intervention',
+    'type_intervention',
+    'appelant',
+    'priorite',
+    'description',
+    'n_OS',
+    'date_debut',
+    'date_fin',
+    
+]
     success_url = 'task-list'
     
     def form_valid(self, form: BaseModelForm):
@@ -124,10 +94,8 @@ class TaskCreate(CreateView):
         context = super().get_context_data(**kwargs)
         context["agences"] = Agence.objects.all()
         context["appelants"] = Appelant.objects.all()
-        context["etat"] = Etat.objects.all()
         context["clients"] = Client.objects.all()
-        context["status"]   = status
-        context["pri"]   = prio
+        #context["pri"]   = prio
         return context
     
 #
@@ -143,7 +111,7 @@ class TacheListView(ListView):
     fields = fields
     #t_list = list(Tache.objects.all().values('appelant','n_OS','observation','nom','priorite','description','etat','date_debut',))
     fieldss = ('tache','date d ajout','appelant','priorite','etat','date_debut','technicient','date_fin','n_OS',)
-    tec = TechnicienTache.objects.all()
+    #tec = TechnicienTache.objects.all()
 
             
     def get_context_data(self, **kwargs):
@@ -156,7 +124,7 @@ class TacheListView(ListView):
         context["page"] = 'Liste des Taches'
         context["field"] = self.fieldss
         #context["tl"] = self.s
-        context['ass'] = TechnicienTache.objects.all()
+        #context['ass'] = TechnicienTache.objects.all()
         context["taches"]    =  Tache.objects.all().order_by('createdAt')
         context["total"]     =  Tache.objects.count()
         context["ts"]        =  Tache.objects.all()
@@ -171,10 +139,17 @@ class TacheListView(ListView):
 
 
 
+# views.py
+
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from .models import Tache
 def att(request):
     if request.method == 'POST':
         tec_id = request.POST.get('tec')
         ta_id = request.POST.get('ta')
+        date_debut = request.POST.get('date_debut')
+        date_fin = request.POST.get('date_fin')
         
         try:
             tec = get_object_or_404(Technicien, id=tec_id)
@@ -183,12 +158,79 @@ def att(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid technicien or tache ID.'})
         
         try:
-            tect = TechnicienTache.objects.create(technicien=tec, tache=ta)
+            # Vérifier si la tâche est déjà accomplie
+            if ta.ok:
+                return JsonResponse({'status': 'error', 'message': 'La tâche est déjà accomplie et ne peut pas être attribuée à un nouveau technicien.'})
+            
+            # Vérifier si la tâche est déjà attribuée à un technicien avec ok=True
+            existing_tech_tache = TechnicienTache.objects.filter(tache=ta, technicien=tec)
+            
+            if existing_tech_tache:
+                # La tâche est déjà attribuée, donc mettez à jour uniquement la date de début
+                existing_tech_tache = existing_tech_tache.first()  # Prendre le premier résultat
+                existing_tech_tache.date_debut = date_debut
+                existing_tech_tache.date_fin = date_fin
+                existing_tech_tache.save()
+            else:
+                # Vérifier si le technicien est déjà attribué à une autre tâche pour la même période
+                overlapping_tech_tache = TechnicienTache.objects.filter(
+                    technicien=tec,
+                    date_debut__lte=date_fin,
+                    date_fin__gte=date_debut
+                )
+                if overlapping_tech_tache.exists():
+                    return JsonResponse({'status': 'error', 'message': 'Le technicien est déjà attribué à une autre tâche pour la même période.'})
+                
+                tect = TechnicienTache.objects.create(technicien=tec, tache=ta, date_debut=date_debut, date_fin=date_fin)
+            
             return JsonResponse({'status': 'success', 'message': 'Attribution successful.'})
         except Exception as e:
+            print('err01')
             return JsonResponse({'status': 'error', 'message': str(e)})
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+from django.core.exceptions import ValidationError
+
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+
+def edit_task(request):
+    if request.method == 'POST':
+        ta_id = request.POST.get('ta_id')
+        task_done = request.POST.get('task_done') == 'true'  # Convertir en booléen
+
+        num_os = request.POST.get('num_os')
+        rapport_text = request.POST.get('rapport_text')
+
+        try:
+            ta = get_object_or_404(Tache, id=ta_id)
+            tt = ta.technicientache_set.first()
+
+            if ta.ok:
+                return JsonResponse({'status': 'error', 'message': 'La tâche est déjà accomplie et ne peut pas être modifiée.'})
+            
+            if tt:
+                tt.ok = task_done
+                tt.save()
+
+            # Mettre à jour les champs de la tâche
+            ta.n_OS = num_os
+            ta.save()
+
+            # Créer un nouveau rapport
+            t_list = ta.technicientache_set.all()
+            tl = [technicien_tache.technicien.nom for technicien_tache in t_list]
+            rapport = Rapport.objects.create(technicien_tache=tt, rapport_text=rapport_text, technicien_list=tl)
+            
+            return JsonResponse({'status': 'success', 'message': 'Tâche modifiée avec succès.', 'techniciens': tl})
+        except Tache.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'ID de tâche invalide.'})
+        except Exception as e:
+            print(e)
+            return JsonResponse({'status': 'error', 'message': 'Une erreur s\'est produite lors de la modification de la tâche.'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Méthode de requête invalide.'})
 
 
 class TaskDetail(DetailView,UpdateView):
@@ -207,26 +249,13 @@ class TaskDetail(DetailView,UpdateView):
         context["agences"] = Agence.objects.all()
         context["clients"] = Client.objects.all()
         context["appelant"] = Appelant.objects.all()
-        context["etat"] = Etat.objects.all()
-        context["status"]   = status
-        context["prio"]   = prio
+        #context["etat"] = Etat.objects.all()
+        #context["status"]   = status
+        #context["prio"]   = prio
         return context
     
 
     
-
-class EnregistrementJournalierCreateView(CreateView):
-    model = EnregistrementJournalier
-    template_name = 'enregistrement_journalier_form.html'
-    fields = ['tache', 'date', 'description']
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['tache'] = Tache.objects.get(pk=self.kwargs['pk'])  # Pour pré-remplir le champ 'tache'
-        return initial
-
-    def get_success_url(self):
-        return reverse_lazy('tache-detail', kwargs={'pk': self.kwargs['pk']})
 
 
 #@method_decorator([login_required(login_url='accounts/login/'),manager_required] , name='dispatch')
@@ -235,24 +264,6 @@ class TaskDelete(DeleteView):
     template_name = 'project/task-delete.html'
     success_url = '/project/dashboard'
 
-
-class TechnicienTacheUpdateView(UpdateView):
-    model = TechnicienTache
-    template_name = 'technicien_tache_update.html'
-    fields = ['technicien', 'tache', 'ok']
-
-    def get_object(self, queryset=None):
-        technicien_tache_id = self.kwargs.get('technicien_tache_id')
-        return get_object_or_404(TechnicienTache, pk=technicien_tache_id)
-
-    def form_valid(self, form):
-        self.object = form.save()
-        response_data = {'success': True}
-        return JsonResponse(response_data)
-
-    def form_invalid(self, form):
-        response_data = {'success': False, 'errors': form.errors}
-        return JsonResponse(response_data, status=400)
 
 
 class Desk(ListView):
@@ -272,21 +283,19 @@ from .models import Tache
 def create_task(request):
     if request.method == 'POST':
         # Récupérer les données du formulaire
-        nom = request.POST.get('nom')
+        #nom = request.POST.get('nom')
         appelant_id = request.POST.get('appelant')
         priorite = request.POST.get('priorite')
         description = request.POST.get('description')
         n_os = request.POST.get('n_os')
-        etat_id = request.POST.get('etat')
-        date_debut = request.POST.get('date_debut')
-        date_fin = request.POST.get('date_fin')
-
+        #date_debut = request.POST.get('date_debut')
+        #date_fin = request.POST.get('date_fin')
         # Créer la tâche en base de données
         appelant = Appelant.objects.get(pk=appelant_id)
-        etat = Etat.objects.get(pk=etat_id)
-        tache = Tache.objects.create(nom=nom, appelant=appelant, priorite=priorite,
-                                     description=description, n_OS=n_os, etat=etat,
-                                     date_debut=date_debut, date_fin=date_fin)
+        #etat = Etat.objects.get(pk=etat_id)
+        tache = Tache.objects.create( appelant=appelant, priorite=priorite,
+                                     description=description, n_OS=n_os,)
+                                    # date_debut=date_debut, date_fin=date_fin)
 
         # Répondre avec un message de succès
         response_data = {'message': 'Tâche créée avec succès!'}
@@ -296,28 +305,45 @@ def create_task(request):
         response_data = {'message': 'Erreur lors de la soumission du formulaire'}
         return JsonResponse(response_data, status=400)
 
+def create_appelant(request):
+    if request.method == 'POST':
+        nom_appelant = request.POST.get('nom_appelant')
+        if nom_appelant:
+            appelant = Appelant.objects.create(name=nom_appelant)
+            return JsonResponse({'message': f"L'appelant '{appelant.name}' a été créé avec succès."})
+        else:
+            return JsonResponse({'errors': 'Le nom de l\'appelant ne peut pas être vide.'}, status=400)
+    return redirect('/')
+
+# Autres vues existantes ...
+
 
 
 
 class CreateTaskView(CreateView):
     model = Tache
-    fields = ['nom', 'appelant', 'priorite', 'description', 'etat',]
-    template_name = 'votre_template.html'  # Remplacez "votre_template.html" par le nom de votre modèle
+    fields = [
+        'intervention',
+        'type_intervention',
+        'appelant',
+        'priorite',
+        'description',
+        'n_OS',
+    ]
+    template_name = 'votre_template.html'
 
     def get(self, request, *args, **kwargs):
-        return JsonResponse({"message": "GET request not supported"})
+        return JsonResponse({"message": "Les requêtes GET ne sont pas prises en charge."}, status=405)  # Méthode non autorisée
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         form = self.get_form()
         if form.is_valid():
-            
             self.object = form.save()
             return JsonResponse({"message": "Tâche créée avec succès!"})
         else:
-            
             errors = form.errors.as_json()
             return JsonResponse({"errors": errors}, status=400)
 
     def get_success_url(self):
-        return reverse_lazy("votre_url_de_redirection")  # Remplacez "votre_url_de_redirection" par l'URL où rediriger après la création réussie de la tâche
+        # Remplacez "votre_url_de_redirection" par l'URL où rediriger après la création réussie de la tâche
+        return reverse_lazy("votre_url_de_redirection", kwargs={"pk": self.object.pk})  # Exemple de redirection avec la clé primaire de la tâche

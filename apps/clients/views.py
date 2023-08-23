@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from ajax_datatable.views import AjaxDatatableView
 from django.views.generic import *
 from django.urls import reverse_lazy
 from .models import *
@@ -8,38 +7,6 @@ from django.http import JsonResponse
 # Register your models here.
 ff = ('nom', 'responsable','address', )
 
-class AgenceAjax(AjaxDatatableView):
-    model = Agence
-    
-    initial_order = [["name", "asc"], ]
-    length_menu = [[5, 20, 50, 100, -1], [5, 20, 50, 100, 'all']]
-    search_values_separator = '+'
-
-    column_defs = [
-        AjaxDatatableView.render_row_tools_column_def(),
-        {'name': 'id', 'visible': True, },
-        {'name': 'name', 'visible': True, },
-        {'name': 'responsable', 'visible': True, },
-        
-        {
-            'name': 'dow',
-            'title': 'Action',
-            'placeholder': True,
-            'searchable': False,
-            'orderable': False,
-            'className': 'highlighted',
-        }, 
-        
-    ]
-    
-    def customize_row(self, row, obj):
-        #days = ['monday', 'tuesday', 'wednesday', 'thyrsday', 'friday', 'saturday', 'sunday']
-        
-        row['dow'] = ''' <div class=" list-action">
-                                <a href="/agence/%s/detail" class="mr-5" data-toggle="tooltip" data-kt-menu-placement="bottom-end" title="" data-original-title="View"
-                                    href="#"><i class="fas fa-eye mr-0"></i></a>
-                            </div>''' %obj.pk
-        return
 
 class ClientListView(ListView):
     model = Client

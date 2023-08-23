@@ -20,9 +20,9 @@ urlpatterns = [
     #path('ajax_datatable/permissions/', PermissionAjaxDatatableView.as_view(), name="ajax_datatable_permissions"),
     path('t',t, name='tt'),
     path('att',att, name='att'),
-    
-    path('tache_lists',TacheAjax.as_view(),name='tache_ajax'),
-    
+    path('edit_task',edit_task, name='edit_task'),
+        
     path('create_task/', CreateTaskView.as_view(), name='create_task'),
+    path('create_appelant/',create_appelant, name='create_appelant'),
 
 ]

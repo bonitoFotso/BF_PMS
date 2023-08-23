@@ -15,5 +15,4 @@ urlpatterns = [
     path('agence/<int:pk>/delete',AgenceDeleteView.as_view(),name='agence_del'),
     path('agence/<int:pk>/detail',AgenceDetaiView.as_view(),name='agence-detai'),
     
-    path('agence-lists/',          AgenceAjax.as_view(),name='ag_ajax'),
 ]

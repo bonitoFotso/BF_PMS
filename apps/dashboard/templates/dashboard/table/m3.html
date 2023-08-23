@@ -1,0 +1,33 @@
+<!-- Button to trigger the modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="kt_modal_check_{{t.nom}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Remplir le rapport</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form inside the modal -->
+                <form id="reportForm_{{t.nom}}">
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Case à cocher</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="report" class="form-label">Rapport</label>
+                        <textarea class="form-control" id="report" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- Submit button to trigger the AJAX function -->
+                <button type="button" class="btn btn-primary" onclick="submitData('{{t.nom}}','{{t.id}}')">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript code for the AJAX function -->
