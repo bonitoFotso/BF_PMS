@@ -1,226 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!***************************************************************************!*\
-  !*** ../src/js/custom/apps/ecommerce/customers/details/update-address.js ***!
-  \***************************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/apps/ecommerce/customers/details/update-address.js":
+/*!**********************************************************************************!*\
+  !*** ../demo41/src/js/custom/apps/ecommerce/customers/details/update-address.js ***!
+  \**********************************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTModalUpdateAddress = function () {
-    var element;
-    var submitButton;
-    var cancelButton;
-    var closeButton;
-    var form;
-    var modal;
-    var validator;
+eval("\n\n// Class definition\nvar KTModalUpdateAddress = function () {\n    var element;\n    var submitButton;\n    var cancelButton;\n    var closeButton;\n    var form;\n    var modal;\n    var validator;\n\n    // Init form inputs\n    var initForm = function () {\n        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n        validator = FormValidation.formValidation(\n            form,\n            {\n                fields: {\n                    'name': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Address name is required'\n                            }\n                        }\n                    },\n                    'country': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Country is required'\n                            }\n                        }\n                    },\n                    'address1': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Address 1 is required'\n                            }\n                        }\n                    },\n                    'city': {\n                        validators: {\n                            notEmpty: {\n                                message: 'City is required'\n                            }\n                        }\n                    },\n                    'state': {\n                        validators: {\n                            notEmpty: {\n                                message: 'State is required'\n                            }\n                        }\n                    },\n                    'postcode': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Postcode is required'\n                            }\n                        }\n                    }\n                },\n                plugins: {\n                    trigger: new FormValidation.plugins.Trigger(),\n                    bootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n                    })\n                }\n            }\n        );\n\n        // Revalidate country field. For more info, plase visit the official plugin site: https://select2.org/\n        $(form.querySelector('[name=\"country\"]')).on('change', function () {\n            // Revalidate the field when an option is chosen\n            validator.revalidateField('country');\n        });\n\n        // Action buttons\n        submitButton.addEventListener('click', function (e) {\n            // Prevent default button action\n            e.preventDefault();\n\n            // Validate form before submit\n\t\t\tif (validator) {\n\t\t\t\tvalidator.validate().then(function (status) {\n\t\t\t\t\tconsole.log('validated!');\n\n\t\t\t\t\tif (status == 'Valid') {\n\t\t\t\t\t\tsubmitButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t\t\t\t// Disable submit button whilst loading\n\t\t\t\t\t\tsubmitButton.disabled = true;\n\n\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\tsubmitButton.removeAttribute('data-kt-indicator');\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\t\ttext: \"Form has been successfully submitted!\",\n\t\t\t\t\t\t\t\ticon: \"success\",\n\t\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}).then(function (result) {\n\t\t\t\t\t\t\t\tif (result.isConfirmed) {\n\t\t\t\t\t\t\t\t\t// Hide modal\n\t\t\t\t\t\t\t\t\tmodal.hide();\n\n\t\t\t\t\t\t\t\t\t// Enable submit button after loading\n\t\t\t\t\t\t\t\t\tsubmitButton.disabled = false;\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t});\t\t\t\t\t\t\t\n\t\t\t\t\t\t}, 2000);   \t\t\t\t\t\t\n\t\t\t\t\t} else {\n\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\ttext: \"Sorry, looks like there are some errors detected, please try again.\",\n\t\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n        });\n\n        cancelButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n\n        closeButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n    return {\n        // Public functions\n        init: function () {\n            // Elements\n            element = document.querySelector('#kt_modal_update_address');\n            modal = new bootstrap.Modal(element);\n\n            form = element.querySelector('#kt_modal_update_address_form');\n            submitButton = form.querySelector('#kt_modal_update_address_submit');\n            cancelButton = form.querySelector('#kt_modal_update_address_cancel');\n            closeButton = element.querySelector('#kt_modal_update_address_close');\n\n            initForm();\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n    KTModalUpdateAddress.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/apps/ecommerce/customers/details/update-address.js?");
 
-    // Init form inputs
-    var initForm = function () {
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'name': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Address name is required'
-                            }
-                        }
-                    },
-                    'country': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Country is required'
-                            }
-                        }
-                    },
-                    'address1': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Address 1 is required'
-                            }
-                        }
-                    },
-                    'city': {
-                        validators: {
-                            notEmpty: {
-                                message: 'City is required'
-                            }
-                        }
-                    },
-                    'state': {
-                        validators: {
-                            notEmpty: {
-                                message: 'State is required'
-                            }
-                        }
-                    },
-                    'postcode': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Postcode is required'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
-            }
-        );
+/***/ })
 
-        // Revalidate country field. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="country"]')).on('change', function () {
-            // Revalidate the field when an option is chosen
-            validator.revalidateField('country');
-        });
-
-        // Action buttons
-        submitButton.addEventListener('click', function (e) {
-            // Prevent default button action
-            e.preventDefault();
-
-            // Validate form before submit
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
-
-					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
-
-						// Disable submit button whilst loading
-						submitButton.disabled = true;
-
-						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
-							
-							Swal.fire({
-								text: "Form has been successfully submitted!",
-								icon: "success",
-								buttonsStyling: false,
-								confirmButtonText: "Ok, got it!",
-								customClass: {
-									confirmButton: "btn btn-primary"
-								}
-							}).then(function (result) {
-								if (result.isConfirmed) {
-									// Hide modal
-									modal.hide();
-
-									// Enable submit button after loading
-									submitButton.disabled = false;
-								}
-							});							
-						}, 2000);   						
-					} else {
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-primary"
-							}
-						});
-					}
-				});
-			}
-        });
-
-        cancelButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-
-        closeButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    return {
-        // Public functions
-        init: function () {
-            // Elements
-            element = document.querySelector('#kt_modal_update_address');
-            modal = new bootstrap.Modal(element);
-
-            form = element.querySelector('#kt_modal_update_address_form');
-            submitButton = form.querySelector('#kt_modal_update_address_submit');
-            cancelButton = form.querySelector('#kt_modal_update_address_cancel');
-            closeButton = element.querySelector('#kt_modal_update_address_close');
-
-            initForm();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalUpdateAddress.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/apps/ecommerce/customers/details/update-address.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=update-address.js.map

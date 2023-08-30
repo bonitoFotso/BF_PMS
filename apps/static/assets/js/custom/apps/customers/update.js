@@ -1,140 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!*************************************************!*\
-  !*** ../src/js/custom/apps/customers/update.js ***!
-  \*************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/apps/customers/update.js":
+/*!********************************************************!*\
+  !*** ../demo41/src/js/custom/apps/customers/update.js ***!
+  \********************************************************/
+/***/ (() => {
 
-// Class definition
-var KTModalUpdateCustomer = function () {
-    var element;
-    var submitButton;
-    var cancelButton;
-    var closeButton;
-    var form;
-    var modal;
+eval("\n\n// Class definition\nvar KTModalUpdateCustomer = function () {\n    var element;\n    var submitButton;\n    var cancelButton;\n    var closeButton;\n    var form;\n    var modal;\n\n    // Init form inputs\n    var initForm = function () {\n        // Action buttons\n        submitButton.addEventListener('click', function (e) {\n            // Prevent default button action\n            e.preventDefault();\n\n            // Show loading indication\n            submitButton.setAttribute('data-kt-indicator', 'on');\n\n            // Simulate form submission\n            setTimeout(function () {\n                // Simulate form submission\n                submitButton.removeAttribute('data-kt-indicator');\n\n                // Show popup confirmation \n                Swal.fire({\n                    text: \"Form has been successfully submitted!\",\n                    icon: \"success\",\n                    buttonsStyling: false,\n                    confirmButtonText: \"Ok, got it!\",\n                    customClass: {\n                        confirmButton: \"btn btn-primary\"\n                    }\n                }).then(function (result) {\n                    if (result.isConfirmed) {\n                        modal.hide();\n                    }\n                });\n\n                //form.submit(); // Submit form\n            }, 2000);\n        });\n\n        cancelButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n\n        closeButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n    return {\n        // Public functions\n        init: function () {\n            // Elements\n            element = document.querySelector('#kt_modal_update_customer');\n            modal = new bootstrap.Modal(element);\n\n            form = element.querySelector('#kt_modal_update_customer_form');\n            submitButton = form.querySelector('#kt_modal_update_customer_submit');\n            cancelButton = form.querySelector('#kt_modal_update_customer_cancel');\n            closeButton = element.querySelector('#kt_modal_update_customer_close');\n\n            initForm();\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n    KTModalUpdateCustomer.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/apps/customers/update.js?");
 
-    // Init form inputs
-    var initForm = function () {
-        // Action buttons
-        submitButton.addEventListener('click', function (e) {
-            // Prevent default button action
-            e.preventDefault();
+/***/ })
 
-            // Show loading indication
-            submitButton.setAttribute('data-kt-indicator', 'on');
-
-            // Simulate form submission
-            setTimeout(function () {
-                // Simulate form submission
-                submitButton.removeAttribute('data-kt-indicator');
-
-                // Show popup confirmation 
-                Swal.fire({
-                    text: "Form has been successfully submitted!",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary"
-                    }
-                }).then(function (result) {
-                    if (result.isConfirmed) {
-                        modal.hide();
-                    }
-                });
-
-                //form.submit(); // Submit form
-            }, 2000);
-        });
-
-        cancelButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-
-        closeButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    return {
-        // Public functions
-        init: function () {
-            // Elements
-            element = document.querySelector('#kt_modal_update_customer');
-            modal = new bootstrap.Modal(element);
-
-            form = element.querySelector('#kt_modal_update_customer_form');
-            submitButton = form.querySelector('#kt_modal_update_customer_submit');
-            cancelButton = form.querySelector('#kt_modal_update_customer_cancel');
-            closeButton = element.querySelector('#kt_modal_update_customer_close');
-
-            initForm();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalUpdateCustomer.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/apps/customers/update.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=update.js.map

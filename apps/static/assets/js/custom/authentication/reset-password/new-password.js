@@ -1,255 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!**********************************************************************!*\
-  !*** ../src/js/custom/authentication/reset-password/new-password.js ***!
-  \**********************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/authentication/reset-password/new-password.js":
+/*!*****************************************************************************!*\
+  !*** ../demo41/src/js/custom/authentication/reset-password/new-password.js ***!
+  \*****************************************************************************/
+/***/ (() => {
 
-// Class Definition
-var KTAuthNewPassword = function() {
-    // Elements
-    var form;
-    var submitButton;
-    var validator;
-    var passwordMeter;
+eval("\n\n// Class Definition\nvar KTAuthNewPassword = function() {\n    // Elements\n    var form;\n    var submitButton;\n    var validator;\n    var passwordMeter;\n\n    var handleForm = function(e) {\n        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n        validator = FormValidation.formValidation(\n            form,\n            {\n                fields: {\n                    'password': {\n                        validators: {\n                            notEmpty: {\n                                message: 'The password is required'\n                            },\n                            callback: {\n                                message: 'Please enter valid password',\n                                callback: function(input) {\n                                    if (input.value.length > 0) {\n                                        return validatePassword();\n                                    }\n                                }\n                            }\n                        }\n                    },\n                    'confirm-password': {\n                        validators: {\n                            notEmpty: {\n                                message: 'The password confirmation is required'\n                            },\n                            identical: {\n                                compare: function() {\n                                    return form.querySelector('[name=\"password\"]').value;\n                                },\n                                message: 'The password and its confirm are not the same'\n                            }\n                        }\n                    },\n                    'toc': {\n                        validators: {\n                            notEmpty: {\n                                message: 'You must accept the terms and conditions'\n                            }\n                        }\n                    }\n                },\n                plugins: {\n                    trigger: new FormValidation.plugins.Trigger({\n                        event: {\n                            password: false\n                        }\n                    }),\n                    bootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row',\n                        eleInvalidClass: '',  // comment to enable invalid state icons\n                        eleValidClass: '' // comment to enable valid state icons\n                    })\n                }\n            }\n        );\n\n        form.querySelector('input[name=\"password\"]').addEventListener('input', function() {\n            if (this.value.length > 0) {\n                validator.updateFieldStatus('password', 'NotValidated');\n            }\n        });\n    }\n\n\n    var handleSubmitDemo = function (e) {\n        submitButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            validator.revalidateField('password');\n\n            validator.validate().then(function(status) {\n                if (status == 'Valid') {\n                    // Show loading indication\n                    submitButton.setAttribute('data-kt-indicator', 'on');\n\n                    // Disable button to avoid multiple click\n                    submitButton.disabled = true;\n\n                    // Simulate ajax request\n                    setTimeout(function() {\n                        // Hide loading indication\n                        submitButton.removeAttribute('data-kt-indicator');\n\n                        // Enable button\n                        submitButton.disabled = false;\n\n                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                        Swal.fire({\n                            text: \"You have successfully reset your password!\",\n                            icon: \"success\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\"\n                            }\n                        }).then(function (result) {\n                            if (result.isConfirmed) {\n                                form.querySelector('[name=\"password\"]').value= \"\";\n                                form.querySelector('[name=\"confirm-password\"]').value= \"\";\n                                passwordMeter.reset();  // reset password meter\n                                //form.submit();\n\n                                var redirectUrl = form.getAttribute('data-kt-redirect-url');\n                                if (redirectUrl) {\n                                    location.href = redirectUrl;\n                                }\n                            }\n                        });\n                    }, 1500);\n                } else {\n                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                    Swal.fire({\n                        text: \"Sorry, looks like there are some errors detected, please try again.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\"\n                        }\n                    });\n                }\n            });\n        });\n\n    }\n\n    var handleSubmitAjax = function (e) {\n        // Handle form submit\n        submitButton.addEventListener('click', function (e) {\n            // Prevent button default action\n            e.preventDefault();\n\n            validator.revalidateField('password');\n\n            // Validate form\n            validator.validate().then(function (status) {\n                if (status == 'Valid') {\n                    // Show loading indication\n                    submitButton.setAttribute('data-kt-indicator', 'on');\n\n                    // Disable button to avoid multiple click\n                    submitButton.disabled = true;\n\n                    // Check axios library docs: https://axios-http.com/docs/intro\n                    axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {\n                        if (response) {\n                            form.reset();\n\n                            const redirectUrl = form.getAttribute('data-kt-redirect-url');\n\n                            if (redirectUrl) {\n                                location.href = redirectUrl;\n                            }\n                        } else {\n                            // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                            Swal.fire({\n                                text: \"Sorry, the email is incorrect, please try again.\",\n                                icon: \"error\",\n                                buttonsStyling: false,\n                                confirmButtonText: \"Ok, got it!\",\n                                customClass: {\n                                    confirmButton: \"btn btn-primary\"\n                                }\n                            });\n                        }\n                    }).catch(function (error) {\n                        Swal.fire({\n                            text: \"Sorry, looks like there are some errors detected, please try again.\",\n                            icon: \"error\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\"\n                            }\n                        });\n                    }).then(() => {\n                        // Hide loading indication\n                        submitButton.removeAttribute('data-kt-indicator');\n\n                        // Enable button\n                        submitButton.disabled = false;\n                    });\n                } else {\n                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                    Swal.fire({\n                        text: \"Sorry, looks like there are some errors detected, please try again.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\"\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n    var validatePassword = function() {\n        return  (passwordMeter.getScore() > 50);\n    }\n\n    var isValidUrl = function(url) {\n        try {\n            new URL(url);\n            return true;\n        } catch (e) {\n            return false;\n        }\n    }\n\n    // Public Functions\n    return {\n        // public functions\n        init: function() {\n            form = document.querySelector('#kt_new_password_form');\n            submitButton = document.querySelector('#kt_new_password_submit');\n            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter=\"true\"]'));\n\n            handleForm();\n\n            if (isValidUrl(form.getAttribute('action'))) {\n                handleSubmitAjax(); // use for ajax submit\n            } else {\n                handleSubmitDemo(); // used for demo purposes only\n            }\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function() {\n    KTAuthNewPassword.init();\n});\n\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/authentication/reset-password/new-password.js?");
 
-    var handleForm = function(e) {
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'password': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password is required'
-                            },
-                            callback: {
-                                message: 'Please enter valid password',
-                                callback: function(input) {
-                                    if (input.value.length > 0) {
-                                        return validatePassword();
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    'confirm-password': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password confirmation is required'
-                            },
-                            identical: {
-                                compare: function() {
-                                    return form.querySelector('[name="password"]').value;
-                                },
-                                message: 'The password and its confirm are not the same'
-                            }
-                        }
-                    },
-                    'toc': {
-                        validators: {
-                            notEmpty: {
-                                message: 'You must accept the terms and conditions'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger({
-                        event: {
-                            password: false
-                        }
-                    }),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',  // comment to enable invalid state icons
-                        eleValidClass: '' // comment to enable valid state icons
-                    })
-                }
-            }
-        );
+/***/ })
 
-        form.querySelector('input[name="password"]').addEventListener('input', function() {
-            if (this.value.length > 0) {
-                validator.updateFieldStatus('password', 'NotValidated');
-            }
-        });
-    }
-
-
-    var handleSubmitDemo = function (e) {
-        submitButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            validator.revalidateField('password');
-
-            validator.validate().then(function(status) {
-                if (status == 'Valid') {
-                    // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
-
-                    // Disable button to avoid multiple click
-                    submitButton.disabled = true;
-
-                    // Simulate ajax request
-                    setTimeout(function() {
-                        // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
-
-                        // Enable button
-                        submitButton.disabled = false;
-
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "You have successfully reset your password!",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) {
-                                form.querySelector('[name="password"]').value= "";
-                                form.querySelector('[name="confirm-password"]').value= "";
-                                passwordMeter.reset();  // reset password meter
-                                //form.submit();
-
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                if (redirectUrl) {
-                                    location.href = redirectUrl;
-                                }
-                            }
-                        });
-                    }, 1500);
-                } else {
-                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                    Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    });
-                }
-            });
-        });
-
-    }
-
-    var handleSubmitAjax = function (e) {
-        // Handle form submit
-        submitButton.addEventListener('click', function (e) {
-            // Prevent button default action
-            e.preventDefault();
-
-            validator.revalidateField('password');
-
-            // Validate form
-            validator.validate().then(function (status) {
-                if (status == 'Valid') {
-                    // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
-
-                    // Disable button to avoid multiple click
-                    submitButton.disabled = true;
-
-                    // Check axios library docs: https://axios-http.com/docs/intro
-                    axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {
-                        if (response) {
-                            form.reset();
-
-                            const redirectUrl = form.getAttribute('data-kt-redirect-url');
-
-                            if (redirectUrl) {
-                                location.href = redirectUrl;
-                            }
-                        } else {
-                            // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                            Swal.fire({
-                                text: "Sorry, the email is incorrect, please try again.",
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            });
-                        }
-                    }).catch(function (error) {
-                        Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    }).then(() => {
-                        // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
-
-                        // Enable button
-                        submitButton.disabled = false;
-                    });
-                } else {
-                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                    Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    var validatePassword = function() {
-        return  (passwordMeter.getScore() > 50);
-    }
-
-    var isValidUrl = function(url) {
-        try {
-            new URL(url);
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    // Public Functions
-    return {
-        // public functions
-        init: function() {
-            form = document.querySelector('#kt_new_password_form');
-            submitButton = document.querySelector('#kt_new_password_submit');
-            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
-
-            handleForm();
-
-            if (isValidUrl(form.getAttribute('action'))) {
-                handleSubmitAjax(); // use for ajax submit
-            } else {
-                handleSubmitDemo(); // used for demo purposes only
-            }
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAuthNewPassword.init();
-});
-
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/authentication/reset-password/new-password.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=new-password.js.map

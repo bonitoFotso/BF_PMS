@@ -1,220 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!*******************************************************!*\
-  !*** ../src/js/custom/utilities/modals/new-target.js ***!
-  \*******************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/utilities/modals/new-target.js":
+/*!**************************************************************!*\
+  !*** ../demo41/src/js/custom/utilities/modals/new-target.js ***!
+  \**************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTModalNewTarget = function () {
-	var submitButton;
-	var cancelButton;
-	var validator;
-	var form;
-	var modal;
-	var modalEl;
+eval("\n\n// Class definition\nvar KTModalNewTarget = function () {\n\tvar submitButton;\n\tvar cancelButton;\n\tvar validator;\n\tvar form;\n\tvar modal;\n\tvar modalEl;\n\n\t// Init form inputs\n\tvar initForm = function() {\n\t\t// Tags. For more info, please visit the official plugin site: https://yaireo.github.io/tagify/\n\t\tvar tags = new Tagify(form.querySelector('[name=\"tags\"]'), {\n\t\t\twhitelist: [\"Important\", \"Urgent\", \"High\", \"Medium\", \"Low\"],\n\t\t\tmaxTags: 5,\n\t\t\tdropdown: {\n\t\t\t\tmaxItems: 10,           // <- mixumum allowed rendered suggestions\n\t\t\t\tenabled: 0,             // <- show suggestions on focus\n\t\t\t\tcloseOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected\n\t\t\t}\n\t\t});\n\t\ttags.on(\"change\", function(){\n\t\t\t// Revalidate the field when an option is chosen\n            validator.revalidateField('tags');\n\t\t});\n\n\t\t// Due date. For more info, please visit the official plugin site: https://flatpickr.js.org/\n\t\tvar dueDate = $(form.querySelector('[name=\"due_date\"]'));\n\t\tdueDate.flatpickr({\n\t\t\tenableTime: true,\n\t\t\tdateFormat: \"d, M Y, H:i\",\n\t\t});\n\n\t\t// Team assign. For more info, plase visit the official plugin site: https://select2.org/\n        $(form.querySelector('[name=\"team_assign\"]')).on('change', function() {\n            // Revalidate the field when an option is chosen\n            validator.revalidateField('team_assign');\n        });\n\t}\n\n\t// Handle form validation and submittion\n\tvar handleForm = function() {\n\t\t// Stepper custom navigation\n\n\t\t// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n\t\tvalidator = FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\ttarget_title: {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Target title is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\ttarget_assign: {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Target assign is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\ttarget_due_date: {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Target due date is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\ttarget_tags: {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Target tags are required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'targets_notifications[]': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Please select at least one communication method'\n                            }\n                        }\n                    },\n\t\t\t\t},\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t);\n\n\t\t// Action buttons\n\t\tsubmitButton.addEventListener('click', function (e) {\n\t\t\te.preventDefault();\n\n\t\t\t// Validate form before submit\n\t\t\tif (validator) {\n\t\t\t\tvalidator.validate().then(function (status) {\n\t\t\t\t\tconsole.log('validated!');\n\n\t\t\t\t\tif (status == 'Valid') {\n\t\t\t\t\t\tsubmitButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t\t\t\t// Disable button to avoid multiple click \n\t\t\t\t\t\tsubmitButton.disabled = true;\n\n\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\tsubmitButton.removeAttribute('data-kt-indicator');\n\n\t\t\t\t\t\t\t// Enable button\n\t\t\t\t\t\t\tsubmitButton.disabled = false;\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t// Show success message. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n\t\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\t\ttext: \"Form has been successfully submitted!\",\n\t\t\t\t\t\t\t\ticon: \"success\",\n\t\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}).then(function (result) {\n\t\t\t\t\t\t\t\tif (result.isConfirmed) {\n\t\t\t\t\t\t\t\t\tmodal.hide();\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t});\n\n\t\t\t\t\t\t\t//form.submit(); // Submit form\n\t\t\t\t\t\t}, 2000);   \t\t\t\t\t\t\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Show error message.\n\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\ttext: \"Sorry, looks like there are some errors detected, please try again.\",\n\t\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\t\t});\n\n\t\tcancelButton.addEventListener('click', function (e) {\n\t\t\te.preventDefault();\n\n\t\t\tSwal.fire({\n\t\t\t\ttext: \"Are you sure you would like to cancel?\",\n\t\t\t\ticon: \"warning\",\n\t\t\t\tshowCancelButton: true,\n\t\t\t\tbuttonsStyling: false,\n\t\t\t\tconfirmButtonText: \"Yes, cancel it!\",\n\t\t\t\tcancelButtonText: \"No, return\",\n\t\t\t\tcustomClass: {\n\t\t\t\t\tconfirmButton: \"btn btn-primary\",\n\t\t\t\t\tcancelButton: \"btn btn-active-light\"\n\t\t\t\t}\n\t\t\t}).then(function (result) {\n\t\t\t\tif (result.value) {\n\t\t\t\t\tform.reset(); // Reset form\t\n\t\t\t\t\tmodal.hide(); // Hide modal\t\t\t\t\n\t\t\t\t} else if (result.dismiss === 'cancel') {\n\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\ttext: \"Your form has not been cancelled!.\",\n\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\",\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t});\n\t\t});\n\t}\n\n\treturn {\n\t\t// Public functions\n\t\tinit: function () {\n\t\t\t// Elements\n\t\t\tmodalEl = document.querySelector('#kt_modal_new_target');\n\n\t\t\tif (!modalEl) {\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tmodal = new bootstrap.Modal(modalEl);\n\n\t\t\tform = document.querySelector('#kt_modal_new_target_form');\n\t\t\tsubmitButton = document.getElementById('kt_modal_new_target_submit');\n\t\t\tcancelButton = document.getElementById('kt_modal_new_target_cancel');\n\n\t\t\tinitForm();\n\t\t\thandleForm();\n\t\t}\n\t};\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n\tKTModalNewTarget.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/utilities/modals/new-target.js?");
 
-	// Init form inputs
-	var initForm = function() {
-		// Tags. For more info, please visit the official plugin site: https://yaireo.github.io/tagify/
-		var tags = new Tagify(form.querySelector('[name="tags"]'), {
-			whitelist: ["Important", "Urgent", "High", "Medium", "Low"],
-			maxTags: 5,
-			dropdown: {
-				maxItems: 10,           // <- mixumum allowed rendered suggestions
-				enabled: 0,             // <- show suggestions on focus
-				closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-			}
-		});
-		tags.on("change", function(){
-			// Revalidate the field when an option is chosen
-            validator.revalidateField('tags');
-		});
+/***/ })
 
-		// Due date. For more info, please visit the official plugin site: https://flatpickr.js.org/
-		var dueDate = $(form.querySelector('[name="due_date"]'));
-		dueDate.flatpickr({
-			enableTime: true,
-			dateFormat: "d, M Y, H:i",
-		});
-
-		// Team assign. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="team_assign"]')).on('change', function() {
-            // Revalidate the field when an option is chosen
-            validator.revalidateField('team_assign');
-        });
-	}
-
-	// Handle form validation and submittion
-	var handleForm = function() {
-		// Stepper custom navigation
-
-		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-		validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					target_title: {
-						validators: {
-							notEmpty: {
-								message: 'Target title is required'
-							}
-						}
-					},
-					target_assign: {
-						validators: {
-							notEmpty: {
-								message: 'Target assign is required'
-							}
-						}
-					},
-					target_due_date: {
-						validators: {
-							notEmpty: {
-								message: 'Target due date is required'
-							}
-						}
-					},
-					target_tags: {
-						validators: {
-							notEmpty: {
-								message: 'Target tags are required'
-							}
-						}
-					},
-					'targets_notifications[]': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Please select at least one communication method'
-                            }
-                        }
-                    },
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-					})
-				}
-			}
-		);
-
-		// Action buttons
-		submitButton.addEventListener('click', function (e) {
-			e.preventDefault();
-
-			// Validate form before submit
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
-
-					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
-
-						// Disable button to avoid multiple click 
-						submitButton.disabled = true;
-
-						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
-
-							// Enable button
-							submitButton.disabled = false;
-							
-							// Show success message. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-							Swal.fire({
-								text: "Form has been successfully submitted!",
-								icon: "success",
-								buttonsStyling: false,
-								confirmButtonText: "Ok, got it!",
-								customClass: {
-									confirmButton: "btn btn-primary"
-								}
-							}).then(function (result) {
-								if (result.isConfirmed) {
-									modal.hide();
-								}
-							});
-
-							//form.submit(); // Submit form
-						}, 2000);   						
-					} else {
-						// Show error message.
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-primary"
-							}
-						});
-					}
-				});
-			}
-		});
-
-		cancelButton.addEventListener('click', function (e) {
-			e.preventDefault();
-
-			Swal.fire({
-				text: "Are you sure you would like to cancel?",
-				icon: "warning",
-				showCancelButton: true,
-				buttonsStyling: false,
-				confirmButtonText: "Yes, cancel it!",
-				cancelButtonText: "No, return",
-				customClass: {
-					confirmButton: "btn btn-primary",
-					cancelButton: "btn btn-active-light"
-				}
-			}).then(function (result) {
-				if (result.value) {
-					form.reset(); // Reset form	
-					modal.hide(); // Hide modal				
-				} else if (result.dismiss === 'cancel') {
-					Swal.fire({
-						text: "Your form has not been cancelled!.",
-						icon: "error",
-						buttonsStyling: false,
-						confirmButtonText: "Ok, got it!",
-						customClass: {
-							confirmButton: "btn btn-primary",
-						}
-					});
-				}
-			});
-		});
-	}
-
-	return {
-		// Public functions
-		init: function () {
-			// Elements
-			modalEl = document.querySelector('#kt_modal_new_target');
-
-			if (!modalEl) {
-				return;
-			}
-
-			modal = new bootstrap.Modal(modalEl);
-
-			form = document.querySelector('#kt_modal_new_target_form');
-			submitButton = document.getElementById('kt_modal_new_target_submit');
-			cancelButton = document.getElementById('kt_modal_new_target_cancel');
-
-			initForm();
-			handleForm();
-		}
-	};
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalNewTarget.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/utilities/modals/new-target.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=new-target.js.map

@@ -1,70 +1,22 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../src/js/custom/utilities/modals/create-project/team.js":
-/*!****************************************************************!*\
-  !*** ../src/js/custom/utilities/modals/create-project/team.js ***!
-  \****************************************************************/
+/***/ "../demo41/src/js/custom/utilities/modals/create-project/team.js":
+/*!***********************************************************************!*\
+  !*** ../demo41/src/js/custom/utilities/modals/create-project/team.js ***!
+  \***********************************************************************/
 /***/ ((module) => {
 
-
-
-// Class definition
-var KTModalCreateProjectTeam = function () {
-	// Variables
-	var nextButton;
-	var previousButton;
-	var form;
-	var stepper;
-
-	// Private functions
-	var handleForm = function() {
-		nextButton.addEventListener('click', function (e) {
-			// Prevent default button action
-			e.preventDefault();
-
-			// Disable button to avoid multiple click 
-			nextButton.disabled = true;
-
-			// Show loading indication
-			nextButton.setAttribute('data-kt-indicator', 'on');
-
-			// Simulate form submission
-			setTimeout(function() {
-				// Enable button
-				nextButton.disabled = false;
-				
-				// Simulate form submission
-				nextButton.removeAttribute('data-kt-indicator');
-				
-				// Go to next step
-				stepper.goNext();
-			}, 1500); 		
-		});
-
-		previousButton.addEventListener('click', function () {
-			stepper.goPrevious();
-		});
-	}
-
-	return {
-		// Public functions
-		init: function () {
-			form = KTModalCreateProject.getForm();
-			stepper = KTModalCreateProject.getStepperObj();
-			nextButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="team-next"]');
-			previousButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="team-previous"]');
-
-			handleForm();
-		}
-	};
-}();
-
-// Webpack support
-if ( true && typeof module.exports !== 'undefined') {
-	window.KTModalCreateProjectTeam = module.exports = KTModalCreateProjectTeam;
-}
+eval("\n\n// Class definition\nvar KTModalCreateProjectTeam = function () {\n\t// Variables\n\tvar nextButton;\n\tvar previousButton;\n\tvar form;\n\tvar stepper;\n\n\t// Private functions\n\tvar handleForm = function() {\n\t\tnextButton.addEventListener('click', function (e) {\n\t\t\t// Prevent default button action\n\t\t\te.preventDefault();\n\n\t\t\t// Disable button to avoid multiple click \n\t\t\tnextButton.disabled = true;\n\n\t\t\t// Show loading indication\n\t\t\tnextButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t// Simulate form submission\n\t\t\tsetTimeout(function() {\n\t\t\t\t// Enable button\n\t\t\t\tnextButton.disabled = false;\n\t\t\t\t\n\t\t\t\t// Simulate form submission\n\t\t\t\tnextButton.removeAttribute('data-kt-indicator');\n\t\t\t\t\n\t\t\t\t// Go to next step\n\t\t\t\tstepper.goNext();\n\t\t\t}, 1500); \t\t\n\t\t});\n\n\t\tpreviousButton.addEventListener('click', function () {\n\t\t\tstepper.goPrevious();\n\t\t});\n\t}\n\n\treturn {\n\t\t// Public functions\n\t\tinit: function () {\n\t\t\tform = KTModalCreateProject.getForm();\n\t\t\tstepper = KTModalCreateProject.getStepperObj();\n\t\t\tnextButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element=\"team-next\"]');\n\t\t\tpreviousButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element=\"team-previous\"]');\n\n\t\t\thandleForm();\n\t\t}\n\t};\n}();\n\n// Webpack support\nif ( true && typeof module.exports !== 'undefined') {\n\twindow.KTModalCreateProjectTeam = module.exports = KTModalCreateProjectTeam;\n}\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/utilities/modals/create-project/team.js?");
 
 /***/ })
 
@@ -99,8 +51,7 @@ if ( true && typeof module.exports !== 'undefined') {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("../src/js/custom/utilities/modals/create-project/team.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("../demo41/src/js/custom/utilities/modals/create-project/team.js");
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=team.js.map

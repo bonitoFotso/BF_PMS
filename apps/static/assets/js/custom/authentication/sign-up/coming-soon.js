@@ -1,174 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!**************************************************************!*\
-  !*** ../src/js/custom/authentication/sign-up/coming-soon.js ***!
-  \**************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/authentication/sign-up/coming-soon.js":
+/*!*********************************************************************!*\
+  !*** ../demo41/src/js/custom/authentication/sign-up/coming-soon.js ***!
+  \*********************************************************************/
+/***/ (() => {
 
-// Class Definition
-var KTSignupComingSoon = function() {
-    // Elements
-    var form;
-    var submitButton;
-	var validator; 
+eval("\n\n// Class Definition\nvar KTSignupComingSoon = function() {\n    // Elements\n    var form;\n    var submitButton;\n\tvar validator; \n\n    var counterDays;\n    var counterHours;\n    var counterMinutes;\n    var counterSeconds;\n\n    var handleForm = function(e) {\n        var validation;\t\t \n\n        if( !form ) {\n            return;\n        }        \n\n        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n        validator = FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\t\t\t\t\t\n\t\t\t\t\t'email': {\n                        validators: {\n                            regexp: {\n                                regexp: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/,\n                                message: 'The value is not a valid email address',\n                            },\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Email address is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t} \n\t\t\t\t},\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n                    })\n\t\t\t\t}\n\t\t\t}\n\t\t);\t\t\n\n        submitButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            // Validate form\n            validator.validate().then(function (status) {\n                if (status == 'Valid') {\n                    // Show loading indication\n                    submitButton.setAttribute('data-kt-indicator', 'on');\n\n                    // Disable button to avoid multiple click \n                    submitButton.disabled = true;\n\n                    // Simulate ajax request\n                    setTimeout(function() {\n                        // Hide loading indication\n                        submitButton.removeAttribute('data-kt-indicator');\n\n                        // Enable button\n                        submitButton.disabled = false;\n\n                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                        Swal.fire({\n                            text: \"We have received your request. You will be notified once we go live.\",\n                            icon: \"success\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\"\n                            }\n                        }).then(function (result) {\n                            if (result.isConfirmed) { \n                                form.querySelector('[name=\"email\"]').value= \"\";                            \n                                //form.submit();\n\n                                //form.submit(); // submit form\n                                var redirectUrl = form.getAttribute('data-kt-redirect-url');\n                                if (redirectUrl) {\n                                    location.href = redirectUrl;\n                                }\n                            }\n                        });\n                    }, 2000);   \t\t\t\t\t\t\n                } else {\n                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                    Swal.fire({\n                        text: \"Sorry, looks like there are some errors detected, please try again.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\"\n                        }\n                    });\n                }\n            });\n\t\t});\n    }\n\n    var initCounter = function() {\n        // Set the date we're counting down to\n        var currentTime = new Date(); \n        var countDownDate = new Date(currentTime.getTime() + 1000 * 60 * 60 * 24 * 15 + 1000 * 60 * 60 * 10 + 1000 * 60 * 15).getTime();\n\n        var count = function() {\n            // Get todays date and time\n            var now = new Date().getTime();\n\n            // Find the distance between now an the count down date\n            var distance = countDownDate - now;\n\n            // Time calculations for days, hours, minutes and seconds\n            var days = Math.floor(distance / (1000 * 60 * 60 * 24));\n            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));\n            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));\n            var seconds = Math.floor((distance % (1000 * 60)) / 1000);\n\n            // Display the result\n            if(counterDays) counterDays.innerHTML = days; \n            if(counterHours) counterHours.innerHTML = hours;\n            if(counterMinutes) counterMinutes.innerHTML = minutes;\n            if(counterSeconds) counterSeconds.innerHTML = seconds;\n        };\n\n        // Update the count down every 1 second\n        var x = setInterval(count, 1000);\n\n        // Initial count\n        count();\n    }\n\n    // Public Functions\n    return {\n        // public functions\n        init: function() {\n            form = document.querySelector('#kt_coming_soon_form');\n            submitButton = document.querySelector('#kt_coming_soon_submit');\n           \n            handleForm();\n\n            counterDays = document.querySelector('#kt_coming_soon_counter_days');\n            if (counterDays) {                \n                counterHours = document.querySelector('#kt_coming_soon_counter_hours');\n                counterMinutes = document.querySelector('#kt_coming_soon_counter_minutes');\n                counterSeconds = document.querySelector('#kt_coming_soon_counter_seconds');\n                \n                initCounter();\n            }\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function() {\n    KTSignupComingSoon.init();\n});\n\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/authentication/sign-up/coming-soon.js?");
 
-    var counterDays;
-    var counterHours;
-    var counterMinutes;
-    var counterSeconds;
+/***/ })
 
-    var handleForm = function(e) {
-        var validation;		 
-
-        if( !form ) {
-            return;
-        }        
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {					
-					'email': {
-                        validators: {
-                            regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'The value is not a valid email address',
-                            },
-							notEmpty: {
-								message: 'Email address is required'
-							}
-						}
-					} 
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-				}
-			}
-		);		
-
-        submitButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            // Validate form
-            validator.validate().then(function (status) {
-                if (status == 'Valid') {
-                    // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
-
-                    // Disable button to avoid multiple click 
-                    submitButton.disabled = true;
-
-                    // Simulate ajax request
-                    setTimeout(function() {
-                        // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
-
-                        // Enable button
-                        submitButton.disabled = false;
-
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "We have received your request. You will be notified once we go live.",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) { 
-                                form.querySelector('[name="email"]').value= "";                            
-                                //form.submit();
-
-                                //form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                if (redirectUrl) {
-                                    location.href = redirectUrl;
-                                }
-                            }
-                        });
-                    }, 2000);   						
-                } else {
-                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                    Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    });
-                }
-            });
-		});
-    }
-
-    var initCounter = function() {
-        // Set the date we're counting down to
-        var currentTime = new Date(); 
-        var countDownDate = new Date(currentTime.getTime() + 1000 * 60 * 60 * 24 * 15 + 1000 * 60 * 60 * 10 + 1000 * 60 * 15).getTime();
-
-        var count = function() {
-            // Get todays date and time
-            var now = new Date().getTime();
-
-            // Find the distance between now an the count down date
-            var distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Display the result
-            if(counterDays) counterDays.innerHTML = days; 
-            if(counterHours) counterHours.innerHTML = hours;
-            if(counterMinutes) counterMinutes.innerHTML = minutes;
-            if(counterSeconds) counterSeconds.innerHTML = seconds;
-        };
-
-        // Update the count down every 1 second
-        var x = setInterval(count, 1000);
-
-        // Initial count
-        count();
-    }
-
-    // Public Functions
-    return {
-        // public functions
-        init: function() {
-            form = document.querySelector('#kt_coming_soon_form');
-            submitButton = document.querySelector('#kt_coming_soon_submit');
-           
-            handleForm();
-
-            counterDays = document.querySelector('#kt_coming_soon_counter_days');
-            if (counterDays) {                
-                counterHours = document.querySelector('#kt_coming_soon_counter_hours');
-                counterMinutes = document.querySelector('#kt_coming_soon_counter_minutes');
-                counterSeconds = document.querySelector('#kt_coming_soon_counter_seconds');
-                
-                initCounter();
-            }
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSignupComingSoon.init();
-});
-
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/authentication/sign-up/coming-soon.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=coming-soon.js.map

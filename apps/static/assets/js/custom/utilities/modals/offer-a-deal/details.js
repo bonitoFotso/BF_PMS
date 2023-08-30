@@ -1,160 +1,22 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../src/js/custom/utilities/modals/offer-a-deal/details.js":
-/*!*****************************************************************!*\
-  !*** ../src/js/custom/utilities/modals/offer-a-deal/details.js ***!
-  \*****************************************************************/
+/***/ "../demo41/src/js/custom/utilities/modals/offer-a-deal/details.js":
+/*!************************************************************************!*\
+  !*** ../demo41/src/js/custom/utilities/modals/offer-a-deal/details.js ***!
+  \************************************************************************/
 /***/ ((module) => {
 
-
-
-// Class definition
-var KTModalOfferADealDetails = function () {
-	// Variables
-	var nextButton;
-	var previousButton;
-	var validator;
-	var form;
-	var stepper;
-
-	// Private functions
-	var initForm = function() {
-		// Due date. For more info, please visit the official plugin site: https://flatpickr.js.org/
-		var dueDate = $(form.querySelector('[name="details_activation_date"]'));
-		dueDate.flatpickr({
-			enableTime: true,
-			dateFormat: "d, M Y, H:i",
-		});
-
-		// Expiry year. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="details_customer"]')).on('change', function() {
-            // Revalidate the field when an option is chosen
-            validator.revalidateField('details_customer');
-        });
-	}
-
-	var initValidation = function() {
-		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-		validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					'details_customer': {
-						validators: {
-							notEmpty: {
-								message: 'Customer is required'
-							}
-						}
-					},
-					'details_title': {
-						validators: {
-							notEmpty: {
-								message: 'Deal title is required'
-							}
-						}
-					},					
-					'details_activation_date': {
-						validators: {
-							notEmpty: {
-								message: 'Activation date is required'
-							}
-						}
-					},
-					'details_notifications[]': {
-						validators: {
-							notEmpty: {
-								message: 'Notifications are required'
-							}
-						}
-					}
-				},
-				
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-					})
-				}
-			}
-		);
-	}
-
-	var handleForm = function() {
-		nextButton.addEventListener('click', function (e) {
-			// Prevent default button action
-			e.preventDefault();
-
-			// Disable button to avoid multiple click 
-			nextButton.disabled = true;
-
-			// Validate form before submit
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
-
-					if (status == 'Valid') {
-						// Show loading indication
-						nextButton.setAttribute('data-kt-indicator', 'on');
-
-						// Simulate form submission
-						setTimeout(function() {
-							// Simulate form submission
-							nextButton.removeAttribute('data-kt-indicator');
-
-							// Enable button
-							nextButton.disabled = false;
-							
-							// Go to next step
-							stepper.goNext();
-						}, 1500);   						
-					} else {
-						// Enable button
-						nextButton.disabled = false;
-						
-						// Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-primary"
-							}
-						});
-					}
-				});
-			}			
-		});
-
-		previousButton.addEventListener('click', function () {
-			// Go to previous step
-			stepper.goPrevious();
-		});
-	}
-
-	return {
-		// Public functions
-		init: function () {
-			form = KTModalOfferADeal.getForm();
-			stepper = KTModalOfferADeal.getStepperObj();
-			nextButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="details-next"]');
-			previousButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="details-previous"]');
-
-			initForm();
-			initValidation();
-			handleForm();
-		}
-	};
-}();
-
-// Webpack support
-if ( true && typeof module.exports !== 'undefined') {
-	window.KTModalOfferADealDetails = module.exports = KTModalOfferADealDetails;
-}
+eval("\n\n// Class definition\nvar KTModalOfferADealDetails = function () {\n\t// Variables\n\tvar nextButton;\n\tvar previousButton;\n\tvar validator;\n\tvar form;\n\tvar stepper;\n\n\t// Private functions\n\tvar initForm = function() {\n\t\t// Due date. For more info, please visit the official plugin site: https://flatpickr.js.org/\n\t\tvar dueDate = $(form.querySelector('[name=\"details_activation_date\"]'));\n\t\tdueDate.flatpickr({\n\t\t\tenableTime: true,\n\t\t\tdateFormat: \"d, M Y, H:i\",\n\t\t});\n\n\t\t// Expiry year. For more info, plase visit the official plugin site: https://select2.org/\n        $(form.querySelector('[name=\"details_customer\"]')).on('change', function() {\n            // Revalidate the field when an option is chosen\n            validator.revalidateField('details_customer');\n        });\n\t}\n\n\tvar initValidation = function() {\n\t\t// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n\t\tvalidator = FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\t'details_customer': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Customer is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'details_title': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Deal title is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\t\t\t\t\t\n\t\t\t\t\t'details_activation_date': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Activation date is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'details_notifications[]': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Notifications are required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t);\n\t}\n\n\tvar handleForm = function() {\n\t\tnextButton.addEventListener('click', function (e) {\n\t\t\t// Prevent default button action\n\t\t\te.preventDefault();\n\n\t\t\t// Disable button to avoid multiple click \n\t\t\tnextButton.disabled = true;\n\n\t\t\t// Validate form before submit\n\t\t\tif (validator) {\n\t\t\t\tvalidator.validate().then(function (status) {\n\t\t\t\t\tconsole.log('validated!');\n\n\t\t\t\t\tif (status == 'Valid') {\n\t\t\t\t\t\t// Show loading indication\n\t\t\t\t\t\tnextButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t\t\t\t// Simulate form submission\n\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\t// Simulate form submission\n\t\t\t\t\t\t\tnextButton.removeAttribute('data-kt-indicator');\n\n\t\t\t\t\t\t\t// Enable button\n\t\t\t\t\t\t\tnextButton.disabled = false;\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t// Go to next step\n\t\t\t\t\t\t\tstepper.goNext();\n\t\t\t\t\t\t}, 1500);   \t\t\t\t\t\t\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Enable button\n\t\t\t\t\t\tnextButton.disabled = false;\n\t\t\t\t\t\t\n\t\t\t\t\t\t// Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\ttext: \"Sorry, looks like there are some errors detected, please try again.\",\n\t\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\t\t\t\n\t\t});\n\n\t\tpreviousButton.addEventListener('click', function () {\n\t\t\t// Go to previous step\n\t\t\tstepper.goPrevious();\n\t\t});\n\t}\n\n\treturn {\n\t\t// Public functions\n\t\tinit: function () {\n\t\t\tform = KTModalOfferADeal.getForm();\n\t\t\tstepper = KTModalOfferADeal.getStepperObj();\n\t\t\tnextButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element=\"details-next\"]');\n\t\t\tpreviousButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element=\"details-previous\"]');\n\n\t\t\tinitForm();\n\t\t\tinitValidation();\n\t\t\thandleForm();\n\t\t}\n\t};\n}();\n\n// Webpack support\nif ( true && typeof module.exports !== 'undefined') {\n\twindow.KTModalOfferADealDetails = module.exports = KTModalOfferADealDetails;\n}\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/utilities/modals/offer-a-deal/details.js?");
 
 /***/ })
 
@@ -189,8 +51,7 @@ if ( true && typeof module.exports !== 'undefined') {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("../src/js/custom/utilities/modals/offer-a-deal/details.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("../demo41/src/js/custom/utilities/modals/offer-a-deal/details.js");
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=details.js.map

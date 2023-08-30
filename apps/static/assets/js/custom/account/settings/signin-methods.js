@@ -1,246 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!***********************************************************!*\
-  !*** ../src/js/custom/account/settings/signin-methods.js ***!
-  \***********************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/account/settings/signin-methods.js":
+/*!******************************************************************!*\
+  !*** ../demo41/src/js/custom/account/settings/signin-methods.js ***!
+  \******************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTAccountSettingsSigninMethods = function () {
-    var signInForm;
-    var signInMainEl;
-    var signInEditEl;
-    var passwordMainEl;
-    var passwordEditEl;
-    var signInChangeEmail;
-    var signInCancelEmail;
-    var passwordChange;
-    var passwordCancel;
+eval("\n\n// Class definition\nvar KTAccountSettingsSigninMethods = function () {\n    var signInForm;\n    var signInMainEl;\n    var signInEditEl;\n    var passwordMainEl;\n    var passwordEditEl;\n    var signInChangeEmail;\n    var signInCancelEmail;\n    var passwordChange;\n    var passwordCancel;\n\n    var toggleChangeEmail = function () {\n        signInMainEl.classList.toggle('d-none');\n        signInChangeEmail.classList.toggle('d-none');\n        signInEditEl.classList.toggle('d-none');\n    }\n\n    var toggleChangePassword = function () {\n        passwordMainEl.classList.toggle('d-none');\n        passwordChange.classList.toggle('d-none');\n        passwordEditEl.classList.toggle('d-none');\n    }\n\n    // Private functions\n    var initSettings = function () {  \n        if (!signInMainEl) {\n            return;\n        }        \n\n        // toggle UI\n        signInChangeEmail.querySelector('button').addEventListener('click', function () {\n            toggleChangeEmail();\n        });\n\n        signInCancelEmail.addEventListener('click', function () {\n            toggleChangeEmail();\n        });\n\n        passwordChange.querySelector('button').addEventListener('click', function () {\n            toggleChangePassword();\n        });\n\n        passwordCancel.addEventListener('click', function () {\n            toggleChangePassword();\n        });\n    }\n\n    var handleChangeEmail = function (e) {\n        var validation;        \n\n        if (!signInForm) {\n            return;\n        }\n\n        validation = FormValidation.formValidation(\n            signInForm,\n            {\n                fields: {\n                    emailaddress: {\n                        validators: {\n                            notEmpty: {\n                                message: 'Email is required'\n                            },\n                            emailAddress: {\n                                message: 'The value is not a valid email address'\n                            }\n                        }\n                    },\n\n                    confirmemailpassword: {\n                        validators: {\n                            notEmpty: {\n                                message: 'Password is required'\n                            }\n                        }\n                    }\n                },\n\n                plugins: { //Learn more: https://formvalidation.io/guide/plugins\n                    trigger: new FormValidation.plugins.Trigger(),\n                    bootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row'\n                    })\n                }\n            }\n        );\n\n        signInForm.querySelector('#kt_signin_submit').addEventListener('click', function (e) {\n            e.preventDefault();\n            console.log('click');\n\n            validation.validate().then(function (status) {\n                if (status == 'Valid') {\n                    swal.fire({\n                        text: \"Sent password reset. Please check your email\",\n                        icon: \"success\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn font-weight-bold btn-light-primary\"\n                        }\n                    }).then(function(){\n                        signInForm.reset();\n                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/\n                        toggleChangeEmail();\n                    });\n                } else {\n                    swal.fire({\n                        text: \"Sorry, looks like there are some errors detected, please try again.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn font-weight-bold btn-light-primary\"\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n    var handleChangePassword = function (e) {\n        var validation;\n\n        // form elements\n        var passwordForm = document.getElementById('kt_signin_change_password');\n\n        if (!passwordForm) {\n            return;\n        }\n\n        validation = FormValidation.formValidation(\n            passwordForm,\n            {\n                fields: {\n                    currentpassword: {\n                        validators: {\n                            notEmpty: {\n                                message: 'Current Password is required'\n                            }\n                        }\n                    },\n\n                    newpassword: {\n                        validators: {\n                            notEmpty: {\n                                message: 'New Password is required'\n                            }\n                        }\n                    },\n\n                    confirmpassword: {\n                        validators: {\n                            notEmpty: {\n                                message: 'Confirm Password is required'\n                            },\n                            identical: {\n                                compare: function() {\n                                    return passwordForm.querySelector('[name=\"newpassword\"]').value;\n                                },\n                                message: 'The password and its confirm are not the same'\n                            }\n                        }\n                    },\n                },\n\n                plugins: { //Learn more: https://formvalidation.io/guide/plugins\n                    trigger: new FormValidation.plugins.Trigger(),\n                    bootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row'\n                    })\n                }\n            }\n        );\n\n        passwordForm.querySelector('#kt_password_submit').addEventListener('click', function (e) {\n            e.preventDefault();\n            console.log('click');\n\n            validation.validate().then(function (status) {\n                if (status == 'Valid') {\n                    swal.fire({\n                        text: \"Sent password reset. Please check your email\",\n                        icon: \"success\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn font-weight-bold btn-light-primary\"\n                        }\n                    }).then(function(){\n                        passwordForm.reset();\n                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/\n                        toggleChangePassword();\n                    });\n                } else {\n                    swal.fire({\n                        text: \"Sorry, looks like there are some errors detected, please try again.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn font-weight-bold btn-light-primary\"\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n    // Public methods\n    return {\n        init: function () {\n            signInForm = document.getElementById('kt_signin_change_email');\n            signInMainEl = document.getElementById('kt_signin_email');\n            signInEditEl = document.getElementById('kt_signin_email_edit');\n            passwordMainEl = document.getElementById('kt_signin_password');\n            passwordEditEl = document.getElementById('kt_signin_password_edit');\n            signInChangeEmail = document.getElementById('kt_signin_email_button');\n            signInCancelEmail = document.getElementById('kt_signin_cancel');\n            passwordChange = document.getElementById('kt_signin_password_button');\n            passwordCancel = document.getElementById('kt_password_cancel');\n\n            initSettings();\n            handleChangeEmail();\n            handleChangePassword();\n        }\n    }\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function() {\n    KTAccountSettingsSigninMethods.init();\n});\n\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/account/settings/signin-methods.js?");
 
-    var toggleChangeEmail = function () {
-        signInMainEl.classList.toggle('d-none');
-        signInChangeEmail.classList.toggle('d-none');
-        signInEditEl.classList.toggle('d-none');
-    }
+/***/ })
 
-    var toggleChangePassword = function () {
-        passwordMainEl.classList.toggle('d-none');
-        passwordChange.classList.toggle('d-none');
-        passwordEditEl.classList.toggle('d-none');
-    }
-
-    // Private functions
-    var initSettings = function () {  
-        if (!signInMainEl) {
-            return;
-        }        
-
-        // toggle UI
-        signInChangeEmail.querySelector('button').addEventListener('click', function () {
-            toggleChangeEmail();
-        });
-
-        signInCancelEmail.addEventListener('click', function () {
-            toggleChangeEmail();
-        });
-
-        passwordChange.querySelector('button').addEventListener('click', function () {
-            toggleChangePassword();
-        });
-
-        passwordCancel.addEventListener('click', function () {
-            toggleChangePassword();
-        });
-    }
-
-    var handleChangeEmail = function (e) {
-        var validation;        
-
-        if (!signInForm) {
-            return;
-        }
-
-        validation = FormValidation.formValidation(
-            signInForm,
-            {
-                fields: {
-                    emailaddress: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Email is required'
-                            },
-                            emailAddress: {
-                                message: 'The value is not a valid email address'
-                            }
-                        }
-                    },
-
-                    confirmemailpassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Password is required'
-                            }
-                        }
-                    }
-                },
-
-                plugins: { //Learn more: https://formvalidation.io/guide/plugins
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row'
-                    })
-                }
-            }
-        );
-
-        signInForm.querySelector('#kt_signin_submit').addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log('click');
-
-            validation.validate().then(function (status) {
-                if (status == 'Valid') {
-                    swal.fire({
-                        text: "Sent password reset. Please check your email",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    }).then(function(){
-                        signInForm.reset();
-                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
-                        toggleChangeEmail();
-                    });
-                } else {
-                    swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    var handleChangePassword = function (e) {
-        var validation;
-
-        // form elements
-        var passwordForm = document.getElementById('kt_signin_change_password');
-
-        if (!passwordForm) {
-            return;
-        }
-
-        validation = FormValidation.formValidation(
-            passwordForm,
-            {
-                fields: {
-                    currentpassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Current Password is required'
-                            }
-                        }
-                    },
-
-                    newpassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'New Password is required'
-                            }
-                        }
-                    },
-
-                    confirmpassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Confirm Password is required'
-                            },
-                            identical: {
-                                compare: function() {
-                                    return passwordForm.querySelector('[name="newpassword"]').value;
-                                },
-                                message: 'The password and its confirm are not the same'
-                            }
-                        }
-                    },
-                },
-
-                plugins: { //Learn more: https://formvalidation.io/guide/plugins
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row'
-                    })
-                }
-            }
-        );
-
-        passwordForm.querySelector('#kt_password_submit').addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log('click');
-
-            validation.validate().then(function (status) {
-                if (status == 'Valid') {
-                    swal.fire({
-                        text: "Sent password reset. Please check your email",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    }).then(function(){
-                        passwordForm.reset();
-                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
-                        toggleChangePassword();
-                    });
-                } else {
-                    swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    // Public methods
-    return {
-        init: function () {
-            signInForm = document.getElementById('kt_signin_change_email');
-            signInMainEl = document.getElementById('kt_signin_email');
-            signInEditEl = document.getElementById('kt_signin_email_edit');
-            passwordMainEl = document.getElementById('kt_signin_password');
-            passwordEditEl = document.getElementById('kt_signin_password_edit');
-            signInChangeEmail = document.getElementById('kt_signin_email_button');
-            signInCancelEmail = document.getElementById('kt_signin_cancel');
-            passwordChange = document.getElementById('kt_signin_password_button');
-            passwordCancel = document.getElementById('kt_password_cancel');
-
-            initSettings();
-            handleChangeEmail();
-            handleChangePassword();
-        }
-    }
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSettingsSigninMethods.init();
-});
-
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/account/settings/signin-methods.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=signin-methods.js.map

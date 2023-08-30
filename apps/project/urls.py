@@ -24,5 +24,6 @@ urlpatterns = [
         
     path('create_task/', CreateTaskView.as_view(), name='create_task'),
     path('create_appelant/',create_appelant, name='create_appelant'),
+    path('tec_ajax/', tec_ajax, name='tec_ajax'),
 
 ]

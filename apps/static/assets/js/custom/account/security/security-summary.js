@@ -1,165 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!*************************************************************!*\
-  !*** ../src/js/custom/account/security/security-summary.js ***!
-  \*************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/account/security/security-summary.js":
+/*!********************************************************************!*\
+  !*** ../demo41/src/js/custom/account/security/security-summary.js ***!
+  \********************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTAccountSecuritySummary = function () {
-    // Private functions
-    var initChart = function(tabSelector, chartSelector, data1, data2, initByDefault) {
-        var element = document.querySelector(chartSelector);
-        var height = parseInt(KTUtil.css(element, 'height'));
+eval("\n\n// Class definition\nvar KTAccountSecuritySummary = function () {\n    // Private functions\n    var initChart = function(tabSelector, chartSelector, data1, data2, initByDefault) {\n        var element = document.querySelector(chartSelector);\n        var height = parseInt(KTUtil.css(element, 'height'));\n\n        if (!element) {\n            return;\n        }\n \n        var options = {\n            series: [{\n                name: 'Net Profit',\n                data: data1\n            }, {\n                name: 'Revenue',\n                data: data2\n            }],\n            chart: {\n                fontFamily: 'inherit',\n                type: 'bar',\n                height: height,\n                toolbar: {\n                    show: false\n                }\n            },\n            plotOptions: {\n                bar: {\n                    horizontal: false,\n                    columnWidth: ['35%'],\n                    borderRadius: 6\n                }\n            },\n            legend: {\n                show: false\n            },\n            dataLabels: {\n                enabled: false\n            },\n            stroke: {\n                show: true,\n                width: 2,\n                colors: ['transparent']\n            },\n            xaxis: {\n                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],\n                axisBorder: {\n                    show: false,\n                },\n                axisTicks: {\n                    show: false\n                },\n                labels: {\n                    style: {\n                        colors: KTUtil.getCssVariableValue('--bs-gray-400'),\n                        fontSize: '12px'\n                    }\n                }\n            },\n            yaxis: {\n                labels: {\n                    style: {\n                        colors: KTUtil.getCssVariableValue('--bs-gray-400'),\n                        fontSize: '12px'\n                    }\n                }\n            },\n            fill: {\n                opacity: 1\n            },\n            states: {\n                normal: {\n                    filter: {\n                        type: 'none',\n                        value: 0\n                    }\n                },\n                hover: {\n                    filter: {\n                        type: 'none',\n                        value: 0\n                    }\n                },\n                active: {\n                    allowMultipleDataPointsSelection: false,\n                    filter: {\n                        type: 'none',\n                        value: 0\n                    }\n                }\n            },\n            tooltip: {\n                style: {\n                    fontSize: '12px'\n                },\n                y: {\n                    formatter: function (val) {\n                        return \"$\" + val + \" thousands\"\n                    }\n                }\n            },\n            colors: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-gray-200')],\n            grid: {\n                borderColor: KTUtil.getCssVariableValue('--bs-gray-200'),\n                strokeDashArray: 4,\n                yaxis: {\n                    lines: {\n                        show: true\n                    }\n                }\n            }\n        };\n\n        var chart = new ApexCharts(element, options);\n\n        var init = false;\n        var tab = document.querySelector(tabSelector);\n        \n        if (initByDefault === true) {\n            setTimeout(function() {\n                chart.render();\n                init = true;\n            }, 500);\n        }        \n\n        tab.addEventListener('shown.bs.tab', function (event) {\n            if (init == false) {\n                chart.render();\n                init = true;\n            }\n        })\n    } \n\n    // Public methods\n    return {\n        init: function () {\n            initChart('#kt_security_summary_tab_hours_agents', '#kt_security_summary_chart_hours_agents', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 70, 90, 115, 95, 70, 84], true);\n            initChart('#kt_security_summary_tab_hours_clients', '#kt_security_summary_chart_hours_clients', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);\n           \n            initChart('#kt_security_summary_tab_day', '#kt_security_summary_chart_day_agents', [50, 70, 80, 100, 90, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 60, 65, 80, 90, 100, 95, 70, 84], false);\n            initChart('#kt_security_summary_tab_day_clients', '#kt_security_summary_chart_day_clients', [50, 70, 100, 90, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 115, 80, 65, 80, 90, 115, 95, 70, 84], false);\n           \n            initChart('#kt_security_summary_tab_week', '#kt_security_summary_chart_week_agents', [50, 70, 75, 117, 80, 65, 80, 90, 115, 95, 50, 84], [50, 60, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);\n            initChart('#kt_security_summary_tab_week_clients', '#kt_security_summary_chart_week_clients', [50, 70, 90, 117, 80, 65, 80, 90, 100, 80, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 100, 95, 70, 84], false);\n        }\n    }\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function() {\n    KTAccountSecuritySummary.init();\n});\n\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/account/security/security-summary.js?");
 
-        if (!element) {
-            return;
-        }
- 
-        var options = {
-            series: [{
-                name: 'Net Profit',
-                data: data1
-            }, {
-                name: 'Revenue',
-                data: data2
-            }],
-            chart: {
-                fontFamily: 'inherit',
-                type: 'bar',
-                height: height,
-                toolbar: {
-                    show: false
-                }
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: ['35%'],
-                    borderRadius: 6
-                }
-            },
-            legend: {
-                show: false
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                show: true,
-                width: 2,
-                colors: ['transparent']
-            },
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false
-                },
-                labels: {
-                    style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-400'),
-                        fontSize: '12px'
-                    }
-                }
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-400'),
-                        fontSize: '12px'
-                    }
-                }
-            },
-            fill: {
-                opacity: 1
-            },
-            states: {
-                normal: {
-                    filter: {
-                        type: 'none',
-                        value: 0
-                    }
-                },
-                hover: {
-                    filter: {
-                        type: 'none',
-                        value: 0
-                    }
-                },
-                active: {
-                    allowMultipleDataPointsSelection: false,
-                    filter: {
-                        type: 'none',
-                        value: 0
-                    }
-                }
-            },
-            tooltip: {
-                style: {
-                    fontSize: '12px'
-                },
-                y: {
-                    formatter: function (val) {
-                        return "$" + val + " thousands"
-                    }
-                }
-            },
-            colors: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-gray-200')],
-            grid: {
-                borderColor: KTUtil.getCssVariableValue('--bs-gray-200'),
-                strokeDashArray: 4,
-                yaxis: {
-                    lines: {
-                        show: true
-                    }
-                }
-            }
-        };
+/***/ })
 
-        var chart = new ApexCharts(element, options);
-
-        var init = false;
-        var tab = document.querySelector(tabSelector);
-        
-        if (initByDefault === true) {
-            setTimeout(function() {
-                chart.render();
-                init = true;
-            }, 500);
-        }        
-
-        tab.addEventListener('shown.bs.tab', function (event) {
-            if (init == false) {
-                chart.render();
-                init = true;
-            }
-        })
-    } 
-
-    // Public methods
-    return {
-        init: function () {
-            initChart('#kt_security_summary_tab_hours_agents', '#kt_security_summary_chart_hours_agents', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 70, 90, 115, 95, 70, 84], true);
-            initChart('#kt_security_summary_tab_hours_clients', '#kt_security_summary_chart_hours_clients', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);
-           
-            initChart('#kt_security_summary_tab_day', '#kt_security_summary_chart_day_agents', [50, 70, 80, 100, 90, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 60, 65, 80, 90, 100, 95, 70, 84], false);
-            initChart('#kt_security_summary_tab_day_clients', '#kt_security_summary_chart_day_clients', [50, 70, 100, 90, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 115, 80, 65, 80, 90, 115, 95, 70, 84], false);
-           
-            initChart('#kt_security_summary_tab_week', '#kt_security_summary_chart_week_agents', [50, 70, 75, 117, 80, 65, 80, 90, 115, 95, 50, 84], [50, 60, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);
-            initChart('#kt_security_summary_tab_week_clients', '#kt_security_summary_chart_week_clients', [50, 70, 90, 117, 80, 65, 80, 90, 100, 80, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 100, 95, 70, 84], false);
-        }
-    }
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSecuritySummary.init();
-});
-
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/account/security/security-summary.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=security-summary.js.map

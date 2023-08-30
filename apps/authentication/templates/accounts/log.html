@@ -1,0 +1,175 @@
+{% extends 'base/full.html' %}
+{% load static %}
+{% block title %} Login {% endblock title %}
+
+{% block content %}
+
+<div class="stepper stepper-pills" id="kt_stepper_example_basic">
+    <!--begin::Nav-->
+    <div class="stepper-nav flex-center flex-wrap mb-10">
+        <!--begin::Step 1-->
+        <div class="stepper-item mx-2 my-4 current" data-kt-stepper-element="nav">
+            <!--begin::Line-->
+            <div class="stepper-line w-40px"></div>
+            <!--end::Line-->
+
+            <!--begin::Icon-->
+            <div class="stepper-icon w-40px h-40px">
+                <i class="stepper-check fas fa-check"></i>
+                <span class="stepper-number">1</span>
+            </div>
+            <!--end::Icon-->
+
+            <!--begin::Label-->
+            <div class="stepper-label">
+                <h3 class="stepper-title">
+                    Email
+                </h3>
+
+                <div class="stepper-desc">
+                    Description
+                </div>
+            </div>
+            <!--end::Label-->
+        </div>
+        <!--end::Step 1-->
+
+        <div class="stepper-item mx-2 my-4" data-kt-stepper-element="nav">
+            <!--begin::Line-->
+            <div class="stepper-line w-40px"></div>
+            <!--end::Line-->
+
+            <!--begin::Icon-->
+            <div class="stepper-icon w-40px h-40px">
+                <i class="stepper-check fas fa-check"></i>
+                <span class="stepper-number">4</span>
+            </div>
+            <!--begin::Icon-->
+
+            <!--begin::Label-->
+            <div class="stepper-label">
+                <h3 class="stepper-title">
+                    Step 4
+                </h3>
+
+                <div class="stepper-desc">
+                    Description
+                </div>
+            </div>
+            <!--end::Label-->
+        </div>
+        
+    </div>
+    <!--end::Nav-->
+
+    <!--begin::Form-->
+    <form class="form w-lg-500px mx-auto" novalidate="novalidate" method="post" id="kt_sign_in_form">
+        {% csrf_token %}
+        <!--begin::Group-->
+        <div class="mb-5">
+            <!--begin::Step 1-->
+            <div class="flex-column current" data-kt-stepper-element="content">
+                <!--begin::Input group-->
+                <div id="div_e" class="form-floating mb-7 current" data-kt-stepper-element="content">
+                    {{ form.username }}
+                    <span class="loader" style="display: none;">Verification...</span>
+    
+                    <label class="form-label fs-6 fw-bolder text-dark" for="id_username">Email</label>
+                </div>
+                <!--end::Input group-->                
+            </div>
+            <!--begin::Step 1-->
+
+            <!--begin::Step 1-->
+            <div id="div_p" class="flex-column " data-kt-stepper-element="content">
+                <!--begin::Input group-->
+                <div class="form-floating mb-7" >
+                    {{ form.password }}
+                    <span class="loader" style="display: none;">Chargement...</span>
+    
+                    <label class="form-label fw-bolder text-dark fs-6 mb-0" name="password" for="id_password">Password</label>
+                </div>
+                <!--end::Input group-->                
+            </div>
+            
+            
+        </div>
+        <!--end::Group-->
+
+        <!--begin::Actions-->
+        <div class="d-flex flex-stack">
+            <!--begin::Wrapper-->
+            <div class="me-2">
+                <button type="button" class="btn btn-light btn-active-light-primary" data-kt-stepper-action="previous">
+                    Back
+                </button>
+            </div>
+            <!--end::Wrapper-->
+
+            <!--begin::Wrapper-->
+            <div>
+                
+                <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
+                    <span class="indicator-label">
+                        Submit
+                    </span>
+                    <span class="indicator-progress">
+                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+
+                
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Actions-->
+    </form>
+    <!--end::Form-->
+</div> 
+
+{% endblock content %}
+
+{% block js %}
+<!--script src="{% static 'assets/js/custom/authentication/sign-in/general.js'%}"></script-->
+
+
+<!-- JavaScript -->
+<script>
+    var element = document.querySelector("#kt_stepper_example_basic");
+    var stepper = new KTStepper(element);
+    
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const emailInput = document.getElementById('id_username');
+        const passwordInput = document.getElementById('id_password');
+        const submitButton = document.getElementById('kt_sign_in_submit');
+
+        // Vérifie si l'utilisateur existe lorsqu'on quitte le champ e-mail
+        emailInput.addEventListener('blur', function () {
+            const email = this.value;
+
+            if (email) {
+                
+                fetch(`/check_user_exists/?email=${email}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            stepper.goNext();
+                            
+                            
+                        } else {
+                            
+                        }
+                    });
+            }
+
+        });
+
+        
+    });
+    
+</script>
+
+
+
+{% endblock js %}

@@ -494,8 +494,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["pourcent"] = self.p
         context["field"] = self.fields
         context['fields'] = self.ff
-        context['interventions'] = Tache.INTERVENTION_CHOICES
-        context['type_ints'] = Tache.TYPE_INTERVENTION_CHOICES
         context['status'] = Tache.STATUS_CHOICES
         context["tech"] = Technicien.objects.all()
         context["appelants"] = Appelant.objects.all()

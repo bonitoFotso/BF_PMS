@@ -1,250 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!**************************************************************!*\
-  !*** ../src/js/custom/apps/customers/view/adjust-balance.js ***!
-  \**************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/apps/customers/view/adjust-balance.js":
+/*!*********************************************************************!*\
+  !*** ../demo41/src/js/custom/apps/customers/view/adjust-balance.js ***!
+  \*********************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTModalAdjustBalance = function () {
-    var element;
-    var submitButton;
-    var cancelButton;
-    var closeButton;
-    var validator;
-    var maskInput;
-    var newBalance;
-    var form;
-    var modal;
+eval("\n\n// Class definition\nvar KTModalAdjustBalance = function () {\n    var element;\n    var submitButton;\n    var cancelButton;\n    var closeButton;\n    var validator;\n    var maskInput;\n    var newBalance;\n    var form;\n    var modal;\n\n    // Init form inputs\n    var initForm = function () {\n        // Init inputmask plugin --- For more info please refer to the official documentation here: https://github.com/RobinHerbots/Inputmask\n        Inputmask(\"US$ 9,999,999.99\", {\n            \"numericInput\": true\n        }).mask(\"#kt_modal_inputmask\");\n    }\n\n    var handleBalanceCalculator = function () {\n        // Select elements\n        const currentBalance = element.querySelector('[kt-modal-adjust-balance=\"current_balance\"]');\n        newBalance = element.querySelector('[kt-modal-adjust-balance=\"new_balance\"]');\n        maskInput = document.getElementById('kt_modal_inputmask');\n\n        // Get current balance value\n        const isNegative = currentBalance.innerHTML.includes('-');\n        let currentValue = parseFloat(currentBalance.innerHTML.replace(/[^0-9.]/g, '').replace(',', ''));\n        currentValue = isNegative ? currentValue * -1 : currentValue; \n\n        // On change event for inputmask\n        let maskValue;\n        maskInput.addEventListener('focusout', function (e) {\n            // Get inputmask value on change\n            maskValue = parseFloat(e.target.value.replace(/[^0-9.]/g, '').replace(',', ''));\n\n            // Set mask value as 0 when NaN detected\n            if(isNaN(maskValue)){\n                maskValue = 0;\n            }\n\n            // Calculate & set new balance value\n            newBalance.innerHTML = 'US$ ' + (maskValue + currentValue).toFixed(2).replace(/\\d(?=(\\d{3})+\\.)/g, '$&,');\n        });\n    }\n\n    // Handle form validation and submittion\n    var handleForm = function () {\n        // Stepper custom navigation\n\n        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n        validator = FormValidation.formValidation(\n            form,\n            {\n                fields: {\n                    'adjustment': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Adjustment type is required'\n                            }\n                        }\n                    },\n                    'amount': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Amount is required'\n                            }\n                        }\n                    }\n                },\n\n                plugins: {\n                    trigger: new FormValidation.plugins.Trigger(),\n                    bootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n                    })\n                }\n            }\n        );\n\n        // Revalidate country field. For more info, plase visit the official plugin site: https://select2.org/\n        $(form.querySelector('[name=\"adjustment\"]')).on('change', function () {\n            // Revalidate the field when an option is chosen\n            validator.revalidateField('adjustment');\n        });\n\n        // Action buttons\n        submitButton.addEventListener('click', function (e) {\n            // Prevent default button action\n            e.preventDefault();\n\n            // Validate form before submit\n            if (validator) {\n                validator.validate().then(function (status) {\n                    console.log('validated!');\n\n                    if (status == 'Valid') {\n                        // Show loading indication\n                        submitButton.setAttribute('data-kt-indicator', 'on');\n\n                        // Disable submit button whilst loading\n                        submitButton.disabled = true;\n\n                        // Simulate form submission\n                        setTimeout(function () {\n                            // Simulate form submission\n                            submitButton.removeAttribute('data-kt-indicator');\n\n                            // Show popup confirmation \n                            Swal.fire({\n                                text: \"Form has been successfully submitted!\",\n                                icon: \"success\",\n                                buttonsStyling: false,\n                                confirmButtonText: \"Ok, got it!\",\n                                customClass: {\n                                    confirmButton: \"btn btn-primary\"\n                                }\n                            }).then(function (result) {\n                                if (result.isConfirmed) {\n                                    modal.hide();\n\n                                    // Enable submit button after loading\n                                    submitButton.disabled = false;\n\n                                    // Reset form for demo purposes only\n                                    form.reset();\n                                    newBalance.innerHTML = \"--\";\n                                }\n                            });\n\n                            //form.submit(); // Submit form\n                        }, 2000);\n                    } else {\n                        // Show popup warning \n                        Swal.fire({\n                            text: \"Sorry, looks like there are some errors detected, please try again.\",\n                            icon: \"error\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\"\n                            }\n                        });\n                    }\n                });\n            }\n        });\n\n        cancelButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n\n        closeButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n    }\n    \n    return {\n        // Public functions\n        init: function () {\n            // Elements\n            element = document.querySelector('#kt_modal_adjust_balance');\n            modal = new bootstrap.Modal(element);\n\n            form = element.querySelector('#kt_modal_adjust_balance_form');\n            submitButton = form.querySelector('#kt_modal_adjust_balance_submit');\n            cancelButton = form.querySelector('#kt_modal_adjust_balance_cancel');\n            closeButton = element.querySelector('#kt_modal_adjust_balance_close');\n\n            initForm();\n            handleBalanceCalculator();\n            handleForm();\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n    KTModalAdjustBalance.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/apps/customers/view/adjust-balance.js?");
 
-    // Init form inputs
-    var initForm = function () {
-        // Init inputmask plugin --- For more info please refer to the official documentation here: https://github.com/RobinHerbots/Inputmask
-        Inputmask("US$ 9,999,999.99", {
-            "numericInput": true
-        }).mask("#kt_modal_inputmask");
-    }
+/***/ })
 
-    var handleBalanceCalculator = function () {
-        // Select elements
-        const currentBalance = element.querySelector('[kt-modal-adjust-balance="current_balance"]');
-        newBalance = element.querySelector('[kt-modal-adjust-balance="new_balance"]');
-        maskInput = document.getElementById('kt_modal_inputmask');
-
-        // Get current balance value
-        const isNegative = currentBalance.innerHTML.includes('-');
-        let currentValue = parseFloat(currentBalance.innerHTML.replace(/[^0-9.]/g, '').replace(',', ''));
-        currentValue = isNegative ? currentValue * -1 : currentValue; 
-
-        // On change event for inputmask
-        let maskValue;
-        maskInput.addEventListener('focusout', function (e) {
-            // Get inputmask value on change
-            maskValue = parseFloat(e.target.value.replace(/[^0-9.]/g, '').replace(',', ''));
-
-            // Set mask value as 0 when NaN detected
-            if(isNaN(maskValue)){
-                maskValue = 0;
-            }
-
-            // Calculate & set new balance value
-            newBalance.innerHTML = 'US$ ' + (maskValue + currentValue).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-        });
-    }
-
-    // Handle form validation and submittion
-    var handleForm = function () {
-        // Stepper custom navigation
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'adjustment': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Adjustment type is required'
-                            }
-                        }
-                    },
-                    'amount': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Amount is required'
-                            }
-                        }
-                    }
-                },
-
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
-            }
-        );
-
-        // Revalidate country field. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="adjustment"]')).on('change', function () {
-            // Revalidate the field when an option is chosen
-            validator.revalidateField('adjustment');
-        });
-
-        // Action buttons
-        submitButton.addEventListener('click', function (e) {
-            // Prevent default button action
-            e.preventDefault();
-
-            // Validate form before submit
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
-
-                    if (status == 'Valid') {
-                        // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        // Disable submit button whilst loading
-                        submitButton.disabled = true;
-
-                        // Simulate form submission
-                        setTimeout(function () {
-                            // Simulate form submission
-                            submitButton.removeAttribute('data-kt-indicator');
-
-                            // Show popup confirmation 
-                            Swal.fire({
-                                text: "Form has been successfully submitted!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    modal.hide();
-
-                                    // Enable submit button after loading
-                                    submitButton.disabled = false;
-
-                                    // Reset form for demo purposes only
-                                    form.reset();
-                                    newBalance.innerHTML = "--";
-                                }
-                            });
-
-                            //form.submit(); // Submit form
-                        }, 2000);
-                    } else {
-                        // Show popup warning 
-                        Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-        cancelButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-
-        closeButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-    }
-    
-    return {
-        // Public functions
-        init: function () {
-            // Elements
-            element = document.querySelector('#kt_modal_adjust_balance');
-            modal = new bootstrap.Modal(element);
-
-            form = element.querySelector('#kt_modal_adjust_balance_form');
-            submitButton = form.querySelector('#kt_modal_adjust_balance_submit');
-            cancelButton = form.querySelector('#kt_modal_adjust_balance_cancel');
-            closeButton = element.querySelector('#kt_modal_adjust_balance_close');
-
-            initForm();
-            handleBalanceCalculator();
-            handleForm();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalAdjustBalance.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/apps/customers/view/adjust-balance.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=adjust-balance.js.map

@@ -1,232 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!************************************************************************!*\
-  !*** ../src/js/custom/apps/user-management/users/view/add-schedule.js ***!
-  \************************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/apps/user-management/users/view/add-schedule.js":
+/*!*******************************************************************************!*\
+  !*** ../demo41/src/js/custom/apps/user-management/users/view/add-schedule.js ***!
+  \*******************************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTUsersAddSchedule = function () {
-    // Shared variables
-    const element = document.getElementById('kt_modal_add_schedule');
-    const form = element.querySelector('#kt_modal_add_schedule_form');
-    const modal = new bootstrap.Modal(element);
+eval("\n\n// Class definition\nvar KTUsersAddSchedule = function () {\n    // Shared variables\n    const element = document.getElementById('kt_modal_add_schedule');\n    const form = element.querySelector('#kt_modal_add_schedule_form');\n    const modal = new bootstrap.Modal(element);\n\n    // Init add schedule modal\n    var initAddSchedule = () => {       \n\n        // Init flatpickr -- for more info: https://flatpickr.js.org/\n        $(\"#kt_modal_add_schedule_datepicker\").flatpickr({\n            enableTime: true,\n            dateFormat: \"Y-m-d H:i\",\n        });\n\n        // Init tagify -- for more info: https://yaireo.github.io/tagify/\n        const tagifyInput = form.querySelector('#kt_modal_add_schedule_tagify');\n        new Tagify(tagifyInput, {\n            whitelist: [\"sean@dellito.com\", \"brian@exchange.com\", \"mikaela@pexcom.com\", \"f.mitcham@kpmg.com.au\", \"olivia@corpmail.com\", \"owen.neil@gmail.com\", \"dam@consilting.com\", \"emma@intenso.com\", \"ana.cf@limtel.com\", \"robert@benko.com\", \"lucy.m@fentech.com\", \"ethan@loop.com.au\"],\n            maxTags: 10,\n            dropdown: {\n                maxItems: 20,           // <- mixumum allowed rendered suggestions\n                classname: \"tagify__inline__suggestions\", // <- custom classname for this dropdown, so it could be targeted\n                enabled: 0,             // <- show suggestions on focus\n                closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected\n            }\n        });\n\n        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n\t\tvar validator = FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\t'event_datetime': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Event date & time is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n                    'event_name': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Event name is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n                    'event_org': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Event organiser is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n                    'event_invitees': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Event invitees is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\t\t\t\t\t\n\t\t\t\t},\n\t\t\t\t\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t);\n\n        // Revalidate country field. For more info, plase visit the official plugin site: https://select2.org/\n        $(form.querySelector('[name=\"event_invitees\"]')).on('change', function () {\n            // Revalidate the field when an option is chosen\n            validator.revalidateField('event_invitees');\n        });\n\n        // Close button handler\n        const closeButton = element.querySelector('[data-kt-users-modal-action=\"close\"]');\n        closeButton.addEventListener('click', e => {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n\n        // Cancel button handler\n        const cancelButton = element.querySelector('[data-kt-users-modal-action=\"cancel\"]');\n        cancelButton.addEventListener('click', e => {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n\n        // Submit button handler\n        const submitButton = element.querySelector('[data-kt-users-modal-action=\"submit\"]');\n\t\tsubmitButton.addEventListener('click', function (e) {\n\t\t\t// Prevent default button action\n\t\t\te.preventDefault();\n\n\t\t\t// Validate form before submit\n\t\t\tif (validator) {\n\t\t\t\tvalidator.validate().then(function (status) {\n\t\t\t\t\tconsole.log('validated!');\n\n\t\t\t\t\tif (status == 'Valid') {\n\t\t\t\t\t\t// Show loading indication\n\t\t\t\t\t\tsubmitButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t\t\t\t// Disable button to avoid multiple click \n\t\t\t\t\t\tsubmitButton.disabled = true;\n\n\t\t\t\t\t\t// Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\t// Remove loading indication\n\t\t\t\t\t\t\tsubmitButton.removeAttribute('data-kt-indicator');\n\n\t\t\t\t\t\t\t// Enable button\n\t\t\t\t\t\t\tsubmitButton.disabled = false;\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t// Show popup confirmation \n\t\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\t\ttext: \"Form has been successfully submitted!\",\n\t\t\t\t\t\t\t\ticon: \"success\",\n\t\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}).then(function (result) {\n\t\t\t\t\t\t\t\tif (result.isConfirmed) {\n\t\t\t\t\t\t\t\t\tmodal.hide();\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t});\n\n\t\t\t\t\t\t\t//form.submit(); // Submit form\n\t\t\t\t\t\t}, 2000);   \t\t\t\t\t\t\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\ttext: \"Sorry, looks like there are some errors detected, please try again.\",\n\t\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\t\t});\n    }\n\n    return {\n        // Public functions\n        init: function () {\n            initAddSchedule();\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n    KTUsersAddSchedule.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/apps/user-management/users/view/add-schedule.js?");
 
-    // Init add schedule modal
-    var initAddSchedule = () => {       
+/***/ })
 
-        // Init flatpickr -- for more info: https://flatpickr.js.org/
-        $("#kt_modal_add_schedule_datepicker").flatpickr({
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-        });
-
-        // Init tagify -- for more info: https://yaireo.github.io/tagify/
-        const tagifyInput = form.querySelector('#kt_modal_add_schedule_tagify');
-        new Tagify(tagifyInput, {
-            whitelist: ["sean@dellito.com", "brian@exchange.com", "mikaela@pexcom.com", "f.mitcham@kpmg.com.au", "olivia@corpmail.com", "owen.neil@gmail.com", "dam@consilting.com", "emma@intenso.com", "ana.cf@limtel.com", "robert@benko.com", "lucy.m@fentech.com", "ethan@loop.com.au"],
-            maxTags: 10,
-            dropdown: {
-                maxItems: 20,           // <- mixumum allowed rendered suggestions
-                classname: "tagify__inline__suggestions", // <- custom classname for this dropdown, so it could be targeted
-                enabled: 0,             // <- show suggestions on focus
-                closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-            }
-        });
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-		var validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					'event_datetime': {
-						validators: {
-							notEmpty: {
-								message: 'Event date & time is required'
-							}
-						}
-					},
-                    'event_name': {
-						validators: {
-							notEmpty: {
-								message: 'Event name is required'
-							}
-						}
-					},
-                    'event_org': {
-						validators: {
-							notEmpty: {
-								message: 'Event organiser is required'
-							}
-						}
-					},
-                    'event_invitees': {
-						validators: {
-							notEmpty: {
-								message: 'Event invitees is required'
-							}
-						}
-					},					
-				},
-				
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-					})
-				}
-			}
-		);
-
-        // Revalidate country field. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="event_invitees"]')).on('change', function () {
-            // Revalidate the field when an option is chosen
-            validator.revalidateField('event_invitees');
-        });
-
-        // Close button handler
-        const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
-        closeButton.addEventListener('click', e => {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-
-        // Cancel button handler
-        const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
-        cancelButton.addEventListener('click', e => {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-
-        // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-		submitButton.addEventListener('click', function (e) {
-			// Prevent default button action
-			e.preventDefault();
-
-			// Validate form before submit
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
-
-					if (status == 'Valid') {
-						// Show loading indication
-						submitButton.setAttribute('data-kt-indicator', 'on');
-
-						// Disable button to avoid multiple click 
-						submitButton.disabled = true;
-
-						// Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-						setTimeout(function() {
-							// Remove loading indication
-							submitButton.removeAttribute('data-kt-indicator');
-
-							// Enable button
-							submitButton.disabled = false;
-							
-							// Show popup confirmation 
-							Swal.fire({
-								text: "Form has been successfully submitted!",
-								icon: "success",
-								buttonsStyling: false,
-								confirmButtonText: "Ok, got it!",
-								customClass: {
-									confirmButton: "btn btn-primary"
-								}
-							}).then(function (result) {
-								if (result.isConfirmed) {
-									modal.hide();
-								}
-							});
-
-							//form.submit(); // Submit form
-						}, 2000);   						
-					} else {
-						// Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-primary"
-							}
-						});
-					}
-				});
-			}
-		});
-    }
-
-    return {
-        // Public functions
-        init: function () {
-            initAddSchedule();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersAddSchedule.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/apps/user-management/users/view/add-schedule.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=add-schedule.js.map

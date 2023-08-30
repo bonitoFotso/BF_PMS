@@ -1,68 +1,22 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../src/js/custom/utilities/modals/offer-a-deal/main.js":
-/*!**************************************************************!*\
-  !*** ../src/js/custom/utilities/modals/offer-a-deal/main.js ***!
-  \**************************************************************/
+/***/ "../demo41/src/js/custom/utilities/modals/offer-a-deal/main.js":
+/*!*********************************************************************!*\
+  !*** ../demo41/src/js/custom/utilities/modals/offer-a-deal/main.js ***!
+  \*********************************************************************/
 /***/ ((module) => {
 
-
-
-// Class definition
-var KTModalOfferADeal = function () {
-    // Private variables
-	var stepper;
-	var stepperObj;
-	var form;	
-
-	// Private functions
-	var initStepper = function () {
-		// Initialize Stepper
-		stepperObj = new KTStepper(stepper);
-	}
-
-	return {
-		// Public functions
-		init: function () {
-			stepper = document.querySelector('#kt_modal_offer_a_deal_stepper');
-			form = document.querySelector('#kt_modal_offer_a_deal_form');
-
-			initStepper();
-		},
-
-		getStepper: function () {
-			return stepper;
-		},
-
-		getStepperObj: function () {
-			return stepperObj;
-		},
-		
-		getForm: function () {
-			return form;
-		}
-	};
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-	if (!document.querySelector('#kt_modal_offer_a_deal')) {
-		return;
-	}
-
-    KTModalOfferADeal.init();
-    KTModalOfferADealType.init();
-    KTModalOfferADealDetails.init();
-    KTModalOfferADealFinance.init();
-    KTModalOfferADealComplete.init();
-});
-
-// Webpack support
-if ( true && typeof module.exports !== 'undefined') {
-	window.KTModalOfferADeal = module.exports = KTModalOfferADeal;
-}
+eval("\n\n// Class definition\nvar KTModalOfferADeal = function () {\n    // Private variables\n\tvar stepper;\n\tvar stepperObj;\n\tvar form;\t\n\n\t// Private functions\n\tvar initStepper = function () {\n\t\t// Initialize Stepper\n\t\tstepperObj = new KTStepper(stepper);\n\t}\n\n\treturn {\n\t\t// Public functions\n\t\tinit: function () {\n\t\t\tstepper = document.querySelector('#kt_modal_offer_a_deal_stepper');\n\t\t\tform = document.querySelector('#kt_modal_offer_a_deal_form');\n\n\t\t\tinitStepper();\n\t\t},\n\n\t\tgetStepper: function () {\n\t\t\treturn stepper;\n\t\t},\n\n\t\tgetStepperObj: function () {\n\t\t\treturn stepperObj;\n\t\t},\n\t\t\n\t\tgetForm: function () {\n\t\t\treturn form;\n\t\t}\n\t};\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n\tif (!document.querySelector('#kt_modal_offer_a_deal')) {\n\t\treturn;\n\t}\n\n    KTModalOfferADeal.init();\n    KTModalOfferADealType.init();\n    KTModalOfferADealDetails.init();\n    KTModalOfferADealFinance.init();\n    KTModalOfferADealComplete.init();\n});\n\n// Webpack support\nif ( true && typeof module.exports !== 'undefined') {\n\twindow.KTModalOfferADeal = module.exports = KTModalOfferADeal;\n}\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/utilities/modals/offer-a-deal/main.js?");
 
 /***/ })
 
@@ -97,8 +51,7 @@ if ( true && typeof module.exports !== 'undefined') {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("../src/js/custom/utilities/modals/offer-a-deal/main.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("../demo41/src/js/custom/utilities/modals/offer-a-deal/main.js");
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=main.js.map

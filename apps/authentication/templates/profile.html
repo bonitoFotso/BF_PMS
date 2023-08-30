@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Navbar-->
+            {% include 'profile/nav.html' %}
+            <!--end::Navbar-->
+            <!--begin::Row-->
+            <div class="tab-content" id="myTabsContent">
+                <!-- Contenu de l'onglet "Overview" -->
+                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                    <!-- Contenu de l'onglet Overview -->
+                   {% include 'profile/overview.html' %}
+                </div>
+                <!-- Contenu de l'onglet "Projects" -->
+                <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+                    <!-- Contenu de l'onglet Projects -->
+                    {% include 'profile/settings.html' %}
+                </div>
+                <!-- Ajoutez d'autres éléments tab-pane ici pour chaque onglet -->
+            </div>
+            
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+
+{% endblock content %}
+
+{% block js %}
+
+{% endblock js %}

@@ -12,7 +12,7 @@
                     </i>4.5%
                 </span>
             </div>
-            <span class="fs-6 fw-semibold text-gray-400">Nbr Total de Taches</span>
+            <span class="fs-6 fw-semibold text-gray-900">Nbr Total de Taches</span>
         </div>
         <ul class="nav nav-tabs mb-3" id="chartTabs1" role="tablist">
             <li class="nav-item" role="presentation">
@@ -30,7 +30,7 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="barChart1" role="tabpanel" aria-labelledby="barChartTab1">
+            <div class="tab-pane fade show active " id="barChart1" role="tabpanel" aria-labelledby="barChartTab1">
                 <div id="ch1"></div>
             </div>
             <div class="tab-pane fade" id="donutChart1" role="tabpanel" aria-labelledby="donutChartTab1">
@@ -133,10 +133,28 @@
             ],
             xaxis: {
                 categories: labels,
+                axisTicks: {
+                    show: true, // Afficher les ticks de l'axe x
+                    color: '#333', // Couleur des ticks de l'axe x
+                },
+                labels: {
+                    style: {
+                        colors: '#333', // Couleur des étiquettes de l'axe x
+                    },
+                },
             },
             yaxis: {
                 title: {
                     text: 'Nombre de tâches',
+                    
+                    style: {
+                        color: '#333', // Couleur du titre de l'axe y
+                    },
+                },
+                labels: {
+                    style: {
+                        colors: '#333', // Couleur des étiquettes de l'axe y
+                    },
                 },
             },
             legend: {

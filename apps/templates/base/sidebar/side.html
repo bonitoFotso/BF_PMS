@@ -1,0 +1,263 @@
+{% load static %}
+<div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+    <!--begin::Aside Toolbarl-->
+    <div class="aside-toolbar flex-column-auto" id="kt_aside_toolbar">
+        <!--begin::Aside user-->
+        <!--begin::User-->
+        {% if user %} 
+        <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
+            <!--begin::Symbol-->
+            <div class="symbol symbol-50px">
+                <img src="{% static user.technicien.photo %}" alt=" user" />
+            </div>
+            <!--end::Symbol-->
+            <!--begin::Wrapper-->
+            <div class="aside-user-info flex-row-fluid flex-wrap ms-5">
+                <!--begin::Section-->
+                <div class="d-flex">
+                    <!--begin::Info-->
+                    <div class="flex-grow-1 me-2">
+                        <!--begin::Username-->
+                        <a href="#" class="text-white text-hover-primary fs-6 fw-bold"> {{ user.technicien.nom}} </a>
+                        <!--end::Username-->
+                        <!--begin::Description-->
+                        <span class="text-gray-600 fw-bold d-block fs-8 mb-1">{{user.role}} </span>
+                        <!--end::Description-->
+                        <!--begin::Label-->
+                        <div class="d-flex align-items-center text-success fs-9">
+                        <span class="bullet bullet-dot bg-success me-1"></span>online</div>
+                        <!--end::Label-->
+                    </div>
+                    <!--end::Info-->
+                    <!--begin::User menu-->
+                    <div class="me-n2 ">
+                        <!--begin::Action-->
+                        <a href="#" class="btn btn-icon btn-sm btn-active-color-primary mt-n2" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true">
+                            <!--begin::Svg Icon | path: icons/duotune/coding/cod001.svg-->
+                            <span class="svg-icon svg-icon-muted svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path opacity="0.3" d="M22.1 11.5V12.6C22.1 13.2 21.7 13.6 21.2 13.7L19.9 13.9C19.7 14.7 19.4 15.5 18.9 16.2L19.7 17.2999C20 17.6999 20 18.3999 19.6 18.7999L18.8 19.6C18.4 20 17.8 20 17.3 19.7L16.2 18.9C15.5 19.3 14.7 19.7 13.9 19.9L13.7 21.2C13.6 21.7 13.1 22.1 12.6 22.1H11.5C10.9 22.1 10.5 21.7 10.4 21.2L10.2 19.9C9.4 19.7 8.6 19.4 7.9 18.9L6.8 19.7C6.4 20 5.7 20 5.3 19.6L4.5 18.7999C4.1 18.3999 4.1 17.7999 4.4 17.2999L5.2 16.2C4.8 15.5 4.4 14.7 4.2 13.9L2.9 13.7C2.4 13.6 2 13.1 2 12.6V11.5C2 10.9 2.4 10.5 2.9 10.4L4.2 10.2C4.4 9.39995 4.7 8.60002 5.2 7.90002L4.4 6.79993C4.1 6.39993 4.1 5.69993 4.5 5.29993L5.3 4.5C5.7 4.1 6.3 4.10002 6.8 4.40002L7.9 5.19995C8.6 4.79995 9.4 4.39995 10.2 4.19995L10.4 2.90002C10.5 2.40002 11 2 11.5 2H12.6C13.2 2 13.6 2.40002 13.7 2.90002L13.9 4.19995C14.7 4.39995 15.5 4.69995 16.2 5.19995L17.3 4.40002C17.7 4.10002 18.4 4.1 18.8 4.5L19.6 5.29993C20 5.69993 20 6.29993 19.7 6.79993L18.9 7.90002C19.3 8.60002 19.7 9.39995 19.9 10.2L21.2 10.4C21.7 10.5 22.1 11 22.1 11.5ZM12.1 8.59998C10.2 8.59998 8.6 10.2 8.6 12.1C8.6 14 10.2 15.6 12.1 15.6C14 15.6 15.6 14 15.6 12.1C15.6 10.2 14 8.59998 12.1 8.59998Z" fill="currentColor" />
+                                    <path d="M17.1 12.1C17.1 14.9 14.9 17.1 12.1 17.1C9.30001 17.1 7.10001 14.9 7.10001 12.1C7.10001 9.29998 9.30001 7.09998 12.1 7.09998C14.9 7.09998 17.1 9.29998 17.1 12.1ZM12.1 10.1C11 10.1 10.1 11 10.1 12.1C10.1 13.2 11 14.1 12.1 14.1C13.2 14.1 14.1 13.2 14.1 12.1C14.1 11 13.2 10.1 12.1 10.1Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </a>
+                        <!--begin::User account menu-->
+                        <div class="menu bg-gray-300 menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 bg-gray-300 menu-state-primary fw-bold py-4 fs-6 w-275px " data-kt-menu="true">
+                            <!--begin::Menu item-->
+                            <div class="bg-gray-300">
+                                <div class="menu-item px-3 bg-gray-300">
+                                    <div class="menu-content d-flex align-items-center px-3">
+                                        <!--begin::Avatar-->
+                                        <div class="symbol symbol-50px me-5">
+                                            <img alt="Logo" src="{% static user.technicien.photo %}" />
+                                        </div>
+                                        <!--end::Avatar-->
+                                        <!--begin::Username-->
+                                        <div class="d-flex flex-column">
+                                            <div class="fw-bolder d-flex align-items-center fs-5">{{ user.technicien.nom}}
+                                            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">*</span></div>
+                                            <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ user.technicien.email }} </a>
+                                        </div>
+                                        <!--end::Username-->
+                                    </div>
+                                </div>
+                                <!--end::Menu item-->
+                                <!--begin::Menu separator-->
+                                <div class="separator my-2"></div>
+                                <!--end::Menu separator-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-5 bg-gray-300">
+                                    <a href="{% url 'profile' %}" class="menu-link px-5">Mon Profile</a>
+                                </div>
+                                <!--end::Menu item-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-5">
+                                    <a href="" class="menu-link px-5">
+                                        <span class="menu-text">My Projects</span>
+                                        <span class="menu-badge">
+                                            <span class="badge badge-light-danger badge-circle fw-bolder fs-7">3</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+                                
+                                
+                                <!--begin::Menu separator-->
+                                <div class="separator my-2"></div>
+                                <!--end::Menu separator--><!--begin::Menu item-->
+                                <div class="menu-item px-5">
+                                    <a href="{% url 'logout' %}" class="menu-link px-5">Sign Out</a>
+                                </div>
+                                <!--end::Menu item-->
+                                <!--begin::Menu separator-->
+                                <div class="separator my-2"></div>
+                                <!--end::Menu separator-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-5">
+                                    <div class="menu-content px-5">
+                                        <label class="form-check form-switch form-check-custom form-check-solid pulse pulse-success" for="kt_user_menu_dark_mode_toggle">
+                                            <input class="form-check-input w-30px h-20px" type="checkbox" value="1" name="mode" id="kt_user_menu_dark_mode_toggle" data-kt-url="#" />
+                                            <span class="pulse-ring ms-n1"></span>
+                                            <span class="form-check-label text-gray-600 fs-7">Dark Mode</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Menu item-->
+                        </div>
+                        <!--end::User account menu-->
+                        <!--end::Action-->
+                    </div>
+                    <!--end::User menu-->
+                </div>
+                <!--end::Section-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        {% endif %}
+        <!--end::User-->
+        <!--begin::Aside search-->
+        <div class="aside-search py-5">
+            <!--begin::Search-->
+            <div id="kt_header_search" class="header-search d-flex align-items-center w-100" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="menu" data-kt-search-responsive="false" data-kt-menu-trigger="auto" data-kt-menu-permanent="true" data-kt-menu-placement="bottom-start">
+                <!--begin::Form-->
+                <form data-kt-search-element="form" class="w-100 position-relative" autocomplete="off">
+                    <!--begin::Hidden input(Added to disable form autocomplete)-->
+                    <input type="hidden" />
+                    <!--end::Hidden input-->
+                    <!--begin::Icon-->
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                    <span class="svg-icon svg-icon-2 search-icon position-absolute top-50 translate-middle-y ms-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <!--end::Icon-->
+                    <!--begin::Input-->
+                    <input type="text" class="search-input form-control ps-13 fs-7 h-40px" name="search" value="" placeholder="Quick Search" data-kt-search-element="input" />
+                    <!--end::Input-->
+                    <!--begin::Spinner-->
+                    <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5" data-kt-search-element="spinner">
+                        <span class="spinner-border h-15px w-15px align-middle text-gray-400"></span>
+                    </span>
+                    <!--end::Spinner-->
+                    <!--begin::Reset-->
+                    <span class="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-4" data-kt-search-element="clear">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-2 svg-icon-lg-1 me-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <!--end::Reset-->
+                </form>
+                <!--end::Form-->
+                {% include 'base/sidebar/search.html' %}
+            </div>
+            <!--end::Search-->
+        </div>
+        <!--end::Aside search-->
+        <!--end::Aside user-->
+    </div>
+    <!--end::Aside Toolbarl-->
+    <!--begin::Aside menu-->
+    <div class="aside-menu flex-column-fluid">
+        <!--begin::Aside Menu-->
+        <div class="hover-scroll-overlay-y px-2 my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="{default: '#kt_aside_toolbar, #kt_aside_footer', lg: '#kt_header, #kt_aside_toolbar, #kt_aside_footer'}" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="5px">
+            <!--begin::Menu-->
+            <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
+                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor" />
+                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor" />
+                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor" />
+                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </span>
+                        <span class="menu-title">Dashboards</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <div class="menu-item">
+                            <a class="menu-link active" href="#">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Multipurpose</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">eCommerce</span>
+                            </a>
+                        </div>
+                        
+                        <div class="menu-inner flex-column collapse" id="kt_aside_menu_collapse">
+                            
+                        
+                            
+                        </div>
+                        <!-- div class="menu-item">
+                            <div class="menu-content">
+                                <a class="btn btn-flex btn-color-success fs-base p-0 ms-2 mb-2 collapsible collapsed rotate" data-bs-toggle="collapse" href="#kt_aside_menu_collapse" data-kt-toggle-text="Masquer">
+                                    <span data-kt-toggle-text-target="true">Montrer</span>
+                                    <span class="svg-icon ms-2 svg-icon-3 rotate-180">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.5" d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z" fill="currentColor" />
+                                            <path d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+                        </div -->
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <div class="separator mx-1 my-4"></div>
+                    </div>
+                </div>
+                {% include 'project/inc/nav.html' %}
+                
+            </div>
+            <!--end::Menu-->
+        </div>
+        <!--end::Aside Menu-->
+    </div>
+    <!--end::Aside menu-->
+    <!--begin::Footer-->
+    <div class="aside-footer flex-column-auto py-5" id="kt_aside_footer">
+        <a href="#" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="BF TMS pour SERVITEL">
+            <span class="menu-icon">
+                <!--begin::Svg Icon | path: icons/duotune/technology/teh004.svg-->
+                <span class="svg-icon svg-icon-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.3" d="M21 10.7192H3C2.4 10.7192 2 11.1192 2 11.7192C2 12.3192 2.4 12.7192 3 12.7192H6V14.7192C6 18.0192 8.7 20.7192 12 20.7192C15.3 20.7192 18 18.0192 18 14.7192V12.7192H21C21.6 12.7192 22 12.3192 22 11.7192C22 11.1192 21.6 10.7192 21 10.7192Z" fill="currentColor" />
+                        <path d="M11.6 21.9192C11.4 21.9192 11.2 21.8192 11 21.7192C10.6 21.4192 10.5 20.7191 10.8 20.3191C11.7 19.1191 12.3 17.8191 12.7 16.3191C12.8 15.8191 13.4 15.4192 13.9 15.6192C14.4 15.7192 14.8 16.3191 14.6 16.8191C14.2 18.5191 13.4 20.1192 12.4 21.5192C12.2 21.7192 11.9 21.9192 11.6 21.9192ZM8.7 19.7192C10.2 18.1192 11 15.9192 11 13.7192V8.71917C11 8.11917 11.4 7.71917 12 7.71917C12.6 7.71917 13 8.11917 13 8.71917V13.0192C13 13.6192 13.4 14.0192 14 14.0192C14.6 14.0192 15 13.6192 15 13.0192V8.71917C15 7.01917 13.7 5.71917 12 5.71917C10.3 5.71917 9 7.01917 9 8.71917V13.7192C9 15.4192 8.4 17.1191 7.2 18.3191C6.8 18.7191 6.9 19.3192 7.3 19.7192C7.5 19.9192 7.7 20.0192 8 20.0192C8.3 20.0192 8.5 19.9192 8.7 19.7192ZM6 16.7192C6.5 16.7192 7 16.2192 7 15.7192V8.71917C7 8.11917 7.1 7.51918 7.3 6.91918C7.5 6.41918 7.2 5.8192 6.7 5.6192C6.2 5.4192 5.59999 5.71917 5.39999 6.21917C5.09999 7.01917 5 7.81917 5 8.71917V15.7192V15.8191C5 16.3191 5.5 16.7192 6 16.7192ZM9 4.71917C9.5 4.31917 10.1 4.11918 10.7 3.91918C11.2 3.81918 11.5 3.21917 11.4 2.71917C11.3 2.21917 10.7 1.91916 10.2 2.01916C9.4 2.21916 8.59999 2.6192 7.89999 3.1192C7.49999 3.4192 7.4 4.11916 7.7 4.51916C7.9 4.81916 8.2 4.91918 8.5 4.91918C8.6 4.91918 8.8 4.81917 9 4.71917ZM18.2 18.9192C18.7 17.2192 19 15.5192 19 13.7192V8.71917C19 5.71917 17.1 3.1192 14.3 2.1192C13.8 1.9192 13.2 2.21917 13 2.71917C12.8 3.21917 13.1 3.81916 13.6 4.01916C15.6 4.71916 17 6.61917 17 8.71917V13.7192C17 15.3192 16.8 16.8191 16.3 18.3191C16.1 18.8191 16.4 19.4192 16.9 19.6192C17 19.6192 17.1 19.6192 17.2 19.6192C17.7 19.6192 18 19.3192 18.2 18.9192Z" fill="currentColor" />
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </span>
+            <span class="btn-label"># &amp; #</span>
+            <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
+            
+            <!--end::Svg Icon-->
+        </a>
+    </div>
+    <!--end::Footer-->
+</div>

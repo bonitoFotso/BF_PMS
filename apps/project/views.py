@@ -26,6 +26,27 @@ def is_ajax(request):
 
 #class Task(models.Model):
 #    pass
+def tec_ajax(request):
+    if request.method == 'POST':
+        try:
+            nom = request.POST.get('nom')
+            prenom = request.POST.get('prenom')
+            tel = request.POST.get('tel')
+            email = request.POST.get('email')
+            photo = request.FILES.get('photo')
+
+            # Votre logique de validation et traitement ici
+            if nom and prenom and tel and email and photo:
+                # Sauvegarde des données dans le modèle Technicien
+                technicien = Technicien(nom=nom, prenom=prenom, tel=tel, email=email, photo=photo)
+                technicien.save()
+                print('success')
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'success': False, 'message': 'Veuillez remplir tous les champs.'})
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': f'Une erreur s\'est produite : {str(e)}'})
 
 
 fields = ('date d ajout','agence','appelant','tache','priorite','description','etat','date_debut','technicient','date_fin','n_OS','tec',)
@@ -35,13 +56,6 @@ tff = ('appelant','nom','priorite','description','etat','date_debut','technicien
 # Create your views here.
 
 l = []
-def tbb(fi):
-    l.append(AjaxDatatableView.render_row_tools_column_def())
-    for f in fi:
-        t ={'name':f,'visible': True,}
-        l.append(t)
-    print(l)
-    return l
 
 
 class TaskUpdateView(UpdateView):

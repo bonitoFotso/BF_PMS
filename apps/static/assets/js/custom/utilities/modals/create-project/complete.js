@@ -1,46 +1,22 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../src/js/custom/utilities/modals/create-project/complete.js":
-/*!********************************************************************!*\
-  !*** ../src/js/custom/utilities/modals/create-project/complete.js ***!
-  \********************************************************************/
+/***/ "../demo41/src/js/custom/utilities/modals/create-project/complete.js":
+/*!***************************************************************************!*\
+  !*** ../demo41/src/js/custom/utilities/modals/create-project/complete.js ***!
+  \***************************************************************************/
 /***/ ((module) => {
 
-
-
-// Class definition
-var KTModalCreateProjectComplete = function () {
-	// Variables
-	var startButton;
-	var form;
-	var stepper;
-
-	// Private functions
-	var handleForm = function() {
-		startButton.addEventListener('click', function () {
-			stepper.goTo(1);
-		});
-	}
-
-	return {
-		// Public functions
-		init: function () {
-			form = KTModalCreateProject.getForm();
-			stepper = KTModalCreateProject.getStepperObj();
-			startButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="complete-start"]');
-
-			handleForm();
-		}
-	};
-}();
-
-// Webpack support
-if ( true && typeof module.exports !== 'undefined') {
-	window.KTModalCreateProjectComplete = module.exports = KTModalCreateProjectComplete;
-}
-
+eval("\n\n// Class definition\nvar KTModalCreateProjectComplete = function () {\n\t// Variables\n\tvar startButton;\n\tvar form;\n\tvar stepper;\n\n\t// Private functions\n\tvar handleForm = function() {\n\t\tstartButton.addEventListener('click', function () {\n\t\t\tstepper.goTo(1);\n\t\t});\n\t}\n\n\treturn {\n\t\t// Public functions\n\t\tinit: function () {\n\t\t\tform = KTModalCreateProject.getForm();\n\t\t\tstepper = KTModalCreateProject.getStepperObj();\n\t\t\tstartButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element=\"complete-start\"]');\n\n\t\t\thandleForm();\n\t\t}\n\t};\n}();\n\n// Webpack support\nif ( true && typeof module.exports !== 'undefined') {\n\twindow.KTModalCreateProjectComplete = module.exports = KTModalCreateProjectComplete;\n}\n\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/utilities/modals/create-project/complete.js?");
 
 /***/ })
 
@@ -75,8 +51,7 @@ if ( true && typeof module.exports !== 'undefined') {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("../src/js/custom/utilities/modals/create-project/complete.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("../demo41/src/js/custom/utilities/modals/create-project/complete.js");
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=complete.js.map

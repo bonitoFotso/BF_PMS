@@ -1,220 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!********************************************************!*\
-  !*** ../src/js/custom/utilities/modals/new-address.js ***!
-  \********************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/utilities/modals/new-address.js":
+/*!***************************************************************!*\
+  !*** ../demo41/src/js/custom/utilities/modals/new-address.js ***!
+  \***************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTModalNewAddress = function () {
-	var submitButton;
-	var cancelButton;
-	var validator;
-	var form;
-	var modal;
-	var modalEl;
+eval("\n\n// Class definition\nvar KTModalNewAddress = function () {\n\tvar submitButton;\n\tvar cancelButton;\n\tvar validator;\n\tvar form;\n\tvar modal;\n\tvar modalEl;\n\n\t// Init form inputs\n\tvar initForm = function() {\n\t\t// Team assign. For more info, plase visit the official plugin site: https://select2.org/\n        $(form.querySelector('[name=\"country\"]')).select2().on('change', function() {\n            // Revalidate the field when an option is chosen\n            validator.revalidateField('country');\n        });\n\t}\n\n\t// Handle form validation and submittion\n\tvar handleForm = function() {\n\t\t// Stepper custom navigation\n\n\t\t// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n\t\tvalidator = FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\t'first-name': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'First name is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'last-name': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Last name is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'country': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Country is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'address1': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Address 1 is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'address2': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Address 2 is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'city': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'City is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'state': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'State is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'postcode': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Postcode is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t);\n\n\t\t// Action buttons\n\t\tsubmitButton.addEventListener('click', function (e) {\n\t\t\te.preventDefault();\n\n\t\t\t// Validate form before submit\n\t\t\tif (validator) {\n\t\t\t\tvalidator.validate().then(function (status) {\n\t\t\t\t\tconsole.log('validated!');\n\n\t\t\t\t\tif (status == 'Valid') {\n\t\t\t\t\t\tsubmitButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t\t\t\t// Disable button to avoid multiple click \n\t\t\t\t\t\tsubmitButton.disabled = true;\n\n\t\t\t\t\t\t// Simulate ajax process\n\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\tsubmitButton.removeAttribute('data-kt-indicator');\n\n\t\t\t\t\t\t\t// Enable button\n\t\t\t\t\t\t\tsubmitButton.disabled = false;\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t// Show success message.  For more info check the plugin's official documentation: https://sweetalert2.github.io/\n\t\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\t\ttext: \"Form has been successfully submitted!\",\n\t\t\t\t\t\t\t\ticon: \"success\",\n\t\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}).then(function (result) {\n\t\t\t\t\t\t\t\tif (result.isConfirmed) {\n\t\t\t\t\t\t\t\t\tmodal.hide();\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t});\n\n\t\t\t\t\t\t\t//form.submit(); // Submit form\n\t\t\t\t\t\t}, 2000);   \t\t\t\t\t\t\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Show error message.\n\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\ttext: \"Sorry, looks like there are some errors detected, please try again.\",\n\t\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\t\t});\n\n\t\tcancelButton.addEventListener('click', function (e) {\n\t\t\te.preventDefault();\n\n\t\t\tSwal.fire({\n\t\t\t\ttext: \"Are you sure you would like to cancel?\",\n\t\t\t\ticon: \"warning\",\n\t\t\t\tshowCancelButton: true,\n\t\t\t\tbuttonsStyling: false,\n\t\t\t\tconfirmButtonText: \"Yes, cancel it!\",\n\t\t\t\tcancelButtonText: \"No, return\",\n\t\t\t\tcustomClass: {\n\t\t\t\t\tconfirmButton: \"btn btn-primary\",\n\t\t\t\t\tcancelButton: \"btn btn-active-light\"\n\t\t\t\t}\n\t\t\t}).then(function (result) {\n\t\t\t\tif (result.value) {\n\t\t\t\t\tform.reset(); // Reset form\t\n\t\t\t\t\tmodal.hide(); // Hide modal\t\t\t\t\n\t\t\t\t} else if (result.dismiss === 'cancel') {\n\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\ttext: \"Your form has not been cancelled!.\",\n\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\",\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t});\n\t\t});\n\t}\n\n\treturn {\n\t\t// Public functions\n\t\tinit: function () {\n\t\t\t// Elements\n\t\t\tmodalEl = document.querySelector('#kt_modal_new_address');\n\n\t\t\tif (!modalEl) {\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tmodal = new bootstrap.Modal(modalEl);\n\n\t\t\tform = document.querySelector('#kt_modal_new_address_form');\n\t\t\tsubmitButton = document.getElementById('kt_modal_new_address_submit');\n\t\t\tcancelButton = document.getElementById('kt_modal_new_address_cancel');\n\n\t\t\tinitForm();\n\t\t\thandleForm();\n\t\t}\n\t};\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n\tKTModalNewAddress.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/utilities/modals/new-address.js?");
 
-	// Init form inputs
-	var initForm = function() {
-		// Team assign. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="country"]')).select2().on('change', function() {
-            // Revalidate the field when an option is chosen
-            validator.revalidateField('country');
-        });
-	}
+/***/ })
 
-	// Handle form validation and submittion
-	var handleForm = function() {
-		// Stepper custom navigation
-
-		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-		validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					'first-name': {
-						validators: {
-							notEmpty: {
-								message: 'First name is required'
-							}
-						}
-					},
-					'last-name': {
-						validators: {
-							notEmpty: {
-								message: 'Last name is required'
-							}
-						}
-					},
-					'country': {
-						validators: {
-							notEmpty: {
-								message: 'Country is required'
-							}
-						}
-					},
-					'address1': {
-						validators: {
-							notEmpty: {
-								message: 'Address 1 is required'
-							}
-						}
-					},
-					'address2': {
-						validators: {
-							notEmpty: {
-								message: 'Address 2 is required'
-							}
-						}
-					},
-					'city': {
-						validators: {
-							notEmpty: {
-								message: 'City is required'
-							}
-						}
-					},
-					'state': {
-						validators: {
-							notEmpty: {
-								message: 'State is required'
-							}
-						}
-					},
-					'postcode': {
-						validators: {
-							notEmpty: {
-								message: 'Postcode is required'
-							}
-						}
-					}
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-					})
-				}
-			}
-		);
-
-		// Action buttons
-		submitButton.addEventListener('click', function (e) {
-			e.preventDefault();
-
-			// Validate form before submit
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
-
-					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
-
-						// Disable button to avoid multiple click 
-						submitButton.disabled = true;
-
-						// Simulate ajax process
-						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
-
-							// Enable button
-							submitButton.disabled = false;
-							
-							// Show success message.  For more info check the plugin's official documentation: https://sweetalert2.github.io/
-							Swal.fire({
-								text: "Form has been successfully submitted!",
-								icon: "success",
-								buttonsStyling: false,
-								confirmButtonText: "Ok, got it!",
-								customClass: {
-									confirmButton: "btn btn-primary"
-								}
-							}).then(function (result) {
-								if (result.isConfirmed) {
-									modal.hide();
-								}
-							});
-
-							//form.submit(); // Submit form
-						}, 2000);   						
-					} else {
-						// Show error message.
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-primary"
-							}
-						});
-					}
-				});
-			}
-		});
-
-		cancelButton.addEventListener('click', function (e) {
-			e.preventDefault();
-
-			Swal.fire({
-				text: "Are you sure you would like to cancel?",
-				icon: "warning",
-				showCancelButton: true,
-				buttonsStyling: false,
-				confirmButtonText: "Yes, cancel it!",
-				cancelButtonText: "No, return",
-				customClass: {
-					confirmButton: "btn btn-primary",
-					cancelButton: "btn btn-active-light"
-				}
-			}).then(function (result) {
-				if (result.value) {
-					form.reset(); // Reset form	
-					modal.hide(); // Hide modal				
-				} else if (result.dismiss === 'cancel') {
-					Swal.fire({
-						text: "Your form has not been cancelled!.",
-						icon: "error",
-						buttonsStyling: false,
-						confirmButtonText: "Ok, got it!",
-						customClass: {
-							confirmButton: "btn btn-primary",
-						}
-					});
-				}
-			});
-		});
-	}
-
-	return {
-		// Public functions
-		init: function () {
-			// Elements
-			modalEl = document.querySelector('#kt_modal_new_address');
-
-			if (!modalEl) {
-				return;
-			}
-
-			modal = new bootstrap.Modal(modalEl);
-
-			form = document.querySelector('#kt_modal_new_address_form');
-			submitButton = document.getElementById('kt_modal_new_address_submit');
-			cancelButton = document.getElementById('kt_modal_new_address_cancel');
-
-			initForm();
-			handleForm();
-		}
-	};
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalNewAddress.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/utilities/modals/new-address.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=new-address.js.map

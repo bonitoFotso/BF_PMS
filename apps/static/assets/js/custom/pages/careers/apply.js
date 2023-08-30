@@ -1,188 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!***********************************************!*\
-  !*** ../src/js/custom/pages/careers/apply.js ***!
-  \***********************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/pages/careers/apply.js":
+/*!******************************************************!*\
+  !*** ../demo41/src/js/custom/pages/careers/apply.js ***!
+  \******************************************************/
+/***/ (() => {
 
-// Class definition
-var KTCareersApply = function () {
-	var submitButton;
-	var validator;
-	var form;
+eval("\n\n// Class definition\nvar KTCareersApply = function () {\n\tvar submitButton;\n\tvar validator;\n\tvar form;\n\n\t// Init form inputs\n\tvar initForm = function() {\n\t\t// Team assign. For more info, plase visit the official plugin site: https://select2.org/\n        $(form.querySelector('[name=\"position\"]')).on('change', function() {\n            // Revalidate the field when an option is chosen\n            validator.revalidateField('position');\n        });\n\n\t\t// Start date. For more info, please visit the official plugin site: https://flatpickr.js.org/\n\t\tvar startDate = $(form.querySelector('[name=\"start_date\"]'));\n\t\tstartDate.flatpickr({\n\t\t\tenableTime: false,\n\t\t\tdateFormat: \"d, M Y\",\n\t\t});\n\t}\n\n\t// Handle form validation and submittion\n\tvar handleForm = function() {\n\t\t// Stepper custom navigation\n\n\t\t// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n\t\tvalidator = FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\t'first_name': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'First name is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'last_name': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Last name is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'age': {\n                        validators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Age is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'city': {\n                        validators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'City is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'email': {\n                        validators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Email address is required'\n\t\t\t\t\t\t\t},\n                            emailAddress: {\n\t\t\t\t\t\t\t\tmessage: 'The value is not a valid email address'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'salary': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Expected salary is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'position': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Position is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t'start_date': {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Start date is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t);\n\n\t\t// Action buttons\n\t\tsubmitButton.addEventListener('click', function (e) {\n\t\t\te.preventDefault();\n\n\t\t\t// Validate form before submit\n\t\t\tif (validator) {\n\t\t\t\tvalidator.validate().then(function (status) {\n\t\t\t\t\tconsole.log('validated!');\n\n\t\t\t\t\tif (status == 'Valid') {\n\t\t\t\t\t\tsubmitButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t\t\t\t// Disable button to avoid multiple click \n\t\t\t\t\t\tsubmitButton.disabled = true;\n\n\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\tsubmitButton.removeAttribute('data-kt-indicator');\n\n\t\t\t\t\t\t\t// Enable button\n\t\t\t\t\t\t\tsubmitButton.disabled = false;\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\t\ttext: \"Form has been successfully submitted!\",\n\t\t\t\t\t\t\t\ticon: \"success\",\n\t\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}).then(function (result) {\n\t\t\t\t\t\t\t\tif (result.isConfirmed) {\n\t\t\t\t\t\t\t\t\t//form.submit();\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t});\n\n\t\t\t\t\t\t\t//form.submit(); // Submit form\n\t\t\t\t\t\t}, 2000);   \t\t\t\t\t\t\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Scroll top\n\n\t\t\t\t\t\t// Show error popuo. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\ttext: \"Sorry, looks like there are some errors detected, please try again.\",\n\t\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-primary\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}).then(function (result) {\n\t\t\t\t\t\t\tKTUtil.scrollTop();\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\t\t});\n\t}\n\n\treturn {\n\t\t// Public functions\n\t\tinit: function () {\n\t\t\t// Elements\n\t\t\tform = document.querySelector('#kt_careers_form');\n\t\t\tsubmitButton = document.getElementById('kt_careers_submit_button');\n\n\t\t\tinitForm();\n\t\t\thandleForm();\n\t\t}\n\t};\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n\tKTCareersApply.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/pages/careers/apply.js?");
 
-	// Init form inputs
-	var initForm = function() {
-		// Team assign. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="position"]')).on('change', function() {
-            // Revalidate the field when an option is chosen
-            validator.revalidateField('position');
-        });
+/***/ })
 
-		// Start date. For more info, please visit the official plugin site: https://flatpickr.js.org/
-		var startDate = $(form.querySelector('[name="start_date"]'));
-		startDate.flatpickr({
-			enableTime: false,
-			dateFormat: "d, M Y",
-		});
-	}
-
-	// Handle form validation and submittion
-	var handleForm = function() {
-		// Stepper custom navigation
-
-		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-		validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					'first_name': {
-						validators: {
-							notEmpty: {
-								message: 'First name is required'
-							}
-						}
-					},
-					'last_name': {
-						validators: {
-							notEmpty: {
-								message: 'Last name is required'
-							}
-						}
-					},
-					'age': {
-                        validators: {
-							notEmpty: {
-								message: 'Age is required'
-							}
-						}
-					},
-					'city': {
-                        validators: {
-							notEmpty: {
-								message: 'City is required'
-							}
-						}
-					},
-					'email': {
-                        validators: {
-							notEmpty: {
-								message: 'Email address is required'
-							},
-                            emailAddress: {
-								message: 'The value is not a valid email address'
-							}
-						}
-					},
-					'salary': {
-						validators: {
-							notEmpty: {
-								message: 'Expected salary is required'
-							}
-						}
-					},
-					'position': {
-						validators: {
-							notEmpty: {
-								message: 'Position is required'
-							}
-						}
-					},
-					'start_date': {
-						validators: {
-							notEmpty: {
-								message: 'Start date is required'
-							}
-						}
-					},
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-					})
-				}
-			}
-		);
-
-		// Action buttons
-		submitButton.addEventListener('click', function (e) {
-			e.preventDefault();
-
-			// Validate form before submit
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
-
-					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
-
-						// Disable button to avoid multiple click 
-						submitButton.disabled = true;
-
-						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
-
-							// Enable button
-							submitButton.disabled = false;
-							
-							Swal.fire({
-								text: "Form has been successfully submitted!",
-								icon: "success",
-								buttonsStyling: false,
-								confirmButtonText: "Ok, got it!",
-								customClass: {
-									confirmButton: "btn btn-primary"
-								}
-							}).then(function (result) {
-								if (result.isConfirmed) {
-									//form.submit();
-								}
-							});
-
-							//form.submit(); // Submit form
-						}, 2000);   						
-					} else {
-						// Scroll top
-
-						// Show error popuo. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-primary"
-							}
-						}).then(function (result) {
-							KTUtil.scrollTop();
-						});
-					}
-				});
-			}
-		});
-	}
-
-	return {
-		// Public functions
-		init: function () {
-			// Elements
-			form = document.querySelector('#kt_careers_form');
-			submitButton = document.getElementById('kt_careers_submit_button');
-
-			initForm();
-			handleForm();
-		}
-	};
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTCareersApply.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/pages/careers/apply.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=apply.js.map

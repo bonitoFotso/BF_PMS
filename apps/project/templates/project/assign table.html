@@ -168,23 +168,23 @@
 <script src="{% static 'assets/plugins/DataTables/datatables.js' %}"></script>
 
 <script>
-  $(document).ready(function() {
-    AjaxDatatableViewUtils.initialize_table(
-        $('#tache_listf'),
-        "{% url 'ag_ajax' %}",
-        {
-            // extra_options (example)
-            processing: true,
-            autoWidth: false,
-            full_row_select: true,
-            scrollX: true,
-            
-        }, {
-            // extra_data
-            // ...
-        },
-    );
-});
+//  $(document).ready(function() {
+//    AjaxDatatableViewUtils.initialize_table(
+//        $('#tache_listf'),
+//        "{% url 'tt' %}",
+//        {
+//            // extra_options (example)
+//            processing: true,
+//            autoWidth: false,
+//            full_row_select: true, 
+//            scrollX: true,
+//            
+//        }, {
+//            // extra_data
+//            // ...
+//        },
+//    );
+//});
 
   $("#tache_list").DataTable();
   function atts(nom) {

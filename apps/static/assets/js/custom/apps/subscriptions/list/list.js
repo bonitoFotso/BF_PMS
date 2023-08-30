@@ -1,286 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!********************************************************!*\
-  !*** ../src/js/custom/apps/subscriptions/list/list.js ***!
-  \********************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/apps/subscriptions/list/list.js":
+/*!***************************************************************!*\
+  !*** ../demo41/src/js/custom/apps/subscriptions/list/list.js ***!
+  \***************************************************************/
+/***/ (() => {
 
-var KTSubscriptionsList = function () {
-    // Define shared variables
-    var table;
-    var datatable;
-    var toolbarBase;
-    var toolbarSelected;
-    var selectedCount;
+eval("\n\nvar KTSubscriptionsList = function () {\n    // Define shared variables\n    var table;\n    var datatable;\n    var toolbarBase;\n    var toolbarSelected;\n    var selectedCount;\n\n    // Private functions\n    var initDatatable = function () {\n        // Set date data order\n        const tableRows = table.querySelectorAll('tbody tr');\n\n        tableRows.forEach(row => {\n            const dateRow = row.querySelectorAll('td');\n            const realDate = moment(dateRow[5].innerHTML, \"DD MMM YYYY, LT\").format(); // select date from 4th column in table\n            dateRow[5].setAttribute('data-order', realDate);\n        });\n\n        // Init datatable --- more info on datatables: https://datatables.net/manual/\n        datatable = $(table).DataTable({\n            \"info\": false,\n            'order': [],\n            \"pageLength\": 10,\n            \"lengthChange\": false,\n            'columnDefs': [\n                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)\n                { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)                \n            ]\n        });\n\n        // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw\n        datatable.on('draw', function () {\n            initToggleToolbar();\n            handleRowDeletion();\n            toggleToolbars();\n        });\n    }\n\n    // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()\n    var handleSearch = function () {\n        const filterSearch = document.querySelector('[data-kt-subscription-table-filter=\"search\"]');\n        filterSearch.addEventListener('keyup', function (e) {\n            datatable.search(e.target.value).draw();\n        });\n    }\n\n    // Filter Datatable\n    var handleFilter = function () {\n        // Select filter options\n        const filterForm = document.querySelector('[data-kt-subscription-table-filter=\"form\"]');\n        const filterButton = filterForm.querySelector('[data-kt-subscription-table-filter=\"filter\"]');\n        const resetButton = filterForm.querySelector('[data-kt-subscription-table-filter=\"reset\"]');\n        const selectOptions = filterForm.querySelectorAll('select');\n\n        // Filter datatable on submit\n        filterButton.addEventListener('click', function () {\n            var filterString = '';\n\n            // Get filter values\n            selectOptions.forEach((item, index) => {\n                if (item.value && item.value !== '') {\n                    if (index !== 0) {\n                        filterString += ' ';\n                    }\n\n                    // Build filter value options\n                    filterString += item.value;\n                }\n            });\n\n            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()\n            datatable.search(filterString).draw();\n        });\n\n        // Reset datatable\n        resetButton.addEventListener('click', function () {\n            // Reset filter form\n            selectOptions.forEach((item, index) => {\n                // Reset Select2 dropdown --- official docs reference: https://select2.org/programmatic-control/add-select-clear-items\n                $(item).val(null).trigger('change');\n            });\n\n            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()\n            datatable.search('').draw();\n        });\n    }\n\n    // Delete subscirption\n    var handleRowDeletion = function () {\n        // Select all delete buttons\n        const deleteButtons = table.querySelectorAll('[data-kt-subscriptions-table-filter=\"delete_row\"]');\n\n        deleteButtons.forEach(d => {\n            // Delete button on click\n            d.addEventListener('click', function (e) {\n                e.preventDefault();\n\n                // Select parent row\n                const parent = e.target.closest('tr');\n\n                // Get customer name\n                const customerName = parent.querySelectorAll('td')[1].innerText;\n\n                // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/\n                Swal.fire({\n                    text: \"Are you sure you want to delete \" + customerName + \"?\",\n                    icon: \"warning\",\n                    showCancelButton: true,\n                    buttonsStyling: false,\n                    confirmButtonText: \"Yes, delete!\",\n                    cancelButtonText: \"No, cancel\",\n                    customClass: {\n                        confirmButton: \"btn fw-bold btn-danger\",\n                        cancelButton: \"btn fw-bold btn-active-light-primary\"\n                    }\n                }).then(function (result) {\n                    if (result.value) {\n                        Swal.fire({\n                            text: \"You have deleted \" + customerName + \"!.\",\n                            icon: \"success\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn fw-bold btn-primary\",\n                            }\n                        }).then(function () {\n                            // Remove current row\n                            datatable.row($(parent)).remove().draw();\n                        }).then(function () {\n                            // Detect checked checkboxes\n                            toggleToolbars();\n                        });\n                    } else if (result.dismiss === 'cancel') {\n                        Swal.fire({\n                            text: customerName + \" was not deleted.\",\n                            icon: \"error\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn fw-bold btn-primary\",\n                            }\n                        });\n                    }\n                });\n            })\n        });\n    }\n\n    // Init toggle toolbar\n    var initToggleToolbar = () => {\n        // Toggle selected action toolbar\n        // Select all checkboxes\n        const checkboxes = table.querySelectorAll('[type=\"checkbox\"]');\n\n        // Select elements\n        toolbarBase = document.querySelector('[data-kt-subscription-table-toolbar=\"base\"]');\n        toolbarSelected = document.querySelector('[data-kt-subscription-table-toolbar=\"selected\"]');\n        selectedCount = document.querySelector('[data-kt-subscription-table-select=\"selected_count\"]');\n        const deleteSelected = document.querySelector('[data-kt-subscription-table-select=\"delete_selected\"]');\n\n        // Toggle delete selected toolbar\n        checkboxes.forEach(c => {\n            // Checkbox on click event\n            c.addEventListener('click', function () {\n                setTimeout(function () {\n                    toggleToolbars();\n                }, 50);\n            });\n        });\n\n        // Deleted selected rows\n        deleteSelected.addEventListener('click', function () {\n            // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/\n            Swal.fire({\n                text: \"Are you sure you want to delete selected customers?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, delete!\",\n                cancelButtonText: \"No, cancel\",\n                customClass: {\n                    confirmButton: \"btn fw-bold btn-danger\",\n                    cancelButton: \"btn fw-bold btn-active-light-primary\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    Swal.fire({\n                        text: \"You have deleted all selected customers!.\",\n                        icon: \"success\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn fw-bold btn-primary\",\n                        }\n                    }).then(function () {\n                        // Remove all selected customers\n                        checkboxes.forEach(c => {\n                            if (c.checked) {\n                                datatable.row($(c.closest('tbody tr'))).remove().draw();\n                            }\n                        });\n\n                        // Remove header checked box\n                        const headerCheckbox = table.querySelectorAll('[type=\"checkbox\"]')[0];\n                        headerCheckbox.checked = false;\n                    }).then(function () {\n                        toggleToolbars(); // Detect checked checkboxes\n                        initToggleToolbar(); // Re-init toolbar to recalculate checkboxes\n                    });\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Selected customers was not deleted.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn fw-bold btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n    // Toggle toolbars\n    const toggleToolbars = () => {\n        // Select refreshed checkbox DOM elements \n        const allCheckboxes = table.querySelectorAll('tbody [type=\"checkbox\"]');\n\n        // Detect checkboxes state & count\n        let checkedState = false;\n        let count = 0;\n\n        // Count checked boxes\n        allCheckboxes.forEach(c => {\n            if (c.checked) {\n                checkedState = true;\n                count++;\n            }\n        });\n\n        // Toggle toolbars\n        if (checkedState) {\n            selectedCount.innerHTML = count;\n            toolbarBase.classList.add('d-none');\n            toolbarSelected.classList.remove('d-none');\n        } else {\n            toolbarBase.classList.remove('d-none');\n            toolbarSelected.classList.add('d-none');\n        }\n    }\n\n    return {\n        // Public functions  \n        init: function () {\n            table = document.getElementById('kt_subscriptions_table');\n\n            if (!table) {\n                return;\n            }\n\n            initDatatable();\n            initToggleToolbar();\n            handleSearch();\n            handleRowDeletion();\n            handleFilter();\n        }\n    }\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n    KTSubscriptionsList.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/apps/subscriptions/list/list.js?");
 
-    // Private functions
-    var initDatatable = function () {
-        // Set date data order
-        const tableRows = table.querySelectorAll('tbody tr');
+/***/ })
 
-        tableRows.forEach(row => {
-            const dateRow = row.querySelectorAll('td');
-            const realDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 4th column in table
-            dateRow[5].setAttribute('data-order', realDate);
-        });
-
-        // Init datatable --- more info on datatables: https://datatables.net/manual/
-        datatable = $(table).DataTable({
-            "info": false,
-            'order': [],
-            "pageLength": 10,
-            "lengthChange": false,
-            'columnDefs': [
-                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)                
-            ]
-        });
-
-        // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-        datatable.on('draw', function () {
-            initToggleToolbar();
-            handleRowDeletion();
-            toggleToolbars();
-        });
-    }
-
-    // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
-    var handleSearch = function () {
-        const filterSearch = document.querySelector('[data-kt-subscription-table-filter="search"]');
-        filterSearch.addEventListener('keyup', function (e) {
-            datatable.search(e.target.value).draw();
-        });
-    }
-
-    // Filter Datatable
-    var handleFilter = function () {
-        // Select filter options
-        const filterForm = document.querySelector('[data-kt-subscription-table-filter="form"]');
-        const filterButton = filterForm.querySelector('[data-kt-subscription-table-filter="filter"]');
-        const resetButton = filterForm.querySelector('[data-kt-subscription-table-filter="reset"]');
-        const selectOptions = filterForm.querySelectorAll('select');
-
-        // Filter datatable on submit
-        filterButton.addEventListener('click', function () {
-            var filterString = '';
-
-            // Get filter values
-            selectOptions.forEach((item, index) => {
-                if (item.value && item.value !== '') {
-                    if (index !== 0) {
-                        filterString += ' ';
-                    }
-
-                    // Build filter value options
-                    filterString += item.value;
-                }
-            });
-
-            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-            datatable.search(filterString).draw();
-        });
-
-        // Reset datatable
-        resetButton.addEventListener('click', function () {
-            // Reset filter form
-            selectOptions.forEach((item, index) => {
-                // Reset Select2 dropdown --- official docs reference: https://select2.org/programmatic-control/add-select-clear-items
-                $(item).val(null).trigger('change');
-            });
-
-            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-            datatable.search('').draw();
-        });
-    }
-
-    // Delete subscirption
-    var handleRowDeletion = function () {
-        // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-subscriptions-table-filter="delete_row"]');
-
-        deleteButtons.forEach(d => {
-            // Delete button on click
-            d.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                // Select parent row
-                const parent = e.target.closest('tr');
-
-                // Get customer name
-                const customerName = parent.querySelectorAll('td')[1].innerText;
-
-                // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-                Swal.fire({
-                    text: "Are you sure you want to delete " + customerName + "?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Yes, delete!",
-                    cancelButtonText: "No, cancel",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    }
-                }).then(function (result) {
-                    if (result.value) {
-                        Swal.fire({
-                            text: "You have deleted " + customerName + "!.",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn fw-bold btn-primary",
-                            }
-                        }).then(function () {
-                            // Remove current row
-                            datatable.row($(parent)).remove().draw();
-                        }).then(function () {
-                            // Detect checked checkboxes
-                            toggleToolbars();
-                        });
-                    } else if (result.dismiss === 'cancel') {
-                        Swal.fire({
-                            text: customerName + " was not deleted.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn fw-bold btn-primary",
-                            }
-                        });
-                    }
-                });
-            })
-        });
-    }
-
-    // Init toggle toolbar
-    var initToggleToolbar = () => {
-        // Toggle selected action toolbar
-        // Select all checkboxes
-        const checkboxes = table.querySelectorAll('[type="checkbox"]');
-
-        // Select elements
-        toolbarBase = document.querySelector('[data-kt-subscription-table-toolbar="base"]');
-        toolbarSelected = document.querySelector('[data-kt-subscription-table-toolbar="selected"]');
-        selectedCount = document.querySelector('[data-kt-subscription-table-select="selected_count"]');
-        const deleteSelected = document.querySelector('[data-kt-subscription-table-select="delete_selected"]');
-
-        // Toggle delete selected toolbar
-        checkboxes.forEach(c => {
-            // Checkbox on click event
-            c.addEventListener('click', function () {
-                setTimeout(function () {
-                    toggleToolbars();
-                }, 50);
-            });
-        });
-
-        // Deleted selected rows
-        deleteSelected.addEventListener('click', function () {
-            // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-            Swal.fire({
-                text: "Are you sure you want to delete selected customers?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, delete!",
-                cancelButtonText: "No, cancel",
-                customClass: {
-                    confirmButton: "btn fw-bold btn-danger",
-                    cancelButton: "btn fw-bold btn-active-light-primary"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    Swal.fire({
-                        text: "You have deleted all selected customers!.",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-primary",
-                        }
-                    }).then(function () {
-                        // Remove all selected customers
-                        checkboxes.forEach(c => {
-                            if (c.checked) {
-                                datatable.row($(c.closest('tbody tr'))).remove().draw();
-                            }
-                        });
-
-                        // Remove header checked box
-                        const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
-                        headerCheckbox.checked = false;
-                    }).then(function () {
-                        toggleToolbars(); // Detect checked checkboxes
-                        initToggleToolbar(); // Re-init toolbar to recalculate checkboxes
-                    });
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Selected customers was not deleted.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    // Toggle toolbars
-    const toggleToolbars = () => {
-        // Select refreshed checkbox DOM elements 
-        const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
-
-        // Detect checkboxes state & count
-        let checkedState = false;
-        let count = 0;
-
-        // Count checked boxes
-        allCheckboxes.forEach(c => {
-            if (c.checked) {
-                checkedState = true;
-                count++;
-            }
-        });
-
-        // Toggle toolbars
-        if (checkedState) {
-            selectedCount.innerHTML = count;
-            toolbarBase.classList.add('d-none');
-            toolbarSelected.classList.remove('d-none');
-        } else {
-            toolbarBase.classList.remove('d-none');
-            toolbarSelected.classList.add('d-none');
-        }
-    }
-
-    return {
-        // Public functions  
-        init: function () {
-            table = document.getElementById('kt_subscriptions_table');
-
-            if (!table) {
-                return;
-            }
-
-            initDatatable();
-            initToggleToolbar();
-            handleSearch();
-            handleRowDeletion();
-            handleFilter();
-        }
-    }
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTSubscriptionsList.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/apps/subscriptions/list/list.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=list.js.map

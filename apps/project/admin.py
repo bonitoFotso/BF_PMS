@@ -3,8 +3,8 @@ from .models import *
 
 @admin.register(Tache)
 class TacheAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'intervention','status','type_intervention', 'appelant','n_OS','priorite', 'ok', 'date_debut', 'date_fin')
-    list_filter = ('intervention', 'type_intervention', 'appelant', 'priorite', 'ok')
+    list_display = ('nom','appelant', 'status','activite','categorie', 'n_OS','priorite', 'ok', 'date_debut', 'date_fin')
+    list_filter = ('categorie', 'activite', 'appelant', 'priorite', 'ok')
     search_fields = ('nom', 'description')
     date_hierarchy = 'createdAt'
     ordering = ('-createdAt',)

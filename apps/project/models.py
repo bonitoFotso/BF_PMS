@@ -31,28 +31,24 @@ jours = [
     ('samedi', 'samedi'),
 ]
 
+class Categorie(models.Model):
+    nom = models.CharField(max_length=200)
+    description = models.TextField()
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
+    updatedAt = models.DateTimeField(auto_now_add=True)  # Date de mise à jour automatique
+    def __str__(self):
+        return self.nom
 
+class Activite(models.Model):
+    nom = models.CharField(max_length=200)
+    description = models.TextField()
+    createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
+    updatedAt = models.DateTimeField(auto_now_add=True)  # Date de mise à jour automatique
+    def __str__(self):
+        return f"Activité de {self.projet.nom}"
+    
 
 class Tache(models.Model):
-    # Choix pour le champ 'intervention'
-    INTERVENTION_CHOICES = [
-        ('maintenance', 'Maintenance'),
-        ('installation', 'Installation'),
-        ('incident', 'Incident'),
-        ('survey', 'Enquête'),
-        ('extension', 'Extension'),
-        ('migration', 'Migration'),
-    ]
-
-    # Choix pour le champ 'type_intervention'
-    TYPE_INTERVENTION_CHOICES = [
-        ('videosurveillance', 'Vidéosurveillance'),
-        ('controle_acces', 'Contrôle d\'accès'),
-        ('systeme_incendie', 'Système incendie'),
-        ('intrusion', 'Intrusion'),
-        ('dab', 'DAB (Distributeur automatique de billets)'),
-    ]
-
     # Choix pour le champ 'status'
     STATUS_CHOICES = [
         ('En attente', 'En attente'),
@@ -65,12 +61,10 @@ class Tache(models.Model):
     ('Moyen', 'Moyen'),
     ('Élevé', 'Élevé'),
 ]
-
-
-    nom = models.CharField(_("n"), max_length=50, null=True)
-    intervention = models.CharField(choices=INTERVENTION_CHOICES, max_length=20)  # Choix d'intervention
+    activite = models.ForeignKey(Activite, verbose_name=_("Activite"), on_delete=models.CASCADE)
+    categorie = models.ForeignKey(Categorie, verbose_name=_("Categorie"), on_delete=models.CASCADE)
+    nom = models.CharField(_("intitule"), max_length=200,)
     status = models.CharField(choices=STATUS_CHOICES, max_length=20, default="En attente")  # Choix de statut
-    type_intervention = models.CharField(choices=TYPE_INTERVENTION_CHOICES, max_length=20)  # Choix de type d'intervention
     appelant = models.ForeignKey(Appelant, verbose_name=_("Celui qui appelle"), on_delete=models.CASCADE)
     priorite = models.CharField(choices=PRIORITE_CHOICES, max_length=20)  # Choix de priorité
     description = models.CharField(max_length=500, null=False, default='description')
@@ -87,13 +81,6 @@ class Tache(models.Model):
         else:
             self.status = 'En attente'
         self.save()
-        
-    def save(self, *args, **kwargs):
-        # Définition du champ "nom" en fonction des valeurs des champs "intervention", "type_intervention" et "createdAt"
-        self.n = f"{self.intervention} - {self.type_intervention} - {self.appelant}"
-        if not self.nom:
-            self.nom = slugify(self.n)
-        super(Tache, self).save(*args, **kwargs)
         
     def __str__(self):
         return self.nom  # Renvoie le nom unique de la tâche comme représentation en chaîne

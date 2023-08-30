@@ -1,78 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!*****************************************************!*\
-  !*** ../src/js/custom/account/api-keys/api-keys.js ***!
-  \*****************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/account/api-keys/api-keys.js":
+/*!************************************************************!*\
+  !*** ../demo41/src/js/custom/account/api-keys/api-keys.js ***!
+  \************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTAccountAPIKeys = function () {
-    // Private functions
-    var initLicenceCopy = function() {
-        KTUtil.each(document.querySelectorAll('#kt_api_keys_table [data-action="copy"]'), function(button) {
-            var tr = button.closest('tr');
-            var license = KTUtil.find(tr, '[data-bs-target="license"]');
+eval("\n\n// Class definition\nvar KTAccountAPIKeys = function () {\n    // Private functions\n    var initLicenceCopy = function() {\n        KTUtil.each(document.querySelectorAll('#kt_api_keys_table [data-action=\"copy\"]'), function(button) {\n            var tr = button.closest('tr');\n            var license = KTUtil.find(tr, '[data-bs-target=\"license\"]');\n\n            var clipboard = new ClipboardJS(button, {\n                target: license,\n                text: function() {\n                    return license.innerHTML;\n                }                 \n            });\n        \n            clipboard.on('success', function(e) {\n                // Icons\n                var copyIcon = button.querySelector('.ki-copy');                \n                var checkIcon = button.querySelector('.ki-check');\n                \n                // exit if check icon is already shown\n                if (checkIcon) {\n                   return;  \n                }\n\n                // Create check icon\n                checkIcon = document.createElement('i');\n                checkIcon.classList.add('ki-solid');\n                checkIcon.classList.add('ki-check');\n                checkIcon.classList.add('fs-2');\n\n                // Append check icon\n                button.appendChild(checkIcon);\n\n                // Highlight target\n                license.classList.add('text-success');\n\n                // Hide copy icon\n                copyIcon.classList.add('d-none');\n\n                // Set 3 seconds timeout to hide the check icon and show copy icon back\n                setTimeout(function() {\n                    // Remove check icon\n                    copyIcon.classList.remove('d-none');\n                    // Show check icon back\n                    button.removeChild(checkIcon);\n\n                    // Remove highlight\n                    license.classList.remove('text-success');\n                }, 3000);\n            });\n        });\n    }\n\n    // Public methods\n    return {\n        init: function () {\n            initLicenceCopy();\n        }\n    }\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function() {\n    KTAccountAPIKeys.init();\n});\n\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/account/api-keys/api-keys.js?");
 
-            var clipboard = new ClipboardJS(button, {
-                target: license,
-                text: function() {
-                    return license.innerHTML;
-                }                 
-            });
-        
-            clipboard.on('success', function(e) {
-                // Icons
-                var copyIcon = button.querySelector('.ki-copy');                
-                var checkIcon = button.querySelector('.ki-check');
-                
-                // exit if check icon is already shown
-                if (checkIcon) {
-                   return;  
-                }
+/***/ })
 
-                // Create check icon
-                checkIcon = document.createElement('i');
-                checkIcon.classList.add('ki-solid');
-                checkIcon.classList.add('ki-check');
-                checkIcon.classList.add('fs-2');
-
-                // Append check icon
-                button.appendChild(checkIcon);
-
-                // Highlight target
-                license.classList.add('text-success');
-
-                // Hide copy icon
-                copyIcon.classList.add('d-none');
-
-                // Set 3 seconds timeout to hide the check icon and show copy icon back
-                setTimeout(function() {
-                    // Remove check icon
-                    copyIcon.classList.remove('d-none');
-                    // Show check icon back
-                    button.removeChild(checkIcon);
-
-                    // Remove highlight
-                    license.classList.remove('text-success');
-                }, 3000);
-            });
-        });
-    }
-
-    // Public methods
-    return {
-        init: function () {
-            initLicenceCopy();
-        }
-    }
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountAPIKeys.init();
-});
-
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/account/api-keys/api-keys.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=api-keys.js.map

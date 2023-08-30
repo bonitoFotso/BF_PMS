@@ -1,178 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!*************************************************************!*\
-  !*** ../src/js/custom/authentication/sign-up/free-trial.js ***!
-  \*************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/authentication/sign-up/free-trial.js":
+/*!********************************************************************!*\
+  !*** ../demo41/src/js/custom/authentication/sign-up/free-trial.js ***!
+  \********************************************************************/
+/***/ (() => {
 
-// Class Definition
-var KTSignupFreeTrial = function() {
-    // Elements
-    var form;
-    var submitButton;
-    var validator;
-    var passwordMeter;
+eval("\n\n// Class Definition\nvar KTSignupFreeTrial = function() {\n    // Elements\n    var form;\n    var submitButton;\n    var validator;\n    var passwordMeter;\n\n    // Handle form\n    var handleForm = function(e) {\n        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n        validator = FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\t\t\t\t\t \n\t\t\t\t\t'email': {\n                        validators: {\n                            regexp: {\n                                regexp: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/,\n                                message: 'The value is not a valid email address',\n                            },\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Email address is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n                    'password': {\n                        validators: {\n                            notEmpty: {\n                                message: 'The password is required'\n                            },\n                            callback: {\n                                message: 'Please enter valid password',\n                                callback: function(input) {\n                                    if (input.value.length > 0) {\n                                        return validatePassword();\n                                    }\n                                }\n                            }\n                        }\n                    },\n                    'confirm-password': {\n                        validators: {\n                            notEmpty: {\n                                message: 'The password confirmation is required'\n                            },\n                            identical: {\n                                compare: function() {\n                                    return form.querySelector('[name=\"password\"]').value;\n                                },\n                                message: 'The password and its confirm are not the same'\n                            }\n                        }\n                    },\n                    'toc': {\n                        validators: {\n                            notEmpty: {\n                                message: 'You must accept the terms and conditions'\n                            }\n                        }\n                    }\n                },\n                plugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger({\n                        event: {\n                            password: false\n                        }  \n                    }),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n                    })\n                }\t\t\t \n\t\t\t}\n\t\t);\n\n        submitButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            validator.revalidateField('password');\n\n            validator.validate().then(function(status) {\n\t\t        if (status == 'Valid') {\n                    // Show loading indication\n                    submitButton.setAttribute('data-kt-indicator', 'on');\n\n                    // Disable button to avoid multiple click \n                    submitButton.disabled = true;\n\n                    // Simulate ajax request\n                    setTimeout(function() {\n                        // Hide loading indication\n                        submitButton.removeAttribute('data-kt-indicator');\n\n                        // Enable button\n                        submitButton.disabled = false;\n\n                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                        Swal.fire({\n                            text: \"You have successfully registered!\",\n                            icon: \"success\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\"\n                            }\n                        }).then(function (result) {\n                            if (result.isConfirmed) { \n                                form.reset();  // reset form                    \n                                passwordMeter.reset();  // reset password meter\n\n                                //form.submit(); // submit form\n                                var redirectUrl = form.getAttribute('data-kt-redirect-url');\n                                if (redirectUrl) {\n                                    location.href = redirectUrl;\n                                }\n                            }\n                        });\n                    }, 1500);   \t\t\t\t\t\t\n                } else {\n                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n                    Swal.fire({\n                        text: \"Sorry, looks like there are some errors detected, please try again.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\"\n                        }\n                    });\n                }\n\t\t    });\n        });\n\n        form.querySelector('input[name=\"password\"]').addEventListener('input', function() {\n            if (this.value.length > 0) {\n                validator.updateFieldStatus('password', 'NotValidated');\n            }\n        });\n    }\n\n    // Password input validation\n    var validatePassword = function() {\n        return  (passwordMeter.getScore() > 50);\n    }\n\n    // Public functions\n    return {\n        // Initialization\n        init: function() {\n            form = document.querySelector('#kt_free_trial_form');\n            submitButton = document.querySelector('#kt_free_trial_submit');\n            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter=\"true\"]'));\n\n            handleForm();\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function() {\n    KTSignupFreeTrial.init();\n});\n\n\n \n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/authentication/sign-up/free-trial.js?");
 
-    // Handle form
-    var handleForm = function(e) {
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {					 
-					'email': {
-                        validators: {
-                            regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'The value is not a valid email address',
-                            },
-							notEmpty: {
-								message: 'Email address is required'
-							}
-						}
-					},
-                    'password': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password is required'
-                            },
-                            callback: {
-                                message: 'Please enter valid password',
-                                callback: function(input) {
-                                    if (input.value.length > 0) {
-                                        return validatePassword();
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    'confirm-password': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password confirmation is required'
-                            },
-                            identical: {
-                                compare: function() {
-                                    return form.querySelector('[name="password"]').value;
-                                },
-                                message: 'The password and its confirm are not the same'
-                            }
-                        }
-                    },
-                    'toc': {
-                        validators: {
-                            notEmpty: {
-                                message: 'You must accept the terms and conditions'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-					trigger: new FormValidation.plugins.Trigger({
-                        event: {
-                            password: false
-                        }  
-                    }),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }			 
-			}
-		);
+/***/ })
 
-        submitButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            validator.revalidateField('password');
-
-            validator.validate().then(function(status) {
-		        if (status == 'Valid') {
-                    // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
-
-                    // Disable button to avoid multiple click 
-                    submitButton.disabled = true;
-
-                    // Simulate ajax request
-                    setTimeout(function() {
-                        // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
-
-                        // Enable button
-                        submitButton.disabled = false;
-
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "You have successfully registered!",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) { 
-                                form.reset();  // reset form                    
-                                passwordMeter.reset();  // reset password meter
-
-                                //form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                if (redirectUrl) {
-                                    location.href = redirectUrl;
-                                }
-                            }
-                        });
-                    }, 1500);   						
-                } else {
-                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                    Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    });
-                }
-		    });
-        });
-
-        form.querySelector('input[name="password"]').addEventListener('input', function() {
-            if (this.value.length > 0) {
-                validator.updateFieldStatus('password', 'NotValidated');
-            }
-        });
-    }
-
-    // Password input validation
-    var validatePassword = function() {
-        return  (passwordMeter.getScore() > 50);
-    }
-
-    // Public functions
-    return {
-        // Initialization
-        init: function() {
-            form = document.querySelector('#kt_free_trial_form');
-            submitButton = document.querySelector('#kt_free_trial_submit');
-            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
-
-            handleForm();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSignupFreeTrial.init();
-});
-
-
- 
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/authentication/sign-up/free-trial.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=free-trial.js.map

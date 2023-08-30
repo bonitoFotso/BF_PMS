@@ -1,243 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!****************************************************************!*\
-  !*** ../src/js/custom/apps/user-management/users/view/view.js ***!
-  \****************************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/apps/user-management/users/view/view.js":
+/*!***********************************************************************!*\
+  !*** ../demo41/src/js/custom/apps/user-management/users/view/view.js ***!
+  \***********************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTUsersViewMain = function () {
+eval("\n\n// Class definition\nvar KTUsersViewMain = function () {\n\n    // Init login session button\n    var initLoginSession = () => {\n        const button = document.getElementById('kt_modal_sign_out_sesions');\n\n        button.addEventListener('click', e => {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like sign out all sessions?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, sign out!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    Swal.fire({\n                        text: \"You have signed out all sessions!.\",\n                        icon: \"success\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your sessions are still preserved!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n\n    // Init sign out single user\n    var initSignOutUser = () => {\n        const signOutButtons = document.querySelectorAll('[data-kt-users-sign-out=\"single_user\"]');\n\n        signOutButtons.forEach(button => {\n            button.addEventListener('click', e => {\n                e.preventDefault();\n\n                const deviceName = button.closest('tr').querySelectorAll('td')[1].innerText;\n\n                Swal.fire({\n                    text: \"Are you sure you would like sign out \" + deviceName + \"?\",\n                    icon: \"warning\",\n                    showCancelButton: true,\n                    buttonsStyling: false,\n                    confirmButtonText: \"Yes, sign out!\",\n                    cancelButtonText: \"No, return\",\n                    customClass: {\n                        confirmButton: \"btn btn-primary\",\n                        cancelButton: \"btn btn-active-light\"\n                    }\n                }).then(function (result) {\n                    if (result.value) {\n                        Swal.fire({\n                            text: \"You have signed out \" + deviceName + \"!.\",\n                            icon: \"success\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\",\n                            }\n                        }).then(function(){\n                            button.closest('tr').remove();\n                        });\n                    } else if (result.dismiss === 'cancel') {\n                        Swal.fire({\n                            text: deviceName + \"'s session is still preserved!.\",\n                            icon: \"error\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\",\n                            }\n                        });\n                    }\n                });\n            });\n        });\n\n\n    }\n\n    // Delete two step authentication handler\n    const initDeleteTwoStep = () => {\n        const deleteButton = document.getElementById('kt_users_delete_two_step');\n\n        deleteButton.addEventListener('click', e => {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like remove this two-step authentication?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, remove it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    Swal.fire({\n                        text: \"You have removed this two-step authentication!.\",\n                        icon: \"success\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your two-step authentication is still valid!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        })\n    }\n\n    // Email preference form handler\n    const initEmailPreferenceForm = () => {\n        // Define variables\n        const form = document.getElementById('kt_users_email_notification_form');\n        const submitButton = form.querySelector('#kt_users_email_notification_submit');\n        const cancelButton = form.querySelector('#kt_users_email_notification_cancel');\n\n        // Submit action handler\n        submitButton.addEventListener('click', e => {\n            e.preventDefault();\n\n            // Show loading indication\n            submitButton.setAttribute('data-kt-indicator', 'on');\n\n            // Disable button to avoid multiple click \n            submitButton.disabled = true;\n\n            // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n            setTimeout(function () {\n                // Remove loading indication\n                submitButton.removeAttribute('data-kt-indicator');\n\n                // Enable button\n                submitButton.disabled = false;\n\n                // Show popup confirmation \n                Swal.fire({\n                    text: \"Form has been successfully submitted!\",\n                    icon: \"success\",\n                    buttonsStyling: false,\n                    confirmButtonText: \"Ok, got it!\",\n                    customClass: {\n                        confirmButton: \"btn btn-primary\"\n                    }\n                });\n\n                //form.submit(); // Submit form\n            }, 2000);\n        });\n\n        cancelButton.addEventListener('click', e => {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n\n    return {\n        // Public functions\n        init: function () {\n            initLoginSession();\n            initSignOutUser();\n            initDeleteTwoStep();\n            initEmailPreferenceForm();\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n    KTUsersViewMain.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/apps/user-management/users/view/view.js?");
 
-    // Init login session button
-    var initLoginSession = () => {
-        const button = document.getElementById('kt_modal_sign_out_sesions');
+/***/ })
 
-        button.addEventListener('click', e => {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like sign out all sessions?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, sign out!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    Swal.fire({
-                        text: "You have signed out all sessions!.",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your sessions are still preserved!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-
-    // Init sign out single user
-    var initSignOutUser = () => {
-        const signOutButtons = document.querySelectorAll('[data-kt-users-sign-out="single_user"]');
-
-        signOutButtons.forEach(button => {
-            button.addEventListener('click', e => {
-                e.preventDefault();
-
-                const deviceName = button.closest('tr').querySelectorAll('td')[1].innerText;
-
-                Swal.fire({
-                    text: "Are you sure you would like sign out " + deviceName + "?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Yes, sign out!",
-                    cancelButtonText: "No, return",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                        cancelButton: "btn btn-active-light"
-                    }
-                }).then(function (result) {
-                    if (result.value) {
-                        Swal.fire({
-                            text: "You have signed out " + deviceName + "!.",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary",
-                            }
-                        }).then(function(){
-                            button.closest('tr').remove();
-                        });
-                    } else if (result.dismiss === 'cancel') {
-                        Swal.fire({
-                            text: deviceName + "'s session is still preserved!.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary",
-                            }
-                        });
-                    }
-                });
-            });
-        });
-
-
-    }
-
-    // Delete two step authentication handler
-    const initDeleteTwoStep = () => {
-        const deleteButton = document.getElementById('kt_users_delete_two_step');
-
-        deleteButton.addEventListener('click', e => {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like remove this two-step authentication?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, remove it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    Swal.fire({
-                        text: "You have removed this two-step authentication!.",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your two-step authentication is still valid!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        })
-    }
-
-    // Email preference form handler
-    const initEmailPreferenceForm = () => {
-        // Define variables
-        const form = document.getElementById('kt_users_email_notification_form');
-        const submitButton = form.querySelector('#kt_users_email_notification_submit');
-        const cancelButton = form.querySelector('#kt_users_email_notification_cancel');
-
-        // Submit action handler
-        submitButton.addEventListener('click', e => {
-            e.preventDefault();
-
-            // Show loading indication
-            submitButton.setAttribute('data-kt-indicator', 'on');
-
-            // Disable button to avoid multiple click 
-            submitButton.disabled = true;
-
-            // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-            setTimeout(function () {
-                // Remove loading indication
-                submitButton.removeAttribute('data-kt-indicator');
-
-                // Enable button
-                submitButton.disabled = false;
-
-                // Show popup confirmation 
-                Swal.fire({
-                    text: "Form has been successfully submitted!",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary"
-                    }
-                });
-
-                //form.submit(); // Submit form
-            }, 2000);
-        });
-
-        cancelButton.addEventListener('click', e => {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-
-    return {
-        // Public functions
-        init: function () {
-            initLoginSession();
-            initSignOutUser();
-            initDeleteTwoStep();
-            initEmailPreferenceForm();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersViewMain.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/apps/user-management/users/view/view.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=view.js.map

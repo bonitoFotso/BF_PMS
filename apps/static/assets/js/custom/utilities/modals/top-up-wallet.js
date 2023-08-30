@@ -1,290 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!**********************************************************!*\
-  !*** ../src/js/custom/utilities/modals/top-up-wallet.js ***!
-  \**********************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/utilities/modals/top-up-wallet.js":
+/*!*****************************************************************!*\
+  !*** ../demo41/src/js/custom/utilities/modals/top-up-wallet.js ***!
+  \*****************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTModalTopUpWallet = function () {
-	// Elements
-	var modal;
-	var modalEl;
+eval("\n\n// Class definition\nvar KTModalTopUpWallet = function () {\n\t// Elements\n\tvar modal;\n\tvar modalEl;\n\n\tvar stepper;\n\tvar form;\n\tvar formSubmitButton;\n\tvar formContinueButton;\n\n\t// Variables\n\tvar stepperObj;\n\tvar validations = [];\n\n\t// Private Functions\n\tvar initStepper = function () {\n\t\t// Initialize Stepper\n\t\tstepperObj = new KTStepper(stepper);\n\n\t\t// Stepper change event(handle hiding submit button for the last step)\n\t\tstepperObj.on('kt.stepper.changed', function (stepper) {\n\t\t\tif (stepperObj.getCurrentStepIndex() === 4) {\n\t\t\t\tformSubmitButton.classList.remove('d-none');\n\t\t\t\tformSubmitButton.classList.add('d-inline-block');\n\t\t\t\tformContinueButton.classList.add('d-none');\n\t\t\t} else if (stepperObj.getCurrentStepIndex() === 5) {\n\t\t\t\tformSubmitButton.classList.add('d-none');\n\t\t\t\tformContinueButton.classList.add('d-none');\n\t\t\t} else {\n\t\t\t\tformSubmitButton.classList.remove('d-inline-block');\n\t\t\t\tformSubmitButton.classList.remove('d-none');\n\t\t\t\tformContinueButton.classList.remove('d-none');\n\t\t\t}\n\t\t});\n\n\t\t// Validation before going to next page\n\t\tstepperObj.on('kt.stepper.next', function (stepper) {\n\t\t\tconsole.log('stepper.next');\n\n\t\t\t// Validate form before change stepper step\n\t\t\tvar validator = validations[stepper.getCurrentStepIndex() - 1]; // get validator for currnt step\n\n\t\t\tif (validator) {\n\t\t\t\tvalidator.validate().then(function (status) {\n\t\t\t\t\tconsole.log('validated!');\n\n\t\t\t\t\tif (status == 'Valid') {\n\t\t\t\t\t\tstepper.goNext();\n\n\t\t\t\t\t\t//KTUtil.scrollTop();\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Show error message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/\n\t\t\t\t\t\tSwal.fire({\n\t\t\t\t\t\t\ttext: \"Sorry, looks like there are some errors detected, please try again.\",\n\t\t\t\t\t\t\ticon: \"error\",\n\t\t\t\t\t\t\tbuttonsStyling: false,\n\t\t\t\t\t\t\tconfirmButtonText: \"Ok, got it!\",\n\t\t\t\t\t\t\tcustomClass: {\n\t\t\t\t\t\t\t\tconfirmButton: \"btn btn-light\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}).then(function () {\n\t\t\t\t\t\t\t//KTUtil.scrollTop();\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t} else {\n\t\t\t\tstepper.goNext();\n\n\t\t\t\tKTUtil.scrollTop();\n\t\t\t}\n\t\t});\n\n\t\t// Prev event\n\t\tstepperObj.on('kt.stepper.previous', function (stepper) {\n\t\t\tconsole.log('stepper.previous');\n\n\t\t\tstepper.goPrevious();\n\t\t\tKTUtil.scrollTop();\n\t\t});\n\n\t\tformSubmitButton.addEventListener('click', function (e) {\n\t\t\t// Prevent default button action\n\t\t\te.preventDefault();\n\n\t\t\t// Disable button to avoid multiple click \n\t\t\tformSubmitButton.disabled = true;\n\n\t\t\t// Show loading indication\n\t\t\tformSubmitButton.setAttribute('data-kt-indicator', 'on');\n\n\t\t\t// Simulate form submission\n\t\t\tsetTimeout(function () {\n\t\t\t\t// Hide loading indication\n\t\t\t\tformSubmitButton.removeAttribute('data-kt-indicator');\n\n\t\t\t\t// Enable button\n\t\t\t\tformSubmitButton.disabled = false;\n\n\t\t\t\tstepperObj.goNext();\n\t\t\t\t//KTUtil.scrollTop();\n\t\t\t}, 2000);\n\t\t});\n\t}\n\n\t// Init form inputs\n\tvar initForm = function () {\t\n        // Handle currency swap logic\n        const currencyTypes = form.querySelectorAll('[name=\"currency_type\"]');\n        const targets = form.querySelectorAll('[data-kt-modal-top-up-wallet-option]');\n        let value = \"dollar\";\n        currencyTypes.forEach(currency => {\n            currency.addEventListener('change', e => {\n                value = e.target.value;\n\n                targets.forEach(target => {\n                    target.classList.add('d-none');\n\n                    if(target.getAttribute('data-kt-modal-top-up-wallet-option') === value){\n                        target.classList.remove('d-none');\n                    }\n                });\n            });\n        });\n\n\t\t// Handle top up wallet button\n\t\tconst restartButton = document.querySelector('#kt_modal_top_up_wallet_create_new');\n\t\trestartButton.addEventListener('click', function () {\n\t\t\tform.reset();\n\t\t\tstepperObj.goTo(1);\n\t\t});\n\t}\n\n\t// Init validation\n\tvar initValidation = function () {\n\t\t// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n\t\t// Step 1\n\t\tvalidations.push(FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\ttop_up_amount: {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Top up amount is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n\t\t\t\t\t\teleInvalidClass: '',\n\t\t\t\t\t\teleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t));\n\n        // Step 2\n\t\tvalidations.push(FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\tpayment_methods: {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Payment method is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n\t\t\t\t\t\teleInvalidClass: '',\n\t\t\t\t\t\teleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t));\n\n        // Step 3\n\t\tvalidations.push(FormValidation.formValidation(\n\t\t\tform,\n\t\t\t{\n\t\t\t\tfields: {\n\t\t\t\t\ttop_up_password: {\n\t\t\t\t\t\tvalidators: {\n\t\t\t\t\t\t\tnotEmpty: {\n\t\t\t\t\t\t\t\tmessage: 'Password is required'\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\tplugins: {\n\t\t\t\t\ttrigger: new FormValidation.plugins.Trigger(),\n\t\t\t\t\tbootstrap: new FormValidation.plugins.Bootstrap5({\n\t\t\t\t\t\trowSelector: '.fv-row',\n\t\t\t\t\t\teleInvalidClass: '',\n\t\t\t\t\t\teleValidClass: ''\n\t\t\t\t\t})\n\t\t\t\t}\n\t\t\t}\n\t\t));\n\t}\n\n\t// Handle cancel modal\n    const handleCancelAction = () => {\n        const closeButton = modalEl.querySelector('[data-kt-modal-action-type=\"close\"]');\n        closeButton.addEventListener('click', e => {\n            cancelAction(e);\n        });\n\n        const cancelAction = (e) => {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        }\n    }\n\n\treturn {\n\t\t// Public Functions\n\t\tinit: function () {\n\t\t\t// Elements\n\t\t\tmodalEl = document.querySelector('#kt_modal_top_up_wallet');\n\n\t\t\tif (!modalEl) {\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tmodal = new bootstrap.Modal(modalEl);\n\n\t\t\tstepper = document.querySelector('#kt_modal_top_up_wallet_stepper');\n\t\t\tform = document.querySelector('#kt_modal_top_up_wallet_stepper_form');\n\t\t\tformSubmitButton = stepper.querySelector('[data-kt-stepper-action=\"submit\"]');\n\t\t\tformContinueButton = stepper.querySelector('[data-kt-stepper-action=\"next\"]');\n\n\t\t\tinitStepper();\n\t\t\tinitForm();\n\t\t\tinitValidation();\n\t\t\thandleCancelAction();\n\t\t}\n\t};\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n\tKTModalTopUpWallet.init();\n});\n\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/utilities/modals/top-up-wallet.js?");
 
-	var stepper;
-	var form;
-	var formSubmitButton;
-	var formContinueButton;
+/***/ })
 
-	// Variables
-	var stepperObj;
-	var validations = [];
-
-	// Private Functions
-	var initStepper = function () {
-		// Initialize Stepper
-		stepperObj = new KTStepper(stepper);
-
-		// Stepper change event(handle hiding submit button for the last step)
-		stepperObj.on('kt.stepper.changed', function (stepper) {
-			if (stepperObj.getCurrentStepIndex() === 4) {
-				formSubmitButton.classList.remove('d-none');
-				formSubmitButton.classList.add('d-inline-block');
-				formContinueButton.classList.add('d-none');
-			} else if (stepperObj.getCurrentStepIndex() === 5) {
-				formSubmitButton.classList.add('d-none');
-				formContinueButton.classList.add('d-none');
-			} else {
-				formSubmitButton.classList.remove('d-inline-block');
-				formSubmitButton.classList.remove('d-none');
-				formContinueButton.classList.remove('d-none');
-			}
-		});
-
-		// Validation before going to next page
-		stepperObj.on('kt.stepper.next', function (stepper) {
-			console.log('stepper.next');
-
-			// Validate form before change stepper step
-			var validator = validations[stepper.getCurrentStepIndex() - 1]; // get validator for currnt step
-
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
-
-					if (status == 'Valid') {
-						stepper.goNext();
-
-						//KTUtil.scrollTop();
-					} else {
-						// Show error message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-light"
-							}
-						}).then(function () {
-							//KTUtil.scrollTop();
-						});
-					}
-				});
-			} else {
-				stepper.goNext();
-
-				KTUtil.scrollTop();
-			}
-		});
-
-		// Prev event
-		stepperObj.on('kt.stepper.previous', function (stepper) {
-			console.log('stepper.previous');
-
-			stepper.goPrevious();
-			KTUtil.scrollTop();
-		});
-
-		formSubmitButton.addEventListener('click', function (e) {
-			// Prevent default button action
-			e.preventDefault();
-
-			// Disable button to avoid multiple click 
-			formSubmitButton.disabled = true;
-
-			// Show loading indication
-			formSubmitButton.setAttribute('data-kt-indicator', 'on');
-
-			// Simulate form submission
-			setTimeout(function () {
-				// Hide loading indication
-				formSubmitButton.removeAttribute('data-kt-indicator');
-
-				// Enable button
-				formSubmitButton.disabled = false;
-
-				stepperObj.goNext();
-				//KTUtil.scrollTop();
-			}, 2000);
-		});
-	}
-
-	// Init form inputs
-	var initForm = function () {	
-        // Handle currency swap logic
-        const currencyTypes = form.querySelectorAll('[name="currency_type"]');
-        const targets = form.querySelectorAll('[data-kt-modal-top-up-wallet-option]');
-        let value = "dollar";
-        currencyTypes.forEach(currency => {
-            currency.addEventListener('change', e => {
-                value = e.target.value;
-
-                targets.forEach(target => {
-                    target.classList.add('d-none');
-
-                    if(target.getAttribute('data-kt-modal-top-up-wallet-option') === value){
-                        target.classList.remove('d-none');
-                    }
-                });
-            });
-        });
-
-		// Handle top up wallet button
-		const restartButton = document.querySelector('#kt_modal_top_up_wallet_create_new');
-		restartButton.addEventListener('click', function () {
-			form.reset();
-			stepperObj.goTo(1);
-		});
-	}
-
-	// Init validation
-	var initValidation = function () {
-		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-		// Step 1
-		validations.push(FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					top_up_amount: {
-						validators: {
-							notEmpty: {
-								message: 'Top up amount is required'
-							}
-						}
-					}
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-						eleInvalidClass: '',
-						eleValidClass: ''
-					})
-				}
-			}
-		));
-
-        // Step 2
-		validations.push(FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					payment_methods: {
-						validators: {
-							notEmpty: {
-								message: 'Payment method is required'
-							}
-						}
-					}
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-						eleInvalidClass: '',
-						eleValidClass: ''
-					})
-				}
-			}
-		));
-
-        // Step 3
-		validations.push(FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					top_up_password: {
-						validators: {
-							notEmpty: {
-								message: 'Password is required'
-							}
-						}
-					}
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
-						rowSelector: '.fv-row',
-						eleInvalidClass: '',
-						eleValidClass: ''
-					})
-				}
-			}
-		));
-	}
-
-	// Handle cancel modal
-    const handleCancelAction = () => {
-        const closeButton = modalEl.querySelector('[data-kt-modal-action-type="close"]');
-        closeButton.addEventListener('click', e => {
-            cancelAction(e);
-        });
-
-        const cancelAction = (e) => {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal				
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        }
-    }
-
-	return {
-		// Public Functions
-		init: function () {
-			// Elements
-			modalEl = document.querySelector('#kt_modal_top_up_wallet');
-
-			if (!modalEl) {
-				return;
-			}
-
-			modal = new bootstrap.Modal(modalEl);
-
-			stepper = document.querySelector('#kt_modal_top_up_wallet_stepper');
-			form = document.querySelector('#kt_modal_top_up_wallet_stepper_form');
-			formSubmitButton = stepper.querySelector('[data-kt-stepper-action="submit"]');
-			formContinueButton = stepper.querySelector('[data-kt-stepper-action="next"]');
-
-			initStepper();
-			initForm();
-			initValidation();
-			handleCancelAction();
-		}
-	};
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalTopUpWallet.init();
-});
-
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/utilities/modals/top-up-wallet.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=top-up-wallet.js.map

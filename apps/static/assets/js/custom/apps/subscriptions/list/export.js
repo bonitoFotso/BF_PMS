@@ -1,198 +1,33 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!**********************************************************!*\
-  !*** ../src/js/custom/apps/subscriptions/list/export.js ***!
-  \**********************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "../demo41/src/js/custom/apps/subscriptions/list/export.js":
+/*!*****************************************************************!*\
+  !*** ../demo41/src/js/custom/apps/subscriptions/list/export.js ***!
+  \*****************************************************************/
+/***/ (() => {
 
-// Class definition
-var KTSubscriptionsExport = function () {
-    var element;
-    var submitButton;
-    var cancelButton;
-    var closeButton;
-    var validator;
-    var form;
-    var modal;
+eval("\n\n// Class definition\nvar KTSubscriptionsExport = function () {\n    var element;\n    var submitButton;\n    var cancelButton;\n    var closeButton;\n    var validator;\n    var form;\n    var modal;\n\n    // Init form inputs\n    var handleForm = function () {\n        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/\n        validator = FormValidation.formValidation(\n            form,\n            {\n                fields: {\n                    'date': {\n                        validators: {\n                            notEmpty: {\n                                message: 'Date range is required'\n                            }\n                        }\n                    },\n                },\n                plugins: {\n                    trigger: new FormValidation.plugins.Trigger(),\n                    bootstrap: new FormValidation.plugins.Bootstrap5({\n                        rowSelector: '.fv-row',\n                        eleInvalidClass: '',\n                        eleValidClass: ''\n                    })\n                }\n            }\n        );\n\n        // Action buttons\n        submitButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            // Validate form before submit\n            if (validator) {\n                validator.validate().then(function (status) {\n                    console.log('validated!');\n\n                    if (status == 'Valid') {\n                        submitButton.setAttribute('data-kt-indicator', 'on');\n\n                        // Disable submit button whilst loading\n                        submitButton.disabled = true;\n\n                        setTimeout(function () {\n                            submitButton.removeAttribute('data-kt-indicator');\n\n                            Swal.fire({\n                                text: \"Customer list has been successfully exported!\",\n                                icon: \"success\",\n                                buttonsStyling: false,\n                                confirmButtonText: \"Ok, got it!\",\n                                customClass: {\n                                    confirmButton: \"btn btn-primary\"\n                                }\n                            }).then(function (result) {\n                                if (result.isConfirmed) {\n                                    modal.hide();\n\n                                    // Enable submit button after loading\n                                    submitButton.disabled = false;\n                                }\n                            });\n\n                            //form.submit(); // Submit form\n                        }, 2000);\n                    } else {\n                        Swal.fire({\n                            text: \"Sorry, looks like there are some errors detected, please try again.\",\n                            icon: \"error\",\n                            buttonsStyling: false,\n                            confirmButtonText: \"Ok, got it!\",\n                            customClass: {\n                                confirmButton: \"btn btn-primary\"\n                            }\n                        });\n                    }\n                });\n            }\n        });\n\n        cancelButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t      \t\t\t\n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n\n        closeButton.addEventListener('click', function (e) {\n            e.preventDefault();\n\n            Swal.fire({\n                text: \"Are you sure you would like to cancel?\",\n                icon: \"warning\",\n                showCancelButton: true,\n                buttonsStyling: false,\n                confirmButtonText: \"Yes, cancel it!\",\n                cancelButtonText: \"No, return\",\n                customClass: {\n                    confirmButton: \"btn btn-primary\",\n                    cancelButton: \"btn btn-active-light\"\n                }\n            }).then(function (result) {\n                if (result.value) {\n                    form.reset(); // Reset form\t\n                    modal.hide(); // Hide modal\t\t      \n                } else if (result.dismiss === 'cancel') {\n                    Swal.fire({\n                        text: \"Your form has not been cancelled!.\",\n                        icon: \"error\",\n                        buttonsStyling: false,\n                        confirmButtonText: \"Ok, got it!\",\n                        customClass: {\n                            confirmButton: \"btn btn-primary\",\n                        }\n                    });\n                }\n            });\n        });\n    }\n\n    var initForm = function () {\n        const datepicker = form.querySelector(\"[name=date]\");\n\n        // Handle datepicker range -- For more info on flatpickr plugin, please visit: https://flatpickr.js.org/\n        $(datepicker).flatpickr({\n            altInput: true,\n            altFormat: \"F j, Y\",\n            dateFormat: \"Y-m-d\",\n            mode: \"range\"\n        });\n    }\n\n    return {\n        // Public functions\n        init: function () {\n            // Elements\n            element = document.querySelector('#kt_subscriptions_export_modal');\n            modal = new bootstrap.Modal(element);\n\n            form = document.querySelector('#kt_subscriptions_export_form');\n            submitButton = form.querySelector('#kt_subscriptions_export_submit');\n            cancelButton = form.querySelector('#kt_subscriptions_export_cancel');\n            closeButton = element.querySelector('#kt_subscriptions_export_close');\n\n            handleForm();\n            initForm();\n        }\n    };\n}();\n\n// On document ready\nKTUtil.onDOMContentLoaded(function () {\n    KTSubscriptionsExport.init();\n});\n\n//# sourceURL=webpack://metronic/../demo41/src/js/custom/apps/subscriptions/list/export.js?");
 
-    // Init form inputs
-    var handleForm = function () {
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'date': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Date range is required'
-                            }
-                        }
-                    },
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
-            }
-        );
+/***/ })
 
-        // Action buttons
-        submitButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            // Validate form before submit
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
-
-                    if (status == 'Valid') {
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        // Disable submit button whilst loading
-                        submitButton.disabled = true;
-
-                        setTimeout(function () {
-                            submitButton.removeAttribute('data-kt-indicator');
-
-                            Swal.fire({
-                                text: "Customer list has been successfully exported!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    modal.hide();
-
-                                    // Enable submit button after loading
-                                    submitButton.disabled = false;
-                                }
-                            });
-
-                            //form.submit(); // Submit form
-                        }, 2000);
-                    } else {
-                        Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-        cancelButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal	      			
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-
-        closeButton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form	
-                    modal.hide(); // Hide modal		      
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    var initForm = function () {
-        const datepicker = form.querySelector("[name=date]");
-
-        // Handle datepicker range -- For more info on flatpickr plugin, please visit: https://flatpickr.js.org/
-        $(datepicker).flatpickr({
-            altInput: true,
-            altFormat: "F j, Y",
-            dateFormat: "Y-m-d",
-            mode: "range"
-        });
-    }
-
-    return {
-        // Public functions
-        init: function () {
-            // Elements
-            element = document.querySelector('#kt_subscriptions_export_modal');
-            modal = new bootstrap.Modal(element);
-
-            form = document.querySelector('#kt_subscriptions_export_form');
-            submitButton = form.querySelector('#kt_subscriptions_export_submit');
-            cancelButton = form.querySelector('#kt_subscriptions_export_cancel');
-            closeButton = element.querySelector('#kt_subscriptions_export_close');
-
-            handleForm();
-            initForm();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTSubscriptionsExport.init();
-});
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["../demo41/src/js/custom/apps/subscriptions/list/export.js"]();
+/******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=export.js.map
