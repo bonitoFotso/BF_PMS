@@ -1,0 +1,152 @@
+<div class="modal fade" tabindex="-1" id="kt_modal_{{t.nom}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+
+<div class="card ">
+    <div class="card-header card-header-stretch">
+        <h3 class="card-title">{{t.nom}}</h3>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7_{{t.nom}}"><h5 class="modal-title">Attribuer un Technicien</h5></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8_{{t.nom}}"><h5 class="modal-title">Details</h5> </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9_{{t.nom}}"> <h5 class="modal-title">Modifier </h5> </a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x"></span>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_7_{{t.nom}}" role="tabpanel">
+                
+                <form action="" id="form_att_{{t.nom}}">
+                    {% csrf_token %}
+                    <div>
+                      <input type="hidden" name="ta" id="{{t.nom}}_id" value="{{t.id}}">
+                    </div>
+                    <div>
+                      <select name="tec_{{t.nom}}" class="form-select form-select-solid" data-control="select2" data-placeholder="Selectioner les technicien" data-allow-clear="true" >
+                        
+                        {% for te in tech %}
+                        <option value="{{te.id}}">{{te.nom}}</option>
+                        
+                        {% endfor %}
+                      </select>
+                      <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fw-semibold fs-6 mb-2">Date de début</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <input type="date" name="date_debut" id="date_debut_{{t.nom}}" class="form-control form-control-solid mb-3 mb-lg-0" />
+                        <!--end::Input-->
+                    </div>
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fw-semibold fs-6 mb-2">Date de fin</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <input type="date" name="date_fin" id="date_fin_{{t.nom}}" class="form-control form-control-solid mb-3 mb-lg-0" />
+                        <!--end::Input-->
+                    </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                
+                    <button type="submit" id="subm" class="btn btn-primary" onclick="atts('{{t.nom}}')" >Attribuer</button>
+                </div>
+            </div>
+
+            <!-- Votre template HTML -->
+<div class="tab-pane fade" id="kt_tab_pane_8_{{t.nom}}" role="tabpanel">
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Nom de la tâche :</strong> {{t.nom}}</p>
+            <p><strong>Appelant :</strong> {{t.appelant.name}}</p>
+            <p><strong>Agence :</strong> {{t.appelant.agence.name}}</p>
+            <p><strong>Priorité :</strong> {{t.priorite}}</p>
+            <p><strong>Description :</strong> {{t.description}}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Numéro d'OS :</strong> {{t.n_OS}}</p>
+            <p><strong>État :</strong> {{t.etat}}</p>
+            <p><strong>Date de début :</strong> {{t.date_debut}}</p>
+            <p><strong>Date de fin :</strong> {{t.date_fin}}</p>
+            <p><strong>Créé le :</strong> {{t.createdAt}}</p>
+            <p><strong>Dernière mise à jour :</strong> {{t.updatedAt}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <ul>
+            {% for tech_tache in t.technicientache_set.all %}
+            <li>{{ tech_tache.technicien.nom }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+           <!-- Votre template HTML -->
+           <div class="tab-pane fade" id="kt_tab_pane_9_{{ t.nom }}" role="tabpanel">
+            {% if t.technicientache_set.exists %}
+            <form action="" id="form_edit_{{ t.nom }}">
+                {% csrf_token %}
+                <input type="hidden" name="ta" id="{{ t.nom }}_id" value="{{ t.id }}">
+                <div class="fv-row mb-7">
+                    <!-- Champ pour marquer la tâche comme effectuée -->
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="task_done_{{ t.nom }}" name="task_done">
+                        <label class="form-check-label" for="task_done_{{ t.nom }}">Marquer la tâche comme effectuée</label>
+                    </div>
+                </div>
+                <div class="fv-row mb-7">
+                    <!-- Champ pour enregistrer le numéro d'OS -->
+                    <label class="fw-semibold fs-6 mb-2">Numéro d'OS</label>
+                    <input type="text" name="num_os_{{ t.nom }}" id="num_os_{{ t.nom }}"
+                        class="form-control form-control-solid mb-3 mb-lg-0" />
+                </div>
+                <div class="fv-row mb-7">
+                    <!-- Champ pour le rapport -->
+                    <label class="fw-semibold fs-6 mb-2">Rapport</label>
+                    <textarea name="rapport_text_{{ t.nom }}" id="rapport_text_{{ t.nom }}"
+                        class="form-control form-control-solid mb-3 mb-lg-0"></textarea>
+                </div>
+                <div class="fv-row mb-7">
+                    <!-- Liste des techniciens qui ont accompli la tâche -->
+                    <label class="fw-semibold fs-6 mb-2">Techniciens ayant accompli la tâche</label>
+                    <ul>
+                        {% for tech_tache in t.technicientache_set.all %}
+                        <li>{{ tech_tache.technicien.nom }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="submit" id="subm_edit" class="btn btn-primary" onclick="editTask('{{ t.nom }}')">Enregistrer les modifications</button>
+            </div>
+            {% else %}
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" disabled>Aucun technicien affecté</button>
+            </div>
+        {% endif %}
+        </div>
+        
+        </div>
+    </div>
+    <div class="modal-footer">
+              
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">fermer</button>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+</div>

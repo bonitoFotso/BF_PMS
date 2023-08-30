@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/kali/Documents/Programme/ddf/django-GRH/env"
+set -gx VIRTUAL_ENV "/home/bonito/Documents/Programmation/Stage/BF_PMS(10_07_23)/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

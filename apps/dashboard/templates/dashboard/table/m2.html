@@ -1,0 +1,62 @@
+<div class="modal fade" tabindex="-1" id="kt_modal_{{t.nom}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header card-header-stretch">
+                    <h3 class="card-title">{{t.nom}}</h3>
+                    <div class="card-toolbar">
+                        <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                            <li class="nav-item">
+                                <a class="nav-link active tab-link" data-bs-target="#kt_tab_pane_7_{{t.nom}}" data-toggle="tab" href="#kt_tab_pane_7_{{t.nom}}"><h5 class="modal-title">Attribuer un Technicien</h5></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link tab-link" data-bs-target="#kt_tab_pane_8_{{t.nom}}" data-toggle="tab" href="#kt_tab_pane_8_{{t.nom}}"><h5 class="modal-title">Details</h5> </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link tab-link" data-bs-target="#kt_tab_pane_9_{{t.nom}}" data-toggle="tab" href="#kt_tab_pane_9_{{t.nom}}"> <h5 class="modal-title">Modifier</h5> </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-2x"></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="kt_tab_pane_7_{{t.nom}}" role="tabpanel">
+                            <form id="form_att_{{t.nom}}">
+                                <div>
+                                    <input type="hidden" name="ta" id="{{t.nom}}_id" value="{{t.id}}">
+                                </div>
+                                <div>
+                                    <select name="tec_{{t.nom}}" class="form-select form-select-solid" data-control="select2" data-placeholder="Selectioner les technicien" data-allow-clear="true" >
+                                        {% for te in tech %}
+                                        <option value="{{te.id}}">{{te.nom}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </form>
+                            <div class="modal-footer">
+                                <button type="button" id="btn_att_{{t.nom}}" class="btn btn-primary" onclick="atts1('{{t.nom}}')" >Attribuer</button>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="kt_tab_pane_8_{{t.nom}}" role="tabpanel">
+                            <div class="row">
+                                <p>{{t.appelant.name}}:{{t.appelant.agence.name}}</p>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="kt_tab_pane_9_{{t.nom}}" role="tabpanel">
+                            ...
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,24 @@
+{% extends 'base/body.html' %}
+
+{% block title %} Agence {% endblock title %}
+
+{% block body %}
+<div class="content">
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <h4 class="card-title"> <i class="fa fa-address-card"></i> <b>{{page}}</b> </h4>
+                    
+                </div>
+            </div>
+            <form style="display: inline;" method="post" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        
+    </div>
+{% endblock body %}

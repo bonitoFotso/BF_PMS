@@ -1,22 +1,61 @@
 from django.contrib import admin
-from django.contrib.admin import AdminSite
 from .models import *
 
 @admin.register(Tache)
 class TacheAdmin(admin.ModelAdmin):
-    '''Admin View for Tache'''
+    list_display = ('nom','appelant', 'status','activite','categorie', 'n_OS','priorite', 'ok', 'date_debut', 'date_fin')
+    list_filter = ('categorie', 'activite', 'appelant', 'priorite', 'ok')
+    search_fields = ('nom', 'description')
+    date_hierarchy = 'createdAt'
+    ordering = ('-createdAt',)
 
-    list_display = ('nom','agence',)
-# Register your models here.
-admin.site.register(Etat)
-admin.site.register(TechnicienTache)
+@admin.register(TechnicienTache)
+class TechnicienTacheAdmin(admin.ModelAdmin):
+    list_display = ('technicien', 'tache', 'ok', 'date_debut', 'date_fin')
+    list_filter = ('technicien', 'tache', 'ok')
+    search_fields = ('technicien__nom', 'tache__nom')
+    date_hierarchy = 'date_debut'
+    ordering = ('-date_debut',)
 
-#admin.site.register(UserTask)
+@admin.register(Rapport)
+class RapportAdmin(admin.ModelAdmin):
+    list_display = ('technicien_tache', 'date_creation')
+    list_filter = ('date_creation',)
+    search_fields = ('technicien_tache__tache__nom', 'rapport_text')
+    date_hierarchy = 'date_creation'
+    ordering = ('-date_creation',)
 
-admin.site.register(TacheTime)
+@admin.register(EnregistrementJournalier)
+class EnregistrementJournalierAdmin(admin.ModelAdmin):
+    list_display = ( 'date', )
+    list_filter = ('date',)
+    date_hierarchy = 'date'
+    ordering = ('-date',)
 
-class TacheTimeInline(admin.TabularInline):
-    model = TacheTime
-    extra = 0
+@admin.register(TacheAttribuee)
+class TacheAttribueeAdmin(admin.ModelAdmin):
+    list_display = ('technicien', 'tache', 'date_attribuee', 'date_debut', 'date_fin')
+    list_filter = ('technicien', 'tache', 'date_attribuee', 'date_debut', 'date_fin')
+    search_fields = ('technicien__nom', 'tache__nom')
+    date_hierarchy = 'date_attribuee'
+    ordering = ('-date_attribuee',)
 
+@admin.register(TacheEffectuee)
+class TacheEffectueeAdmin(admin.ModelAdmin):
+    list_display = ('tache', 'date', 'rapport')
+    list_filter = ('tache', 'date')
+    search_fields = ('tache__nom', 'rapport__rapport_text')
+    date_hierarchy = 'date'
+    ordering = ('-date',)
 
+@admin.register(Action)
+class ActionAdmin(admin.ModelAdmin):
+    list_display = ('tache','action_type','date',)
+    search_fields = ('tache','action_type','date',)
+    list_filter = ('tache','action_type','date',)
+
+@admin.register(DonneesTechnicien)
+class DonneesTechnicienAdmin(admin.ModelAdmin):
+    list_display = ('technicien', 'date', 'taches_attribuees', 'taches_effectuees')
+    list_filter = ('technicien', 'date')
+    search_fields = ('technicien__nom',)

@@ -1,0 +1,56 @@
+{% load static %}
+<div id="kt_app_header" class="app-header">
+    <!--begin::Header primary-->
+    <div class="app-header-primary" data-kt-sticky="true" data-kt-sticky-name="app-header-primary-sticky" data-kt-sticky-offset="{default: 'false', lg: '500px'}">
+        <!--begin::Header primary container-->
+        <div class="app-container container-xxxl d-flex align-items-stretch justify-content-between">
+            <!--begin::Logo and search-->
+            <div class="d-flex flex-grow-1 flex-lg-grow-0">
+                <!--begin::Logo wrapper-->
+                <div class="d-flex align-items-center" id="kt_app_header_logo_wrapper">
+                    <!--begin::Header toggle-->
+                    <button class="d-lg-none btn btn-icon btn-color-white btn-active-color-primary ms-n4 me-sm-2" id="kt_app_header_menu_toggle">
+                    <i class="ki-duotone ki-abstract-14 fs-1">
+                            <span class="path1"></span>
+                            <span class="path2 "></span>
+                    </i>
+                    </button>
+                    <!--end::Header toggle-->
+                    <!--begin::Logo-->
+                    <a href="{% url 'dashboard' %}" class="d-flex align-items-center mb-1 mb-lg-0 pt-lg-1">
+                        <img alt="Logo" src="{% static 'media/logo.png' %}" class="d-block d-sm-none" width="100%" height="50%" />
+                        <img alt="Logo" src="{% static 'media/logo.png' %}" width="50%" height="20%" class="d-none d-sm-block bg-blue" />
+                    </a>
+                    <!--end::Logo-->
+                </div>
+                <!--end::Logo wrapper-->
+            </div>
+            <!--end::Logo and search-->
+            <!--begin::Navbar-->
+            <div class="app-navbar">
+                <!--begin::Notifications-->
+                
+                <!--end::Notifications-->
+                <!--begin::Quick links-->
+                <!--end::Quick links-->
+                <!--begin::Chat-->
+                {% include 'base/header/chat.html' %}
+                <!--end::Chat-->
+                <!--begin::User menu-->
+                {% include 'base/header/user.html' %}
+                <!--end::User menu-->
+                <!--begin::Primary button-->
+                
+                <!--end::Primary button-->
+                <!--begin::Header menu toggle-->
+                <!--end::Header menu toggle-->
+            </div>
+            <!--end::Navbar-->
+        </div>
+        <!--end::Header primary container-->
+    </div>
+    <!--end::Header primary-->
+    <!--begin::Header secondary-->
+    {% include 'base/header/nav.html' %}
+    <!--end::Header secondary-->
+</div>

@@ -1,0 +1,365 @@
+{% load static %}
+<!--begin::Card-->
+<div class="card card-flush overflow-hidden h-md-100">
+    <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
+        <div class="px-9 mb-5">
+            <div class="d-flex align-items-center mb-2">
+                <span class="fs-4 fw-semibold text-gray-400 align-self-start me-1"></span>
+                <span class="fs-2hx fw-bold text-gray-500 me-2 lh-1 ls-n2">{{ taches.count }}</span>
+                <span class="badge badge-light-success fs-base">
+                    <i class="ki-duotone ki-arrow-down fs-5 text-success ms-n1">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>4.5%
+                </span>
+            </div>
+            <span class="fs-6 fw-semibold text-gray-400">Nbr Total de Taches</span>
+        </div>
+        
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs mb-3" id="chartTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="barChartTab" data-bs-toggle="tab" href="#barChart" role="tab" aria-controls="barChart" aria-selected="true">par domaine</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="donutChartTab" data-bs-toggle="tab" href="#donutChart" role="tab" aria-controls="donutChart" aria-selected="false">par type</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="taskByTechnicianTab" data-bs-toggle="tab" href="#taskByTechnician" role="tab" aria-controls="taskByTechnician" aria-selected="false">rapport domaine type_intervention</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="technicianByTaskTab" data-bs-toggle="tab" href="#technicianByTask" role="tab" aria-controls="technicianByTask" aria-selected="false">Techniciens par Tache</a>
+            </li>
+        </ul>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="barChart" role="tabpanel" aria-labelledby="barChartTab">
+                <div class='row'>
+                    <div class='col' id="tachesParInterventions" height="200"></div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="donutChart" role="tabpanel" aria-labelledby="donutChartTab">
+                <div class='row'>
+                    <div class='col' id="tachesParInterventionss" height="200"></div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="taskByTechnician" role="tabpanel" aria-labelledby="taskByTechnicianTab">
+                <div class='row'>
+                    <!-- div class='col' id="taskByTechnicianChart" height="200"></!-->
+                    <div class='col' id="tachesParInterventionType" height="200"></div>
+
+                </div>
+            </div>
+            <div class="tab-pane fade" id="technicianByTask" role="tabpanel" aria-labelledby="technicianByTaskTab">
+                <div class='row'>
+                    <div class='col' id="techsTache" height="200"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
+
+<script src="{% static 'assets/js/apexcharts.js' %}"></script>
+<script>
+    // Fonction pour créer le graphique à barres avec ApexCharts
+
+    
+    // Écouteur d'événement pour le clic sur le bouton de rechargement
+
+    function createDonutChart1(containerId, data) {
+        const labels = data.map(item => item.type_intervention);
+        const counts = data.map(item => item.count);
+        const total = counts.reduce((acc, val) => acc + val, 0); // Calculer le total des tâches
+        const percentages = counts.map(count => ((count / total) * 100).toFixed(2)); // Calculer les pourcentages
+        const options = {
+            chart: {
+                type: 'donut',
+                height: 300,
+            },
+            labels: labels,
+            series: counts,//percentages,
+            dataLabels: {
+                enabled: true,
+                //formatter: function (val, opts) {
+                //    return `${val}%`; // Format des étiquettes de données
+                //}
+                formatter: function (val, opts) {
+                    return opts.w.config.labels[opts.seriesIndex] + ": " + val.toFixed(2) + "%";
+                }
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '85%',
+                        labels: {
+                            show: true,
+                            name: {
+                                offsetY: -15,
+                                fontFamily: 'Public Sans',
+                                fontSize: '3rem',
+                                fontWeight: 600,
+                                //color: '#333'
+                            },
+                            value: {
+                                fontFamily: 'Public Sans',
+                                fontSize: '2.5rem',
+                                fontWeight: 600,
+                                //color: '#333',
+                            },
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                fontSize: '2rem',
+                                fontWeight: 600,
+                                //color: '#333',
+                                formatter: function () {
+                                    return total.toString(); // Afficher le total
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            //colors: colors, // Utilisation de la palette de couleurs personnalisée
+    
+            // Ajout d'un titre
+            title: {
+                text: 'Répartition des Tâches par Type d\'Intervention',
+                align: 'center',
+                style: {
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#333'
+                }
+            },
+            legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 5,
+                labels: {
+                    colors: '#333'
+                }
+            }
+        };
+    
+        const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+        chart.render();
+    };
+    
+    // Appel de la fonction pour créer le donut chart
+    
+    
+    function techTache(containerId, data) {
+        const labels = data.map(item => item.tache__nom);
+        const counts = data.map(item => item.count);
+        const colors = ['#FF5733', '#33FFA6', '#334DFF', '#FF33EA', '#33D4FF', '#FFEC33'];
+        const options = {
+            chart: {
+                type: 'bar',
+                height: 300,
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true, // Afficher les barres horizontalement
+                    barHeight: '60%', // Hauteur des barres
+                    borderRadius: 4,
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                textAnchor: 'start', // Position des étiquettes de données
+                offsetX: 8,
+                style: {
+                    fontSize: '12px',
+                    colors: ['#333']
+                }
+            },
+            series: [{
+                name: 'Nombre de Techniciens',
+                data: counts
+            }],
+            xaxis: {
+                categories: labels,
+                labels: {
+                    show: true, // Afficher les étiquettes d'axe
+                    style: {
+                        fontSize: '12px',
+                        fontWeight: 400,
+                        colors: ['#333']
+                    }
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Nombre de Techniciens', // Titre de l'axe Y
+                    style: {
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        colors: ['#333']
+                    }
+                }
+            },
+            colors: colors, // Utilisation de la palette de couleurs personnalisée
+    
+            // Ajout d'un titre et d'une légende
+            title: {
+                text: 'Nombre de Techniciens par Tâche',
+                align: 'center',
+                style: {
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    colors: ['#333']
+                }
+            },
+            legend: {
+                show: false, // Masquer la légende
+            }
+        };
+    
+        const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+        chart.render();
+    }
+    
+    function createDonutChart(containerId, data) {
+        const labels = data.map(item => item.intervention);
+        const counts = data.map(item => item.count);
+        const colors = ['#FF5733', '#33FFA6', '#334DFF', '#FF33EA', '#33D4FF', '#FFEC33'];
+        const options = {
+            chart: {
+                type: 'donut',
+                height: 300,
+                
+            },
+            series: counts,
+            labels: labels,
+            colors: colors,
+            dataLabels: {
+                enabled: true,
+                formatter: function (val, opts) {
+                    return opts.w.config.labels[opts.seriesIndex] + ": " + val.toFixed(2) + "%";
+                }
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '75%',
+                        labels: {
+                          show: true,
+                          value: {
+                            fontSize: '2.5rem',
+                            fontFamily: 'Public Sans',
+                            //color: headingColor,
+                            offsetY: -15,
+                            formatter: function (val) {
+                              return parseInt(val) + '';
+                            }
+                          },
+                          name: {
+                            offsetY: 20,
+                            fontFamily: 'Public Sans'
+                          },
+                          total: {
+                            show: true,
+                            fontSize: '2rem',
+                            //color: axisColor,
+                            label: 'Total',
+                            formatter: function (w) {
+                                const total = counts.reduce((a, b) => a + b, 0);
+                              return total;
+                            }
+                          }
+                        }
+                      }
+                }
+            },
+            legend: {
+                position: 'right',
+                horizontalAlign: 'right',
+                offsetY: 0,
+                formatter: function (seriesName, opts) {
+                    const seriesIndex = opts.w.config.labels.indexOf(seriesName);
+                    const seriesCount = opts.w.config.series[seriesIndex];
+                    const total = counts.reduce((a, b) => a + b, 0);
+                    const pourcentage = ((seriesCount / total) * 100).toFixed(2);
+                    return `${seriesName}: ${seriesCount} (${pourcentage}%)`;
+                },
+                markers: {
+                    radius: 20
+                },
+                itemMargin: {
+                    vertical: 20
+                }
+            }
+        };
+    
+        const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+        chart.render();
+    };
+    function createBarChartInterventionType(containerId, data) {
+        const labels = data.map(item => `${item.intervention} - ${item.type_intervention}`);
+        const counts = data.map(item => item.count);
+        const colors = ['#FF5733', '#33FFA6', '#334DFF', '#FF33EA', '#33D4FF', '#FFEC33'];
+        const options = {
+            chart: {
+                type: 'bar',
+                height: 300,
+                //width: 600
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: false,
+                }
+            },
+            dataLabels: {
+                enabled: true
+            },
+            series: [{
+                name: 'Nombre de tâches',
+                data: counts
+            }],
+            xaxis: {
+                categories: labels
+            },
+            colors: colors,
+            legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 5,
+            },
+        };
+    
+        const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+        chart.render();
+    };
+    
+    
+
+
+    // Requête AJAX pour récupérer les données depuis la vue AnalyseQuantitativeView
+    function fetchDataAndCreateCharts() {
+        fetch('{% url "ans" %}')
+            .then(response => response.json())
+            .then(data => {
+                // Créer le graphique "Nombre de tâches par intervention"
+                createDonutChart1('tachesParInterventions', data.taches_par_type);
+                techTache('techsTache', data.techniciens_par_tache);
+
+                createDonutChart('tachesParInterventionss', data.taches_par_intervention);
+                // Créer le graphique "Nombre de tâches par type d'intervention"
+                //createBarChart('tachesParTypeInterventionChart', data.taches_par_intervention_type);
+                createBarChartInterventionType('tachesParInterventionType', data.taches_par_intervention_type);
+
+            })
+            .catch(error => {
+                console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+            });
+    };
+
+    // Appeler la fonction pour récupérer les données et créer les graphiques
+    fetchDataAndCreateCharts();
+</script>
+
+

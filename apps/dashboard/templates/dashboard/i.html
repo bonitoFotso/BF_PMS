@@ -5,19 +5,198 @@
 {% if user %} {{ user.technicien.nom }} {% else %} non user {% endif %}
 
 {% block body %}
-<h1>Some Line Charts loaded in Ajax!</h1>
+{% csrf_token %}
+<div id="kt_app_content" class="app-content pb-0">
 
-<canvas id="myChart" width="50" height="40"></canvas>
+  <!--begin::Row-->
+  <div class="row gy-5 g-xl-10">
 
-<script type="text/javascript" src="{% static 'assets/js/jquery/core.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-<script type="text/javascript">
-    $.get('{% url "line_chart_json" %}', function(data) {
-        var ctx = $("#myChart").get(0).getContext("2d");
-        new Chart(ctx, {
-            type: 'line', data: data
-        });
-    });
+    <!--begin::Col-->
+    <div class="col-xl-6 mb-5 mb-xl-10">
+      <!--begin::Chart widget 4-->
+      {% include 'dashboard/chart/ch2.html' %}
+      <!--end::Chart widget 4-->
+    </div>
+    <div class="col-xl-6 mb-5 mb-xl-10">
+      <!--begin::Chart widget 4-->
+      {% include 'dashboard/chart/ch1.html' %}
+      <!--end::Chart widget 4-->
+    </div>
+    <!--end::Col-->
+  </div>
+  <!--end::Row-->
+  <!--begin::Row-->
+  <div class="row gy-5 g-xl-10 mb-5 mb-xl-10">
+    <!--begin::Col-->
+
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col">
+      <!--begin::Table Widget 5-->
+      {% include 'dashboard/table/tab1.html'%}
+      <!--end::Table Widget 5-->
+    </div>
+    <!--end::Col-->
+  </div>
+  <!--end::Row-->
+  <!--begin::Row-->
+  <div class="row g-5 g-xl-10">
+    <!--begin::Col-->
+    <div class="col-xl-6">
+      <!--begin::Table widget 13-->
+      {% include 'dashboard/table/tab2.html'%}
+      <!--end::Table widget 13-->
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xl-6">
+      <!--begin::List widget 23-->
+      <div class="card card-flush h-xl-100">
+        <!--begin::Header-->
+        <div class="card-header pt-7">
+          <!--begin::Title-->
+          <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bold text-gray-800">Technicien </span>
+            <span class="text-gray-400 mt-1 fw-semibold fs-6"></span>
+          </h3>
+          <!--end::Title-->
+          <!--begin::Toolbar-->
+          <div class="card-toolbar">
+            <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+              <!--begin::Filter-->
+              <!--begin::Add user-->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+              <i class="ki-duotone ki-plus fs-2"></i>Creer un Technicien</button>
+              <!--end::Add user-->
+          </div>
+          {% include 'ressource/form_tec.html' %}
+          </div>
+          <!--end::Toolbar-->
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body pt-5 table-responsive">
+          <!--begin::Items-->
+          
+            <!--begin::Table-->
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="tech">
+                <thead>
+                    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                        <th class="w-10px pe-2">
+                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1" />
+                            </div>
+                        </th>
+                        
+                            <th class="min-w-125px"> Nom </th>
+                            
+                        <th class="text-end min-w-100px">stats</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-semibold">
+                    {% for t in tech %}
+                    <tr>
+                        <td>
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input class="form-check-input" type="checkbox" value="1" />
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center">
+                            <!--begin:: Avatar -->
+                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <a href="#">
+                                    <div class="symbol-label">
+                                        <img src="{% static t.photo %}" alt="{{t.nom}}" class="w-100" />
+                                    </div>
+                                </a>
+                            </div>
+                            <!--end::Avatar-->
+                            <!--begin::User details-->
+                            <div class="d-flex flex-column">
+                                <a href="/technicien/{{t.id}}/detail" class="text-gray-800 text-hover-primary mb-1">{{t.nom}}</a>
+                                <span>{{t.email}}</span>
+                                <span>{{t.tel}}</span>
+                                
+                            </div>
+                            <!--begin::User details-->
+                        </td>
+                        
+                        <td class="text-end">
+                            {{t.vitesse_execution }} : {{t.efficacite}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+            <!--end::Table-->
+        
+          <!--end::Items-->
+        </div>
+        <!--end: Card Body-->
+      </div>
+      <!--end::List widget 23-->
+    </div>
+    <!--end::Col-->
+  </div>
+  <!--end::Row-->
+</div>
+<script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
+<script src="{% static 'assets/plugins/DataTables/datatables.js' %}"></script>
+<script src="{% static 'assets/js/apexcharts.js' %}"></script>
+
+
+
+<script>
+$("#clients_table").DataTable({
+  paging: false,
+  scrollY: 400,
+  ordering: true,
+  
+});
+$("#tech").DataTable({
+  paging: false,
+  scrollY: 400,
+  ordering: true,
+
+});
+function getQuantitativeAnalysis() {
+  $.ajax({
+      type: 'GET',
+      url: '{% url "ans" %}',  // Remplacez '/url/vers/votre/vue/analyse/quantitative/' par l'URL appropriée
+      dataType: 'json',
+      success: function(data) {
+          // Traitez ici les données renvoyées par la vue Django
+          //console.log(data);
+          // Par exemple, pour afficher le nombre total de tâches effectuées :
+          //$('#nombre_total_taches_effectuees').text(data.nombre_total_taches_effectuees);
+
+          // Pour parcourir les résultats par type d'intervention :
+          data.taches_par_type.forEach(function(item) {
+              console.log(item.type_intervention, item.count,);
+              // Vous pouvez afficher ces données ou les utiliser selon vos besoins
+          });
+
+          // Pour parcourir les résultats par statut :
+          data.nombre_taches_par_statut.forEach(function(item) {
+              console.log(item.status, item.count);
+              // Vous pouvez afficher ces données ou les utiliser selon vos besoins
+          });
+
+          // Pour afficher la durée moyenne des tâches effectuées :
+          // Vous pouvez afficher cette donnée ou l'utiliser selon vos besoins
+
+      },
+      error: function(xhr, status, error) {
+          console.error(error);
+          // Traitez ici les erreurs en cas de problème avec l'appel AJAX
+      }
+  });
+  
+};
+getQuantitativeAnalysis();
+
+
 </script>
+{% include 'dashboard/inc/js.html' %}
 {% endblock %}

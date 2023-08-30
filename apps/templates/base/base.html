@@ -1,50 +1,59 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-
-
+<html lang="fr">
 
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>BF -{% block title %}{% endblock title %} </title>
-  {% include 'base/css.html' %}
-  <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
+  <title>{% block title %} Base {% endblock title %}</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  {% include 'base/files/css.html' %}
+
+
 </head>
 
-<body >
-  <div class="loader"></div>
-  <div id="app">
-    <div class="main-wrapper main-wrapper-1">
-      <div class="navbar-bg"></div>
-      <!-- navbar -->
-      {% include 'includes/nn.html' %}
-      <div class="main-sidebar sidebar-style-2">
-          <!-- sidebar -->
-          {% include 'includes/side.html' %}
-      </div>
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-        {% block content %}
-          
-        {% endblock content %}
+<body id="kt_body" class="header-tablet-and-mobile-fixed aside-enabled bg-gray-400">
+	<!--begin::Main-->
+	<!--begin::Root-->
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="page d-flex flex-row flex-column-fluid">
+			<!--begin::Aside-->
+			{% include 'base/sidebar/side.html' %}
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+				<!--begin::Header-->
+				{% include 'base/header/header.html' %}
+				<!--end::Header-->
+				<!--begin::Content-->
+				{% block content %}
+				
+				{% endblock content %}
+				<!--end::Content-->
+				<!--begin::Footer-->
+				{% include 'base/footer/footer.html' %}
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Page-->
+	</div>
 
-        </section>
-        
-      </div>
-      <!-- footer -->
-      {% include 'includes/footer.html' %}
-    </div>
-  </div>
-  <!-- General JS Scripts -->
- 
-  {% include 'base/js.html' %}
+	{% include 'base/components/panel.html' %}
 
-  {% block js %}
-    
-  {% endblock js %}
+	<script>var hostUrl = "assets/";</script>
+	<!--begin::Global Javascript Bundle(used by all pages)-->
+	{% include 'base/files/js.html' %}
+	{% block js %}
+	
+	{% endblock js %}
+	<!--end::Page Custom Javascript-->
+	<!--end::Javascript-->
+	<!-- Dans votre template -->
+
+
 </body>
-
-
 
 </html>

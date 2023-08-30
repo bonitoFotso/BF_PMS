@@ -1,0 +1,256 @@
+{% load static %}
+<div class="card card-flush overflow-hidden h-md-100">
+    <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
+        <div class="px-9 mb-5">
+            <div class="d-flex align-items-center mb-2">
+                <span class="fs-4 fw-semibold text-gray-400 align-self-start me-1"></span>
+                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ taches.count }}</span>
+                <span class="badge badge-light-success fs-base">
+                    <i class="ki-duotone ki-arrow-down fs-5 text-success ms-n1">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>4.5%
+                </span>
+            </div>
+            <span class="fs-6 fw-semibold text-gray-900">Nbr Total de Taches</span>
+        </div>
+        <ul class="nav nav-tabs mb-3" id="chartTabs1" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="barChartTab1" data-bs-toggle="tab" href="#barChart1" role="tab" aria-controls="barChart" aria-selected="true">line</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="donutChartTab1" data-bs-toggle="tab" href="#donutChart1" role="tab" aria-controls="donutChart" aria-selected="false">Donut Chart</a>
+            </li>
+            <!-- li class="nav-item" role="presentation">
+                <a class="nav-link" id="taskByTechnicianTab1" data-bs-toggle="tab" href="#taskByTechnician1" role="tab" aria-controls="taskByTechnician" aria-selected="false">Taches par Technicien</a>
+            </!-->
+            <!-- li class="nav-item" role="presentation">
+                <a class="nav-link" id="technicianByTaskTab1" data-bs-toggle="tab" href="#technicianByTask1" role="tab" aria-controls="technicianByTask" aria-selected="false">Techniciens par Tache</a>
+            </!-->
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active " id="barChart1" role="tabpanel" aria-labelledby="barChartTab1">
+                <div id="ch1"></div>
+            </div>
+            <div class="tab-pane fade" id="donutChart1" role="tabpanel" aria-labelledby="donutChartTab1">
+                <div id="ch2"></div>
+            </div>
+            <!-- div class="tab-pane fade" id="taskByTechnician1" role="tabpanel" aria-labelledby="taskByTechnicianTab1">
+                <div id="ch3"></div>
+            </!-->
+            <!-- div class="tab-pane fade" id="technicianByTask1" role="tabpanel" aria-labelledby="technicianByTaskTab1">
+                <div id="ch4"></div>
+            </!-->
+        </div>
+    </div>
+</div>
+  <script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
+
+  <script src="{% static 'assets/js/apexcharts.js' %}"></script>
+    <script>
+
+
+
+
+      function createDonutChart1(containerId, label, value) {
+          const options = {
+              chart: {
+                  type: 'donut',
+                  height: 300,
+              },
+              series: [value],
+              labels: [label],
+              dataLabels: {
+                  enabled: true,
+                  formatter: function (val, opts) {
+                      return val.toFixed(2) + '%';
+                  }
+              },
+              plotOptions: {
+                  pie: {
+                      donut: {
+                          size: '75%',
+                          labels: {
+                              show: true,
+                              value: {
+                                  fontSize: '1.5rem',
+                                  fontFamily: 'Public Sans',
+                                  offsetY: -15,
+                                  formatter: function (val) {
+                                      return parseInt(val) + '';
+                                  }
+                              },
+                              name: {
+                                  offsetY: 20,
+                                  fontFamily: 'Public Sans'
+                              },
+                              total: {
+                                  show: true,
+                                  fontSize: '0.8125rem',
+                                  label: 'Ratio',
+                                  formatter: function (w) {
+                                      return w.config.series[0];
+                                  }
+                              }
+                          }
+                      }
+                  }
+              },
+          };
+  
+          const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+          chart.render();
+      }
+  
+      function createLineChart1(containerId, labels, cre, att, eff,t_total) {
+        const options = {
+            chart: {
+                height: 300,
+                type: 'line',
+                toolbar: {
+                    show: true,
+                },
+            },
+            colors: ['#FF5733', '#33FFA6', '#334DFF', '#FF33EA', '#33D4FF', '#FFEC33'],
+            series: [
+                {
+                    name: 'Tâches créées',
+                    data: cre,
+                },
+                {
+                    name: 'Tâches effectuées',
+                    data: eff,
+                },
+                {
+                    name: 'Tâches attribuées',
+                    data: att,
+                },
+                {
+                    name: 'Tâches total',
+                    data: t_total,
+                },
+            ],
+            xaxis: {
+                categories: labels,
+                axisTicks: {
+                    show: true, // Afficher les ticks de l'axe x
+                    color: '#333', // Couleur des ticks de l'axe x
+                },
+                labels: {
+                    style: {
+                        colors: '#333', // Couleur des étiquettes de l'axe x
+                    },
+                },
+            },
+            yaxis: {
+                title: {
+                    text: 'Nombre de tâches',
+                    
+                    style: {
+                        color: '#333', // Couleur du titre de l'axe y
+                    },
+                },
+                labels: {
+                    style: {
+                        colors: '#333', // Couleur des étiquettes de l'axe y
+                    },
+                },
+            },
+            legend: {
+                position: 'bottom',
+                horizontalAlign: 'right',
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+                    return val.toFixed(0);
+                },
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val.toFixed(0);
+                    },
+                },
+            },
+        };
+    
+        const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+        chart.render();
+    }
+    
+  
+      function createBarChart1(containerId, data) {
+        const labels = data.map(item => item.appelant__name);
+        const counts = data.map(item => item.count);
+        const colors = ['#FF5733', '#33FFA6', '#334DFF', '#FF33EA', '#33D4FF', '#FFEC33'];
+        const options = {
+            chart: {
+                type: 'bar',
+                height: 300,
+            },
+            fill: {
+                colors: ['#F44336', '#E91E63', '#9C27B0']
+              },
+              
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: false,
+                },
+            },
+            dataLabels: {
+                enabled: true,
+            },
+            series: [
+                {
+                name: 'Nombre de tâches',
+                data: counts,
+            },
+            ],
+            xaxis: {
+                categories: labels,
+            },
+            colors: colors,
+            legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 5,
+            },
+        };
+
+        const chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+        chart.render();
+    }
+
+
+      function fetchDataAndCreateCharts2() {
+          fetch('{% url "ans" %}')
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                  // ... (autres graphiques)
+                
+                  // Créer le graphique "Ratio Tâche/Technicien"
+                 // createDonutChart1('ch3', 'Ratio Tâche/Technicien', data.ratio_tache_technicien);
+  
+                  // Créer le graphique "Tâches effectuées par jour"
+                  createLineChart1('ch1', data.datess, data.t_cre,data.t_att,data.t_eff,data.t_total);
+  
+                  // Créer le graphique "Tâches par appelant"
+                  createBarChart1('ch2', data.taches_par_appelant);
+              })
+              .catch(error => {
+                  console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+              });
+      }
+  
+      fetchDataAndCreateCharts2();
+
+  </script>
+  
+
+
+
+
