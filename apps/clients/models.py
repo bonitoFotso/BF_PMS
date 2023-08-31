@@ -18,7 +18,7 @@ class Client(models.Model):
     phone = models.CharField(_("phone"), max_length=20)
     address = models.CharField(_("address"), max_length=200)
     city = models.CharField(_("city"), max_length=50)
-    n_client = models.CharField(_("numero client"), max_length=50)
+    n_client = models.CharField(_("numero client"), max_length=50,default='cli_01')
     maintenance = models.BooleanField(_("est sous c. de maintenance"),default=False)
     createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
     updatedAt = models.DateTimeField(auto_now_add=True)
@@ -54,7 +54,7 @@ class Agence(models.Model):
     siege  = models.ForeignKey("Client", on_delete=models.CASCADE)
     phone = models.CharField(_("phone"), max_length=20)
     email = models.EmailField(_("email"), max_length=254)
-    n_agence = models.CharField(_("numero agence"), max_length=50)
+    n_agence = models.CharField(_("numero agence"), max_length=50,default='cli_ag_01')
     createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
     updatedAt = models.DateTimeField(auto_now_add=True)
     

@@ -15,7 +15,39 @@
 
 	{% include 'partials/theme-mode/_init.html' %}
 	{% include 'layout/partials/_page-loader.html' %}
-	{% include 'layout/_default.html' %}
+	<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+		<!--begin::Page-->
+		<div class="app-page  flex-column flex-column-fluid " id="kt_app_page">
+			{% include 'layout/partials/_header.html' %}
+			<!--begin::Wrapper-->
+			<div class="app-wrapper  d-flex " id="kt_app_wrapper">
+				{% include 'layout/partials/_sidebar.html' %}
+				<!--begin::Main-->
+				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+					<!--begin::Content wrapper-->
+					<div class="d-flex flex-column flex-column-fluid">
+						{% include 'layout/partials/_toolbar.html' %}
+						<!-- begin::Content -->
+						<div id="kt_app_content" class="app-content">
+						  <!-- begin::Content container -->
+						    {% block content %}
+						
+						    {% endblock content %}
+						  <!-- end::Content container -->
+						</div>
+						<!-- end::Content -->
+					</div>
+					<!--end::Content wrapper-->
+						{% include 'layout/partials/_footer.html' %}
+								</div>
+				<!--end:::Main-->
+						</div>
+			<!--end::Wrapper-->
+				</div>
+		<!--end::Page-->
+	</div>
+	<!--end::App-->
+	<!--layout-partial:partials/_drawers.html-->
 	{% include 'partials/_scrolltop.html' %}
 	<!--begin::Modals-->
 	<!--layout-partial:partials/modals/_upgrade-plan.html-->
@@ -26,8 +58,8 @@
 	<!--begin::Javascript-->
 	
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-	<script src="{% static ' assets/plugins/global/plugins.bundle.js' %}"></script>
-	<script src="{% static ' assets/js/scripts.bundle.js' %}"></script>
+	<script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
+	<script src="{% static 'assets/js/scripts.bundle.js' %}"></script>
 	<!--end::Global Javascript Bundle-->
 	<!--begin::Vendors Javascript(used for this page only)-->
 	
@@ -35,6 +67,10 @@
 	<!--begin::Custom Javascript(used for this page only)-->
 	<script src="{% static 'assets/js/widgets.bundle.js' %}"></script>
 	<script src="{% static 'assets/js/custom/widgets.js' %}"></script>
+
+	{% block js %}
+	
+	{% endblock js %}
 	
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->
