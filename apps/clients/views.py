@@ -1,123 +1,62 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import *
 from django.urls import reverse_lazy
 from .models import *
 from django.http import JsonResponse
 
 # Register your models here.
-ff = ('nom', 'responsable','address', )
 
+# views.py
+from django.views.generic import ListView, CreateView,View
+from .models import Client, Agence, Appelant
+from .forms import ClientForm, AgenceForm, AppelantForm
+
+class ClientView(View):
+    template_name = 'clients/clients.html'
+
+    def get(self, request):
+        breadcrumb = [{'label': 'Accueil', 'url': '/'}]  # Le breadcrumb de base
+        breadcrumb.append({'label': 'Client', 'url': '/clients'})  # Ajoutez les éléments au breadcrumb
+        request.breadcrumb = breadcrumb  # Ajoutez le breadcrumb au contexte
+        clients = Client.objects.all()
+        return render(request, self.template_name, {'clients': clients})
+
+    def post(self, request):
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('client-list')  # Rediriger vers la liste des clients
+        return render(request, self.template_name, {'form': form})
 
 class ClientListView(ListView):
     model = Client
-    template_name = "clients/list_client.html"
-    def get_context_data(self, **kwargs):
-        
-        context = super().get_context_data(**kwargs)
-        context["client"] = Client.objects.all()
-        context["agences"] = 2 #Agence.objects.filter(id=self.request.objects.id)
-        context['field'] = ff
-        return context
-    
-class AgenceListView(ListView):
-    model = Agence
-    template_name = "clients/list_agence.html"
-    def get_context_data(self, **kwargs):
-        
-        context = super().get_context_data(**kwargs)
-        context["agences"] = Agence.objects.all()
-        context["clients"] = Client.objects.all()
-        #context["agences"] = 2#Agence.objects.filter(id=self.request.objects.id)
-        context['field'] = ff
-        return context
-    
-class ClientDetaiView(DetailView):
-    model = Client
-    template_name = "clients/detail_client.html"
-    def get_context_data(self, **kwargs):
-        s = Agence.objects.filter(id=self.object.id)
-        print(s)
-        context = super().get_context_data(**kwargs)
-        context["client"] = Client.objects.all()
-        context["agences"] = Agence.objects.all().filter(siege=self.object.id)
-        context['field'] = ff
-        return context
-    
-class AgenceDetaiView(DetailView):
-    model = Agence
-    template_name = "clients/detail_agence.html"
-    def get_context_data(self, **kwargs):
-        s = Agence.objects.filter(id=self.object.id)
-        print(s)
-        context = super().get_context_data(**kwargs)
-        context["Agences"] = Agence.objects.all()
-        #context["agences"] = Agence.objects.all().filter(siege=self.object.id)
-        context['field'] = ff
-        return context
+    template_name = 'client_list.html'
+    context_object_name = 'clients'
 
 class ClientCreateView(CreateView):
     model = Client
-    fields = ['name', 'responsable','email','phone','address','city']
-    template_name = 'clients/client_form.html'
-    success_url = reverse_lazy('client-list')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["clients"]   =  Client.objects.order_by('-id') 
-        #context["clientss"]  =  Client.objects.filter(isCompleted = 'True').values().count
-        context['client']    =  Client.objects.count()
-        context['page']      = 'client'
-        context['fields']      = ff
-        return context
-    
-    
-class ClientUpdateView(UpdateView):
-    model = Client
-    fields = ['name',]# 'responsable','email','phone','address','city' ]
-    template_name = 'clients/client.html'
-    success_url = reverse_lazy('client')
-    
-    
-class ClientDeleteView(DeleteView):
-    model = Client
-    fields = ('name', 'responsable','email','phone','address','city' )
-    template_name = 'clients/client.html'
-    success_url = reverse_lazy('client')
-    
-    
+    form_class = ClientForm
+    template_name = 'client_form.html'
+    success_url = '/client-list/'
+
+class AgenceListView(ListView):
+    model = Agence
+    template_name = 'agence_list.html'
+    context_object_name = 'agences'
 
 class AgenceCreateView(CreateView):
     model = Agence
-    fields = ('name', 'responsable','email','phone','address','city','siege' )
-    #template_name = 'clients/agence_form.html'
-    success_url = reverse_lazy('agence')
-        
-    def get(self, request, *args, **kwargs):
-        return JsonResponse({"as": 12})
-    
-    
-    def post(self, request, *args, **kwargs):
-        print(request.POST)
-        return super().post(request, *args, **kwargs)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["agences"]   =  Agence.objects.order_by('-id') 
-        #context["agencess"]  =  Agence.objects.filter(isCompleted = 'True').values().count
-        context['agence']    =  Agence.objects.count()
-        context['page']      = 'agence'
-        return context
+    form_class = AgenceForm
+    template_name = 'agence_form.html'
+    success_url = '/agence-list/'
 
-    
-class AgenceUpdateView(UpdateView):
-    model = Agence
-    fields = ('name', 'responsable','email','phone','address','city','siege' )
-    template_name = 'clients/agence.html'
-    success_url = reverse_lazy('agence')
-    
-    
-class AgenceDeleteView(DeleteView):
-    model = Agence
-    fields = ('name', 'responsable','email','phone','address','city','siege' )
-    template_name = 'clients/agence.html'
-    success_url = reverse_lazy('agence')
+class AppelantListView(ListView):
+    model = Appelant
+    template_name = 'appelant_list.html'
+    context_object_name = 'appelants'
+
+class AppelantCreateView(CreateView):
+    model = Appelant
+    form_class = AppelantForm
+    template_name = 'appelant_form.html'
+    success_url = '/appelant-list/'
