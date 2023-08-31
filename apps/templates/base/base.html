@@ -13,47 +13,79 @@
 
 </head>
 
-<body id="kt_body" class="header-tablet-and-mobile-fixed aside-enabled bg-gray-400">
-	<!--begin::Main-->
-	<!--begin::Root-->
-	<div class="d-flex flex-column flex-root">
+<body  id="kt_app_body" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="false" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true"  class="app-default" >
+	<!--begin::Theme mode setup on page load-->
+	<!--begin::loader-->
+	<div class="app-page-loader flex-column">
+		<span class="spinner-border text-primary" role="status"></span>
+		<span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
+	</div>
+<!--end::Loader-->
+	<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+	<!--end::Theme mode setup on page load-->
+	<!--begin::App-->
+	<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
 		<!--begin::Page-->
-		<div class="page d-flex flex-row flex-column-fluid">
-			<!--begin::Aside-->
-			{% include 'base/sidebar/side.html' %}
-			<!--end::Aside-->
+		<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+			<!--begin::Header-->
+			{% include 'base/header/header.html' %}
+
+			<!--end::Header-->
 			<!--begin::Wrapper-->
-			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-				<!--begin::Header-->
-				{% include 'base/header/header.html' %}
-				<!--end::Header-->
-				<!--begin::Content-->
-				{% block content %}
-				
-				{% endblock content %}
-				<!--end::Content-->
-				<!--begin::Footer-->
-				{% include 'base/footer/footer.html' %}
-				<!--end::Footer-->
+			<div class="app-wrapper d-flex" id="kt_app_wrapper">
+				<!--begin::Sidebar-->
+				{% include 'base/sidebar/side.html' %}
+				<!--end::Sidebar-->
+				<!--begin::Main-->
+				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+					<!--begin::Content wrapper-->
+					<div class="d-flex flex-column flex-column-fluid">
+						<!--begin::Toolbar-->
+						{% include 'base/toolbar.html' %}
+						<!--end::Toolbar-->
+						<!--begin::Content-->
+						<div id="kt_app_content" class="app-content">
+							<!--begin::Content container-->
+							{% block content %}
+
+							{% endblock content %}
+							<!--end::Content container-->
+						</div>
+						<!--end::Content-->
+					</div>
+					<!--end::Content wrapper-->
+					<!--begin::Footer-->
+					{% include 'base/footer/footer.html' %}
+					<!--end::Footer-->
+				</div>
+				<!--end:::Main-->
 			</div>
 			<!--end::Wrapper-->
 		</div>
 		<!--end::Page-->
 	</div>
-
-	{% include 'base/components/panel.html' %}
-
+	<!--end::App-->
+	<!--begin::Drawers-->
+	<!--begin::Activities drawer-->
+	<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+		<i class="ki-outline ki-arrow-up"></i>
+	</div>
+	<!--end::Modal - Invite Friend-->
+	<!--end::Modals-->
+	<!--begin::Javascript-->
 	<script>var hostUrl = "assets/";</script>
-	<!--begin::Global Javascript Bundle(used by all pages)-->
-	{% include 'base/files/js.html' %}
+	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+	
+	<!--end::Global Javascript Bundle-->
+	<!--begin::Vendors Javascript(used for this page only)-->
+	<script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
+	<script src="{% static 'assets/js/scripts.bundle.js' %}"></script>
+	
 	{% block js %}
 	
 	{% endblock js %}
-	<!--end::Page Custom Javascript-->
+	<!--end::Custom Javascript-->
 	<!--end::Javascript-->
-	<!-- Dans votre template -->
-
-
 </body>
 
 </html>

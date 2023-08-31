@@ -1,0 +1,42 @@
+<body id="kt_body" class="header-tablet-and-mobile-fixed aside-enabled bg-gray-400">
+	<!--begin::Main-->
+	<!--begin::Root-->
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="page d-flex flex-row flex-column-fluid">
+			<!--begin::Aside-->
+			{% include 'base/sidebar/side.html' %}
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+				<!--begin::Header-->
+				{% include 'base/header/header.html' %}
+				<!--end::Header-->
+				<!--begin::Content-->
+				{% block content %}
+				
+				{% endblock content %}
+				<!--end::Content-->
+				<!--begin::Footer-->
+				{% include 'base/footer/footer.html' %}
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Page-->
+	</div>
+
+	{% include 'base/components/panel.html' %}
+
+	<script>var hostUrl = "assets/";</script>
+	<!--begin::Global Javascript Bundle(used by all pages)-->
+	{% include 'base/files/js.html' %}
+	{% block js %}
+	
+	{% endblock js %}
+	<!--end::Page Custom Javascript-->
+	<!--end::Javascript-->
+	<!-- Dans votre template -->
+
+
+</body>
