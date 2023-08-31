@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<title>{% block title %} Base {% endblock title %}</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="{% static 'assets/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/css/style.bundle.css' %}" rel="stylesheet" type="text/css" />
+</head>
+
+<body id="kt_app_body" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="false" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
+
+	{% include 'partials/theme-mode/_init.html' %}
+	{% include 'layout/partials/_page-loader.html' %}
+	{% include 'layout/_default.html' %}
+	{% include 'partials/_scrolltop.html' %}
+	<!--begin::Modals-->
+	<!--layout-partial:partials/modals/_upgrade-plan.html-->
+	<!--layout-partial:partials/modals/create-campaign/_main.html-->
+	<!--layout-partial:partials/modals/users-search/_main.html-->
+	<!--layout-partial:partials/modals/_invite-friends.html-->
+	<!--end::Modals-->
+	<!--begin::Javascript-->
+	
+	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+	<script src="{% static ' assets/plugins/global/plugins.bundle.js' %}"></script>
+	<script src="{% static ' assets/js/scripts.bundle.js' %}"></script>
+	<!--end::Global Javascript Bundle-->
+	<!--begin::Vendors Javascript(used for this page only)-->
+	
+	<!--end::Vendors Javascript-->
+	<!--begin::Custom Javascript(used for this page only)-->
+	<script src="{% static 'assets/js/widgets.bundle.js' %}"></script>
+	<script src="{% static 'assets/js/custom/widgets.js' %}"></script>
+	
+	<!--end::Custom Javascript-->
+	<!--end::Javascript-->
+</body>
+
+</html>
