@@ -14,7 +14,12 @@
       <!--begin::Card toolbar-->
       <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
         <!--begin::Add product-->
-        <a href="#" class="btn btn-primary">Creer une Tache</a>
+        <button type="button" class="btn btn-primary px-3" data-bs-toggle="modal" data-bs-target="#add_taches">
+          Creer une Tache
+        </button>
+        <button type="button" class="btn btn-primary px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">
+          Creer une Tache2
+        </button>
         <!--end::Add product-->
       </div>
       <!--end::Card toolbar-->
@@ -72,7 +77,7 @@
             </td>
             <td class="text-end pe-0" data-order="Scheduled">
               <!--begin::Badges-->
-              <div class="badge badge-light-primary">{{t.etat}}</div>
+              <div class="badge badge-light-primary">{{t.status}}</div>
               <!--end::Badges-->
             </td>
             <td class="text-end pe-0">
@@ -164,6 +169,8 @@
   </div>
   <!--end::Products-->
 </div>
+{% include 'project/tache_f.html' %}
+{% include 'modal/create-app/_main.html' %}
 <script src="{% static 'assets/plugins/custom/datatables/js/jquery.js' %}"></script>
 <script src="{% static 'assets/plugins/DataTables/datatables.js' %}"></script>
 
@@ -205,8 +212,6 @@
   };
   document.querySelector("#subm").addEventListener("click", event => {
     event.preventDefault();
-    
-    alert('test');
     tec = document.querySelector('[name=att]').value;
     ta = document.querySelector('[name=tache]').value;
     alert(tec);

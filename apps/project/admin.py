@@ -1,6 +1,23 @@
 from django.contrib import admin
 from .models import *
 
+# Administration pour le modèle Categorie
+class CategorieAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'description', 'createdAt', 'updatedAt')
+    list_filter = ('createdAt', 'updatedAt')
+    search_fields = ('nom', 'description')
+    list_per_page = 10
+
+# Administration pour le modèle Activite
+class ActiviteAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'description', 'createdAt', 'updatedAt')
+    list_filter = ('createdAt', 'updatedAt')
+    search_fields = ('nom', 'description', 'projet__nom')
+    list_per_page = 10
+
+admin.site.register(Categorie, CategorieAdmin)
+admin.site.register(Activite, ActiviteAdmin)
+
 @admin.register(Tache)
 class TacheAdmin(admin.ModelAdmin):
     list_display = ('nom','appelant', 'status','activite','categorie', 'n_OS','priorite', 'ok', 'date_debut', 'date_fin')

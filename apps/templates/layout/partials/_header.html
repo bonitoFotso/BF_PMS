@@ -6,14 +6,23 @@
         <!--begin::Header mobile toggle-->
         <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show sidebar menu">
             <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
-                <i class="ki-duotone ki-abstract-14 fs-2"><span class="path1"></span><span class="path2"></span></i> </div>
+                <i class="ki-duotone ki-abstract-14 fs-2"><span class="path1"></span><span class="path2"></span></i> 
+            </div>
+                <div class="btn btn-icon btn-active-color-primary w-30px h-30px w-md-35px h-md-35px" id="kt_app_header_menu_toggle">
+                    <i class="ki-duotone ki-text-align-left fs-2 fs-md-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>        
+                </div>
+                
+
         </div>
+        
+            
+        
         <!--end::Header mobile toggle-->
         <!--begin::Logo-->
-        <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-13">
+        <div class="d-flex align-items-center  flex-lg-grow-0 me-lg-13">
             <a href="{% url 'dashboard' %}">
                 <img alt="Logo" src="{% static 'media/logo.png' %}"
-                    class="h-45px h-lg-75px bg-gray-300 " />
+                    class="h-1px h-lg-75px bg-gray-300 " />
             </a>
         </div>
         <!--end::Logo-->

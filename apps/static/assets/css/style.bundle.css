@@ -48779,6 +48779,8 @@ body,
   transition: none;
   background-color: var(--bs-app-aside-base-bg-color);
   box-shadow: var(--bs-app-aside-base-box-shadow);
+  border-left: var(--bs-app-aside-base-border-left);
+  border-right: var(--bs-app-aside-base-border-right);
 }
 
 .app-aside-minimize-d-flex,
@@ -48800,8 +48802,8 @@ body,
     margin-bottom: 0px;
   }
   :root {
-    --bs-app-aside-width: 300px;
-    --bs-app-aside-width-actual: 300px;
+    --bs-app-aside-width: 80px;
+    --bs-app-aside-width-actual: 80px;
     --bs-app-aside-gap-start: 0px;
     --bs-app-aside-gap-end: 0px;
     --bs-app-aside-gap-top: 0px;
@@ -48835,8 +48837,8 @@ body,
   }
   [data-kt-app-aside-fixed=true] .app-aside {
     position: fixed;
-    z-index: 99;
-    top: 0;
+    z-index: 105;
+    top: 100px;
     bottom: 0;
     right: 0;
   }
@@ -48852,7 +48854,7 @@ body,
     top: auto;
     bottom: auto;
     left: auto;
-    z-index: 99;
+    z-index: 105;
     margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
@@ -48914,8 +48916,8 @@ body,
     margin-bottom: 0px;
   }
   :root {
-    --bs-app-aside-width: 275px;
-    --bs-app-aside-width-actual: 275px;
+    --bs-app-aside-width: 80px;
+    --bs-app-aside-width-actual: 80px;
     --bs-app-aside-gap-start: 0px;
     --bs-app-aside-gap-end: 0px;
     --bs-app-aside-gap-top: 0px;

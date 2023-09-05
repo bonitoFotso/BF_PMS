@@ -45,7 +45,7 @@ class Activite(models.Model):
     createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
     updatedAt = models.DateTimeField(auto_now_add=True)  # Date de mise à jour automatique
     def __str__(self):
-        return f"Activité de {self.projet.nom}"
+        return f"Activité de {self.nom}"
     
 
 class Tache(models.Model):

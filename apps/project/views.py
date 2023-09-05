@@ -124,7 +124,7 @@ class TacheListView(ListView):
     t_f=('tache','tech')
     fields = fields
     #t_list = list(Tache.objects.all().values('appelant','n_OS','observation','nom','priorite','description','etat','date_debut',))
-    fieldss = ('tache','date d ajout','appelant','priorite','etat','date_debut','technicient','date_fin','n_OS',)
+    fieldss = ('tache','date d ajout','appelant','priorite','status','date_debut','technicient','date_fin','n_OS',)
     #tec = TechnicienTache.objects.all()
 
             
@@ -155,9 +155,6 @@ class TacheListView(ListView):
 
 # views.py
 
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from .models import Tache
 def att(request):
     if request.method == 'POST':
         tec_id = request.POST.get('tec')
@@ -169,11 +166,13 @@ def att(request):
             tec = get_object_or_404(Technicien, id=tec_id)
             ta = get_object_or_404(Tache, id=ta_id)
         except (ValueError, Technicien.DoesNotExist, Tache.DoesNotExist):
-            return JsonResponse({'status': 'error', 'message': 'Invalid technicien or tache ID.'})
+            return JsonResponse({'status': 'error', 'message': 'ID de technicien ou de tâche invalide.'})
         
         try:
+            print('try1,test')
             # Vérifier si la tâche est déjà accomplie
             if ta.ok:
+                print('try1,ok')
                 return JsonResponse({'status': 'error', 'message': 'La tâche est déjà accomplie et ne peut pas être attribuée à un nouveau technicien.'})
             
             # Vérifier si la tâche est déjà attribuée à un technicien avec ok=True
@@ -185,29 +184,20 @@ def att(request):
                 existing_tech_tache.date_debut = date_debut
                 existing_tech_tache.date_fin = date_fin
                 existing_tech_tache.save()
+                print('if2,ok')
             else:
-                # Vérifier si le technicien est déjà attribué à une autre tâche pour la même période
-                overlapping_tech_tache = TechnicienTache.objects.filter(
-                    technicien=tec,
-                    date_debut__lte=date_fin,
-                    date_fin__gte=date_debut
-                )
-                if overlapping_tech_tache.exists():
-                    return JsonResponse({'status': 'error', 'message': 'Le technicien est déjà attribué à une autre tâche pour la même période.'})
                 
-                tect = TechnicienTache.objects.create(technicien=tec, tache=ta, date_debut=date_debut, date_fin=date_fin)
-            
-            return JsonResponse({'status': 'success', 'message': 'Attribution successful.'})
+                TechnicienTache.objects.create(technicien=tec, tache=ta, date_debut=date_debut, date_fin=date_fin)
+                print('else2,ok')
+            return JsonResponse({'status': 'success', 'message': 'Attribution réussie.'})
+        
         except Exception as e:
-            print('err01')
+            print(str(e))
             return JsonResponse({'status': 'error', 'message': str(e)})
     else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+        return JsonResponse({'status': 'error', 'message': 'Méthode de requête invalide.'})
 
-from django.core.exceptions import ValidationError
 
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
 
 def edit_task(request):
     if request.method == 'POST':
@@ -249,7 +239,7 @@ def edit_task(request):
 
 class TaskDetail(DetailView,UpdateView):
     model = Tache
-    fields = ('appelant','n_OS','ok','observation','nom','priorite','description','etat','date_debut','date_fin',)
+    fields = ('appelant','n_OS','ok','nom','priorite','description','date_debut','date_fin',)
     
     template_name = 'project/tache_detail.html'
     

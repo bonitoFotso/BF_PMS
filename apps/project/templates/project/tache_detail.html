@@ -1,8 +1,8 @@
-{% extends "base/body.html" %}
+{% extends "base.html" %}
 
 {% block title %} detail {% endblock %} 
 
-{% block body %}
+{% block content %}
     
         <div class="page-content" >
             <div class="" role="document">
@@ -25,4 +25,9 @@
     
 
 
-{% endblock body %}
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'assets/js/custom/utilities/modals/create-app.js' %}"></script>
+
+{% endblock js %}

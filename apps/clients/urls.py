@@ -11,4 +11,8 @@ urlpatterns = [
     path('appelant-list/', AppelantListView.as_view(), name='appelant-list'),
     path('appelant-create/', AppelantCreateView.as_view(), name='appelant-create'),
     
+    
+    path('clients_json/', ClientListJson.as_view(), name='client_list_json'),
+    path('get_client_data/', get_client_data, name='get_client_data'),
+
 ]

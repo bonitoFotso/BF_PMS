@@ -1,0 +1,76 @@
+<div class="tab-pane fade " id="tab_content_agences">
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-wrap flex-md-nowrap">
+        <!--begin::Items-->
+        <div class="me-md-5 w-100">
+            <!--begin::Item-->
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="agences_table">
+                <thead class="">
+                    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                        <th>Nom</th>
+                        <th>Siège</th>
+                        <th>Responsable</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Numéro Agence</th>
+                        
+                    </tr>
+                </thead>
+                <tbody class=" fw-semibold"> 
+                    {% for agence in agences %}
+                    <tr class="{% if agence.siege.maintenance %} bg-primary {% endif %}"> 
+                        <td>{{ agence.name }}</td>
+                        <td>{{ agence.siege.name }}</td>
+                        <td>{{ agence.responsable }}</td>
+                        <td>{{ agence.phone }} / {{ agence.email }}</td>
+                        <td>{{ agence.address }} / {{ agence.city }}</td>
+                        <td>{{ agence.n_agence }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!--end::Item-->
+        </div>
+        <!--end::Items-->
+        <!--begin::Container-->
+        <div class="d-flex justify-content-between flex-column w-225px w-md-600px mx-auto mx-md-0 pt-3 pb-10">
+            <!-- Onglets -->
+            <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Tab 1</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Tab 2</a>
+                </li>
+                <!-- Ajoutez d'autres onglets si nécessaire -->
+            </ul>
+            <!-- Contenu des onglets -->
+            <div class="tab-content" id="myTabsContent">
+                <!-- Onglet 1 -->
+                <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                    <div id="chart_Agence1" class="mx-auto mb-4"></div>
+                </div>
+                <!-- Onglet 2 -->
+                <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                    <div id="chart_Agence2" class="mx-auto mb-4"></div>
+                </div>
+                <!-- Ajoutez le contenu des autres onglets ici -->
+            </div>
+        </div>
+        
+        <!--end::Container-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+
+<script>
+    var tab1 = $('#agences_table').DataTable({
+        'order': [],
+        "searching": true,
+        "pageLength": 5,
+        "responsive": true,
+        "lengthChange": false,
+
+    });
+</script>

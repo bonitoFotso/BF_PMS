@@ -9,9 +9,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link href="{% static 'assets/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'assets/css/style.bundle.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/DataTables/datatables.css' %}" rel="stylesheet" type="text/css" />
+	<script src="{% static 'assets/DataTables/datatables.js' %}"></script>
 </head>
 
-<body id="kt_app_body" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="false" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
+<body id="kt_app_body" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="false" data-kt-app-sidebar-push-toolbar="false" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" class="app-default">
 
 	{% include 'partials/theme-mode/_init.html' %}
 	{% include 'layout/partials/_page-loader.html' %}
@@ -22,6 +24,7 @@
 			<!--begin::Wrapper-->
 			<div class="app-wrapper  d-flex " id="kt_app_wrapper">
 				{% include 'layout/partials/_sidebar.html' %}
+				
 				<!--begin::Main-->
 				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 					<!--begin::Content wrapper-->
@@ -41,6 +44,7 @@
 						{% include 'layout/partials/_footer.html' %}
 								</div>
 				<!--end:::Main-->
+				{% include 'layout/partials/_aside.html' %}
 						</div>
 			<!--end::Wrapper-->
 				</div>
@@ -50,6 +54,7 @@
 	<!--layout-partial:partials/_drawers.html-->
 	{% include 'partials/_scrolltop.html' %}
 	<!--begin::Modals-->
+	{% include 'clients/modals/clients.html' %}
 	<!--layout-partial:partials/modals/_upgrade-plan.html-->
 	<!--layout-partial:partials/modals/create-campaign/_main.html-->
 	<!--layout-partial:partials/modals/users-search/_main.html-->

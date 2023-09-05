@@ -79,7 +79,7 @@ class Agence(models.Model):
     @receiver(post_save, sender=Client)
     def create_agence(sender, instance, created, **kwargs):
         if created:
-            generated_n_agence = instance.generate_n_agence()
+            #generated_n_agence = instance.generate_n_agence()
             
             Agence.objects.create(
                 siege=instance,
@@ -89,7 +89,7 @@ class Agence(models.Model):
                 city=instance.city,
                 phone=instance.phone,
                 email=instance.email,
-                n_agence=generated_n_agence
+                #n_agence=generated_n_agence
             )
             
 class Appelant(models.Model):

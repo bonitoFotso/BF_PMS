@@ -1,4 +1,4 @@
-{% extends 'base/full.html' %}
+{% extends 'full.html' %}
 {% load static %}
 {% block title %} Login {% endblock title %}
 
@@ -154,11 +154,12 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
+                            console.log('existe');
                             stepper.goNext();
                             
                             
                         } else {
-                            
+                            console.log('n existe pas');
                         }
                     });
             }

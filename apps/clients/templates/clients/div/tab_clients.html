@@ -1,0 +1,82 @@
+{% load static %}
+<div class="tab-pane fade show active" id="tab_content_clients">
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-wrap flex-md-nowrap">
+        <!--begin::Items-->
+        <div class="me-md-5 w-100">
+
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="clients_table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Responsable</th>
+                        <th>Email / Phone</th>
+                        <th>Adresse / Ville</th>
+                        <th>Numero Client</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr class="{% if client.maintenance %} bg-primary {% endif %}">
+                        <td>{{ client.name }}</td>
+                        <td>{{ client.responsable }}</td>
+                        <td>{{ client.email }} / {{ client.phone }}</td>
+                        <td>{{ client.address }} / {{ client.city }}</td>
+                        <td>{{ client.n_client }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            
+        </div>
+        <!--end::Items-->
+        <!--begin::Container-->
+        <div class="d-flex justify-content-between flex-column w-225px w-md-600px mx-auto mx-md-0 pt-3 pb-10">
+            <!--begin::Title-->
+            <div class="fs-4 fw-bold text-gray-900 text-center mb-5">Session Attendance
+            <br />for Current Academic Year</div>
+            <!--end::Title-->
+            <!--begin::Chart-->
+            <div id="kt_chart_widgets_22_chart_1" class="mx-auto mb-4"></div>
+            <!--end::Chart-->
+            <!--begin::Labels-->
+            
+            <!--end::Labels-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+
+
+<script>
+     
+    $.ajax({
+        url: '/get_client_data/', // Remplacez par l'URL appropriée
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            // Manipulez les données JSON ici
+            console.log(data);
+           const dt = data;
+        },
+        error: function(error) {
+            // Gérez les erreurs ici
+            console.error(error);
+        }
+    });
+
+        var tab = $('#clients_table').DataTable({
+            'order': [],
+            "searching": true,
+            "pageLength": 5,
+            "responsive": true,
+            "lengthChange": false,
+
+        });
+
+     
+   
+</script>
