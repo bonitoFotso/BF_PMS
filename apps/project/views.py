@@ -130,6 +130,9 @@ class TacheListView(ListView):
             
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        breadcrumb = [{'label': 'Accueil', 'url': '/'}]  # Le breadcrumb de base
+        breadcrumb.append({'label': 'Client', 'url': '/clients'})  # Ajoutez les éléments au breadcrumb
+        #request.breadcrumb = breadcrumb  # Ajoutez le breadcrumb au contexte
         
         nb_tasks_bas = Tache.objects.filter(priorite='Bas').count()
         nb_tasks_moyen = Tache.objects.filter(priorite='Moyen').count()
