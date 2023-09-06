@@ -157,6 +157,26 @@ class TacheListView(ListView):
 
 
 # views.py
+def get_task_info(request):
+    task_id = request.GET.get('task_id')
+    try:
+        task = Tache.objects.get(id=task_id)
+        task_info = {
+            'id': task.id,
+            'nom': task.nom,
+            'appelant': task.appelant.name,
+            'priorite': task.priorite,
+            'description': task.description,
+            'n_os': task.n_OS,
+            'status': task.status,
+            'date_debut': task.date_debut.strftime('%Y-%m-%d') if task.date_debut else None,
+            'date_fin': task.date_fin.strftime('%Y-%m-%d') if task.date_fin else None,
+            # Ajoutez d'autres champs ici
+        }
+        return JsonResponse({'task_info': task_info})
+    except Tache.DoesNotExist:
+        return JsonResponse({'error': 'Tâche non trouvée'}, status=404)
+
 
 def att(request):
     if request.method == 'POST':
