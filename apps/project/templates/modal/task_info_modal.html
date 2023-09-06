@@ -26,9 +26,8 @@
             </div>
 
             <div class="modal-footer">
-                <div id="my-id" class="uk-margin-auto-vertical" uk-modal>
-                    
-                </div>
+                <button uk-toggle="target: #my-id" type="button">modifier</button>
+
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
 
@@ -37,3 +36,9 @@
     </div>
 </div>
 
+<div id="my-id" uk-modal class="modal fade" tabindex="-2">
+    <div class="uk-modal-dialog uk-modal-body modal-dialog" >
+        <h2 class="uk-modal-title"></h2>
+        <button class="uk-modal-close" type="button">close</button>
+    </div>
+</div>
