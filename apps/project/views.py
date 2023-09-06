@@ -142,6 +142,12 @@ class TacheListView(ListView):
         context["field"] = self.fieldss
         #context["tl"] = self.s
         #context['ass'] = TechnicienTache.objects.all()
+        context["cats"] = Categorie.objects.all()
+        context["acts"] = Activite.objects.all()
+
+        context["agences"] = Agence.objects.all()
+        context["appelants"] = Appelant.objects.all()
+        context["clients"] = Client.objects.all()
         context["taches"]    =  Tache.objects.all().order_by('createdAt')
         context["total"]     =  Tache.objects.count()
         context["ts"]        =  Tache.objects.all()
@@ -165,6 +171,7 @@ def get_task_info(request):
             'id': task.id,
             'nom': task.nom,
             'appelant': task.appelant.name,
+            'client' : task.appelant.agence.siege.name,
             'priorite': task.priorite,
             'description': task.description,
             'n_os': task.n_OS,
@@ -310,7 +317,7 @@ from .models import Tache
 def create_task(request):
     if request.method == 'POST':
         # Récupérer les données du formulaire
-        #nom = request.POST.get('nom')
+        nom = request.POST.get('nom')
         appelant_id = request.POST.get('appelant')
         priorite = request.POST.get('priorite')
         description = request.POST.get('description')
@@ -350,12 +357,15 @@ def create_appelant(request):
 class CreateTaskView(CreateView):
     model = Tache
     fields = [
-        'intervention',
-        'type_intervention',
+        'nom,'
+        'categorie',
+        'activite',
         'appelant',
         'priorite',
         'description',
         'n_OS',
+        'date_debut',
+        'date_fin'
     ]
     template_name = 'votre_template.html'
 

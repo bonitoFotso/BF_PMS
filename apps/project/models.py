@@ -70,17 +70,26 @@ class Tache(models.Model):
     description = models.CharField(max_length=500, null=False, default='description')
     n_OS = models.CharField(_("Numéro d'OS"), max_length=50, null=True, blank=True)
     ok = models.BooleanField(default=False)  # Champ pour indiquer si la tâche est terminée
-    date_debut = models.DateField(_("Date de début"), blank=True, null=True)
-    date_fin = models.DateField(_("Date de fin"), blank=True, null=True)
+    date_debut = models.DateField(_("Date de début"), blank=True, null=True,)
+    date_fin     = models.DateField(_("Date de fin"), blank=True, null=True,)
     createdAt = models.DateTimeField(auto_now=True)  # Date de création automatique
-    updatedAt = models.DateTimeField(auto_now_add=True)  # Date de mise à jour automatique
+    updatedAt = models.DateTimeField(auto_now_add=True,)  # Date de mise à jour automatique
 
-    def update_status(self):
-        if self.technicientache_set.exists():
-            self.status = 'En cours'
-        else:
+    def save(self, *args, **kwargs):
+        # Si la tâche est nouvellement créée et n'a pas encore de date de début, la mettre en "En attente"
+        if not self.id and not self.date_debut:
             self.status = 'En attente'
-        self.save()
+        # Si la tâche a une date de début, la mettre en "En cours"
+        elif self.date_debut:
+            self.status = 'En cours'
+        # Si la tâche a un numéro d'OS, la mettre en "En facturation"
+        if self.n_OS:
+            self.status = 'En facturation'
+        # Si la tâche est marquée comme terminée, la mettre en "Effectué"
+        if self.ok:
+            self.status = 'Effectué'
+
+        super(Tache, self).save(*args, **kwargs)
         
     def __str__(self):
         return self.nom  # Renvoie le nom unique de la tâche comme représentation en chaîne
