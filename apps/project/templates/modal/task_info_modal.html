@@ -13,21 +13,27 @@
             </div>
 
             <div class="modal-body">
-                <div class="row">
-                    <div class="col " id="r1_c1"> </div>
-                    <div class="col " id="r1_c2"> </div>
-                    <div class="col " id="r1_c3"> </div>
-                </div>
-                <div class="row">
-                    <div class="col " id="r2_c1">g </div>
-                    <div class="col " id="r2_c2">g </div>
-                    <div class="col " id="r2_c3">g </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Intitulé:</strong> <span id="taskTitle"></span></p>
+                            <p><strong>Status:</strong> <span id="taskStatus"></span></p>
+                            <p><strong>Appelant:</strong> <span id="taskAppelant"></span></p>
+                            <!-- Ajoutez d'autres informations de tâche ici -->
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Priorité:</strong> <span id="taskPriorite"></span></p>
+                            <p><strong>Description:</strong> <span id="taskDescription"></span></p>
+                            <p><strong>Numéro d'OS:</strong> <span id="taskNumOS"></span></p>
+                            <!-- Ajoutez d'autres informations de tâche ici -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
-                    modifier
+                <button type="button" class="btn btn-primary" data-bs-stacked-modal="#kt_modal_stacked_2">
+                    Launch stacked modal
                 </button>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
@@ -39,28 +45,57 @@
 
 
 
-<div class="modal fade" tabindex="-1" id="kt_modal_1">
-    <div class="modal-dialog">
+<div class="modal fade" tabindex="-1" id="kt_modal_stacked_2">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Modal title</h3>
-
+                <h3 class="modal-title">Stacked modal title</h3>
+    
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                 </div>
                 <!--end::Close-->
             </div>
-
+    
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
+                ...
+    
+                <button type="button" class="btn btn-primary" data-bs-stacked-modal="#kt_modal_stacked_3">
+                    Launch stacked modal
+                </button>
             </div>
-
+    
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
-</div>
+    </div>
 
+
+    <div class="modal fade" tabindex="-1" id="kt_modal_stacked_3" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Stacked modal title</h3>
+        
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+        
+                <div class="modal-body">
+                    ...
+                </div>
+        
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+        </div>

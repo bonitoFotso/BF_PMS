@@ -89,22 +89,36 @@ class TechnicienDetailView(DetailView,UpdateView):
         dl = []
         td = []
         att = self.object.technicientache_set.all()
-        #do = self.object.technicientache_set.all.filter('tache.ok' == True)
+        do = self.object.technicientache_set.all()
         for d in att:
             if d.tache.ok == True:
                 dl.append(d.tache)
             else:
                 td.append(d)
         stat = {'all':att,"do":dl,"todo":td}
-        print(stat)
+        #print('dd',stat)
         return stat
     def get_context_data(self, **kwargs):
-        
+        context = super().get_context_data(**kwargs)
+
         #ss = self.request.POST
         #tt = self.request.GET
         #print(tt)
+        # Initialisez votre liste breadcrumb de base
+        print(self.object)
+        breadcrumb = [{'label': 'Accueil', 'url': '/'}]
+        breadcrumb = [{'label': 'Techniciens', 'url': '/technicien-list'}]
+
+        # Ajoutez d'autres éléments au breadcrumb en fonction de la vue actuelle
         
-        context = super().get_context_data(**kwargs)
+        breadcrumb.append({'label': 'technicien :'+str(self.object.nom), 'url': self.request.path})
+        #elif self.request.path == '/autre_page':
+        #    breadcrumb.append({'label': 'Autre Page', 'url': '/autre_page'})
+        # Ajoutez autant d'éléments que nécessaire en fonction de votre application
+        
+        # Ajoutez le breadcrumb au contexte
+        context['breadcrumb'] = breadcrumb
+        
         context["q"] = 'qq'
         context["app"] = 'Technicien'
         context["model"] = 'Technicien'
@@ -112,6 +126,7 @@ class TechnicienDetailView(DetailView,UpdateView):
         context["fields"] = fieldss
         context["technicien"] = Technicien.objects.all()
         context["stat"] = self.get_stat()
+        #print(context)
         return context
     
 class AccountView(LoginRequiredMixin,TemplateView):

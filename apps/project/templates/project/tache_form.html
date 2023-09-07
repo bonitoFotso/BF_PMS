@@ -1,13 +1,13 @@
-{% extends 'base/body.html' %}
+{% extends 'base.html' %}
 
 {% block title %} creer tache {% endblock %} 
 
-{% block body %} 
+{% block content %} 
 
 <form action="{% url 'task' %}" method="post">
   {% csrf_token %}
   {{form.as_p}}
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-{% endblock body %}
+{% endblock content %}
 

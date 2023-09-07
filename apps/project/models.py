@@ -55,6 +55,8 @@ class Tache(models.Model):
         ('En cours', 'En cours'),
         ('En arrêt', 'En arrêt'),
         ('En facturation', 'En facturation'),
+        ('Effectué', 'Effectué'),
+
     ]
     PRIORITE_CHOICES = [
     ('Bas', 'Bas'),
@@ -316,25 +318,25 @@ class TacheEffectuee(models.Model):
         verbose_name_plural = _("Tâches effectuées")
 
 
-
 # Mise à jour des statistiques du technicien lors de la création ou de la suppression de TacheAttribuee et TacheEffectuee
-@receiver(post_save, sender=TacheAttribuee)
-@receiver(pre_delete, sender=TacheAttribuee)
-@receiver(post_save, sender=TacheEffectuee)
-@receiver(pre_delete, sender=TacheEffectuee)
-def update_technicien_stats(sender, instance, **kwargs):
-    technicien = instance.technicien
-    taches_attribuees = TacheAttribuee.objects.filter(technicien=technicien)
-    taches_effectuees = TacheEffectuee.objects.filter(technicien=technicien)
-    # Calculer la vitesse d'exécution et l'efficacité et mettre à jour les champs dans le modèle Technicien
-    vitesse_execution = len(taches_effectuees) / len(taches_attribuees) if len(taches_attribuees) > 0 else 0.0
-    technicien.vitesse_execution = round(vitesse_execution, 2)
-
-    efficacite = len(taches_effectuees) / len(taches_attribuees) if len(taches_attribuees) > 0 else 0.0
-    technicien.efficacite = round(efficacite, 2)
-
-
-    technicien.save()
+#@receiver(post_save, sender=TacheAttribuee)
+#@receiver(pre_delete, sender=TacheAttribuee)
+#@receiver(post_save, sender=TacheEffectuee)
+#@receiver(pre_delete, sender=TacheEffectuee)
+#def update_technicien_stats(sender, instance, **kwargs):
+#    technicien = instance.technicien
+#    taches_attribuees = TacheAttribuee.objects.filter(technicien=technicien)
+#    
+#    taches_effectuees = TacheEffectuee.objects.filter(technicien=technicien)
+#    # Calculer la vitesse d'exécution et l'efficacité et mettre à jour les champs dans le modèle Technicien
+#    vitesse_execution = len(taches_effectuees) / len(taches_attribuees) if len(taches_attribuees) > 0 else 0.0
+#    technicien.vitesse_execution = round(vitesse_execution, 2)
+#
+#    efficacite = len(taches_effectuees) / len(taches_attribuees) if len(taches_attribuees) > 0 else 0.0
+#    technicien.efficacite = round(efficacite, 2)
+#
+#
+#    technicien.save()
 # Signal pour la création de tâche
 
 

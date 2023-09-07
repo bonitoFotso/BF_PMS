@@ -130,9 +130,13 @@
                 if ('task_info' in data) {
                     // Affichez les données dans le modal
                     $('#m_title').html(data.task_info.nom);
-                    $('#r1_c1').html(data.task_info.appelant);
-                    $('#r1_c2').html(data.task_info.priorite);
-                    $('#r1_c3').html(data.task_info.status);
+                    $('#r1_c1').html(data.task_info.client);
+                    $('#r1_c2').html(data.task_info.appelant);
+                    $('#r1_c3').html(data.task_info.priorite);
+
+                    $('#r2_c1').html(data.task_info.activite);
+                    $('#r2_c2').html(data.task_info.categorie);
+                    $('#r2_c3').html(data.task_info.status);
                     $('#taskInfoModal').modal('show');
                 } else {
                     // Gérez l'erreur si la tâche n'est pas trouvée

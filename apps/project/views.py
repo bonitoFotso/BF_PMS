@@ -88,8 +88,6 @@ class TaskCreate(CreateView):
     #template_name = "project/add_task.html"
     fields = [
     'nom',
-    'intervention',
-    'type_intervention',
     'appelant',
     'priorite',
     'description',
@@ -174,6 +172,8 @@ def get_task_info(request):
             'client' : task.appelant.agence.siege.name,
             'priorite': task.priorite,
             'description': task.description,
+            'activite': task.activite.nom,
+            'categorie': task.categorie.nom,
             'n_os': task.n_OS,
             'status': task.status,
             'date_debut': task.date_debut.strftime('%Y-%m-%d') if task.date_debut else None,
@@ -309,10 +309,7 @@ class Desk(ListView):
         active = Tache.objects.filter( status_id = 1 ) 
         return render(request, self.template_name, {'active': active,'alltask' : Tache.objects.all()})
     
-from django.shortcuts import render
-from django.http import JsonResponse
 
-from .models import Tache
 
 def create_task(request):
     if request.method == 'POST':
@@ -357,7 +354,7 @@ def create_appelant(request):
 class CreateTaskView(CreateView):
     model = Tache
     fields = [
-        'nom,'
+        'nom',
         'categorie',
         'activite',
         'appelant',

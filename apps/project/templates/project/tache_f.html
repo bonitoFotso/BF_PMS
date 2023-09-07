@@ -167,7 +167,7 @@
             const formData = new FormData(addTaskForm);
             console.log(formData);
             // Récupérer la référence du modal
-            const modal = document.getElementById('kt_modal_add_task');
+            const modal = document.getElementById('add_taches');
     
             // Effectuer la requête Ajax POST pour créer la tâche
             fetch("{% url 'create_task' %}", {
@@ -182,7 +182,7 @@
                 alert(data.message);
     
                 // Masquer le modal en cas de succès
-                const modal = new bootstrap.Modal(document.getElementById('kt_modal_add_task'));
+                const modal = new bootstrap.Modal(document.getElementById('add_taches'));
                 modal.hide();
     
                 // Recharger la page après un délai de 1 seconde (1000 millisecondes)
