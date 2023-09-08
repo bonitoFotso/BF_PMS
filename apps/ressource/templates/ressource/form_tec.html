@@ -131,7 +131,6 @@
                         <span class="indicator-progress">Veuillez patienter...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-<!-- ... Autres éléments HTML ... -->
 
                     </div>
                     <!--end::Actions-->
@@ -147,102 +146,49 @@
 
 <script>
     const element = document.getElementById('kt_modal_add_user');
-    const forms = element.querySelector('#kt_modal_add_user_form');
+const form = element.querySelector('#kt_modal_add_user_form');
 
-    document.querySelector("#kt_modal_add_user_form").addEventListener("submit", event => {
-        event.preventDefault();
-        
-        
-        
+document.querySelector("#kt_modal_add_user_form").addEventListener("submit", event => {
+    event.preventDefault();
 
-        let form = new FormData();
-        let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        
-        form.append('csrfmiddlewaretoken',csrfTokenValue);
-        form.append('nom',$('#nom').val());
-        form.append('prenom',$('#prenom').val());
-        form.append('email',$('#email').val());
-        form.append('tel',$('#tel').val());
-        form.append('matricule',$('#matricule').val());
-        form.append('photo',$('#photo').val());
-        let request = new Request("{% url 'technicien-create' %}", {method: 'POST',
-                                                    body: form,
-                                                    headers: {"X-CSRFToken": csrfTokenValue}
-                                                    })
-        fetch(request)
-            .then(response => {
-                alert(response["body"]);
-            })
-            .then(result => {
-                alert(result["as"]);
-            })
-        
+    let form = new FormData();
+    let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
+    form.append('csrfmiddlewaretoken', csrfTokenValue);
+    form.append('nom', $('#nom').val());
+    form.append('prenom', $('#prenom').val());
+    form.append('email', $('#email').val());
+    form.append('tel', $('#tel').val());
+    form.append('matricule', $('#matricule').val());
+    form.append('photo', $('#photo')[0].files[0]); // Use files[0] to get the selected file
+
+    let request = new Request("{% url 'technicien-create' %}", {
+        method: 'POST',
+        body: form,
+        headers: { "X-CSRFToken": csrfTokenValue }
     });
 
-    const cancelButton = document.querySelector('[data-kt-users-modal-action="cancel"]');
-    cancelButton.addEventListener('click', e => {
-        e.preventDefault();
-
-        Swal.fire({
-            text: "Are you sure you would like to cancel?",
-            icon: "warning",
-            showCancelButton: true,
-            buttonsStyling: false,
-            confirmButtonText: "Yes, cancel it!",
-            cancelButtonText: "No, return",
-            customClass: {
-                confirmButton: "btn btn-primary",
-                cancelButton: "btn btn-active-light"
+    fetch(request)
+        .then(response => {
+            if (response.status === 201) {
+                // La création a réussi (statut 201 Created)
+                // Vous pouvez rediriger ou afficher un message de succès ici
+                console.log("Technicien créé avec succès!");
+                // Fermer la fenêtre modale
+                $('#kt_modal_add_user').modal('hide');
+            } else {
+                // Gérer les erreurs ici, par exemple, afficher un message d'erreur
+                console.error("Erreur lors de la création du technicien");
             }
-        }).then(function (result) {
-            if (result.value) {
-                forms.reset(); // Reset form			
-                forms.hide();	
-            } else if (result.dismiss === 'cancel') {
-                Swal.fire({
-                    text: "Your form has not been cancelled!.",
-                    icon: "error",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    }
-                });
-            }
+        })
+        .catch(error => {
+            // Gérer les erreurs de la requête fetch ici
+            console.error("Erreur lors de la requête fetch:", error);
         });
-    });
-    closeButton.addEventListener('click', e => {
-        e.preventDefault();
+});
 
-        Swal.fire({
-            text: "Are you sure you would like to cancel?",
-            icon: "warning",
-            showCancelButton: true,
-            buttonsStyling: false,
-            confirmButtonText: "Yes, cancel it!",
-            cancelButtonText: "No, return",
-            customClass: {
-                confirmButton: "btn btn-primary",
-                cancelButton: "btn btn-active-light"
-            }
-        }).then(function (result) {
-            if (result.value) {
-                forms.reset(); // Reset form			
-                element.hide();	
-            } else if (result.dismiss === 'cancel') {
-                Swal.fire({
-                    text: "Your form has not been cancelled!.",
-                    icon: "error",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    }
-                });
-            }
-        });
-    });
+
+
 
 
 </script>

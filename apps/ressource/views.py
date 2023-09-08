@@ -8,6 +8,7 @@ from apps.project.models import  *
 from .models import *
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django_datatables_view.base_datatable_view import BaseDatatableView
 # Create your views here.
 fieldss = ('nom','prenom', 'matricule','tel','' )
 
@@ -145,3 +146,21 @@ class AccountView(LoginRequiredMixin,TemplateView):
 
         return context
     
+
+
+class TechnicienListJson(BaseDatatableView):
+    model = Technicien
+    columns = ['id','nom', 'prenom', 'tel', 'email', 'matricule', 'vitesse_execution', 'efficacite']
+    order_columns = ['nom', 'prenom', 'tel', 'email', 'matricule', 'vitesse_execution', 'efficacite','id']
+
+    def get_initial_queryset(self):
+        return Technicien.objects.all()
+
+    def render_column(self, row, column):
+        # Vous pouvez personnaliser le rendu des colonnes ici si nécessaire
+        if column == 'vitesse_execution':
+            return f"{row.vitesse_execution:.2f}"
+        elif column == 'efficacite':
+            return f"{row.efficacite:.2f}"
+        else:
+            return super().render_column(row, column)

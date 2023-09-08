@@ -10,6 +10,9 @@ urlpatterns = [
     path('compute/', compute, name="compute"),
     path('c', Comp.as_view(), name='c'),
     
+    path('api/technicien/', TechnicienListJson.as_view(), name='technicien-list-json'),
+
+    
     
 ]
 
