@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'django_datatables_view',
-    
+    'rest_framework',
     #'jquery',
 
         
