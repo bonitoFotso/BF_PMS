@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.authentication',
     'apps.ressource',
+    'apps.api_clients',
     
     
     #'chartjs',
