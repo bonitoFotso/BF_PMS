@@ -4,13 +4,8 @@
     "default": {
       "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
-        "accessToken": "OWJlN2UxODUtOGUwNy00NTA5LWFiNzMtZGI0NDIzZjg1OTA4fHJlYWQtd3JpdGU="
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "MWUzNTg4MmQtMjZmMy00NjcyLWE5YjctODYyOTIzZjgyNTJjfHJlYWQtd3JpdGU="
       }
     }
   },
@@ -19,26 +14,14 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
-    },
-    "test": {
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/jest.preset.js"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "e2e": {
-      "inputs": [
-        "default",
-        "^production"
-      ]
+      "inputs": ["default", "^production"]
+    },
+    "test": {
+      "inputs": ["default", "^production"]
     },
     "lint": {
       "inputs": [
@@ -50,17 +33,11 @@
     }
   },
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.js"
     ],
@@ -69,14 +46,20 @@
   "generators": {
     "@nx/react": {
       "application": {
-        "babel": true
-      }
-    },
-    "@nx/next": {
-      "application": {
         "style": "css",
-        "linter": "eslint"
+        "linter": "eslint",
+        "bundler": "vite",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint",
+        "unitTestRunner": "vitest"
       }
     }
-  }
+  },
+  "defaultProject": "bf-pms"
 }
