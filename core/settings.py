@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'apps.authentication',
     'apps.ressource',
     'apps.api_clients',
-    
+    'corsheaders',
     
     #'chartjs',
     #'apps.adminss',
@@ -76,7 +76,35 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+#CORS_ALLOW_ORIGIN = [
+#    "http://localhost:4200",  # Remplacez par l'origine de votre choix
+#]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+]
+
 
 ROOT_URLCONF = 'core.urls'
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")
@@ -158,3 +186,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #print(BASE_DIR)
 #print(T_DIR)
 #print(CORE_DIR)
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    #'DEFAULT_PERMISSION_CLASSES': [
+    #    'rest_framework.permissions.IsAuthenticated',
+    #],
+    #'DEFAULT_AUTHENTICATION_CLASSES': [
+    #    'rest_framework.authentication.SessionAuthentication',
+    #    'rest_framework.authentication.TokenAuthentication',
+    #],
+}
