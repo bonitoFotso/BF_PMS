@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'apps.authentication',
     'apps.ressource',
     'apps.api_clients',
+    'apps.api',
+
     'corsheaders',
     
     #'chartjs',
