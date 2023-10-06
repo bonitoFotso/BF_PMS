@@ -1,84 +1,74 @@
-# BfPms
-Créer une application de gestion de tâches avec React en front-end et Django en back-end est un excellent projet pour développer vos compétences en développement web. Voici les étapes de base pour créer une telle application :
+# Getting Started with Create React App
 
-**Étape 1 : Configuration de l'environnement de développement**
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-1. Installez Node.js et npm pour le front-end. Vous pouvez les télécharger à partir du site officiel de Node.js.
+## Available Scripts
 
-2. Installez Python et Django pour le back-end. Vous pouvez utiliser pip, le gestionnaire de paquets Python, pour installer Django.
+In the project directory, you can run:
 
-**Étape 2 : Création du Projet Django**
+### `npm install`
 
-1. Créez un projet Django en utilisant la commande suivante :
-   
-   ```bash
-   django-admin startproject nom_du_projet
-   ```
+Install packages
 
-2. Créez une application Django pour gérer les tâches :
+### `npm start`
 
-   ```bash
-   python manage.py startapp gestion_taches
-   ```
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-3. Configurez la base de données Django dans le fichier `settings.py`.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-**Étape 3 : Développement du Back-end**
+### `npm test`
 
-1. Définissez les modèles Django pour les tâches dans le fichier `models.py` de votre application `gestion_taches`.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-2. Créez les vues Django pour gérer la création, la lecture, la mise à jour et la suppression des tâches dans le fichier `views.py`.
+### `npm run build`
 
-3. Créez les URL pour les vues dans le fichier `urls.py` de votre application.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-4. Créez des serializers Django REST framework pour sérialiser les données.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-5. Configurez les autorisations et l'authentification si nécessaire.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-**Étape 4 : Création du Front-end avec React**
+### `npm run eject`
 
-1. Créez une application React en utilisant Create React App ou une autre configuration de votre choix.
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-2. Créez des composants React pour afficher la liste des tâches, ajouter une tâche, mettre à jour une tâche, etc.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-3. Utilisez Axios ou Fetch pour effectuer des requêtes HTTP vers votre API Django.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-4. Intégrez React Router si vous avez besoin de gérer différentes pages ou vues dans votre application front-end.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-5. Mettez en place un état local pour gérer les données des tâches et les interactions de l'utilisateur.
+## Learn More
 
-**Étape 5 : Intégration Back-end et Front-end**
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-1. Configurez les URL de l'API Django pour servir les données JSON à partir du back-end.
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-2. Utilisez les endpoints de l'API dans votre application React pour effectuer des opérations CRUD (Création, Lecture, Mise à jour, Suppression) sur les tâches.
+### Code Splitting
 
-**Étape 6 : Interface Utilisateur (UI)**
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-1. Utilisez un framework CSS ou une bibliothèque de composants (comme Material-UI ou Bootstrap) pour améliorer l'apparence de votre application.
+### Analyzing the Bundle Size
 
-2. Concevez une interface utilisateur conviviale pour afficher les tâches, ajouter de nouvelles tâches, etc.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-**Étape 7 : Test et Débogage**
+### Making a Progressive Web App
 
-1. Testez votre application en back-end et en front-end pour vous assurer que tout fonctionne comme prévu.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-2. Utilisez les outils de débogage des navigateurs et les outils Django pour résoudre les problèmes éventuels.
+### Advanced Configuration
 
-**Étape 8 : Déploiement**
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-1. Choisissez une plateforme d'hébergement pour votre application Django (comme Heroku, AWS, ou PythonAnywhere) et déployez votre back-end.
+### Deployment
 
-2. Hébergez votre application React sur un service tel que Vercel, Netlify ou GitHub Pages.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-3. Assurez-vous de configurer les bases de données, les fichiers statiques et les variables d'environnement correctement en production.
+### `npm run build` fails to minify
 
-**Étape 9 : Documentation et Maintenance**
-
-1. Documentez votre code pour faciliter la maintenance future.
-
-2. Prévoyez des mises à jour et des améliorations en fonction des besoins de votre application.
-
-3. Assurez-vous que votre application est sécurisée en suivant les meilleures pratiques de sécurité web.
-
-Ces étapes vous donneront une base solide pour créer une application de gestion de tâches robuste avec React et Django. N'oubliez pas de consulter la documentation officielle de React, Django et Django REST framework pour obtenir plus de détails sur chaque étape du processus. Bon développement !
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
