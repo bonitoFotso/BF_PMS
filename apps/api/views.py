@@ -8,6 +8,9 @@ class TacheListCreateView(generics.ListCreateAPIView):
     queryset = Tache.objects.all()
     serializer_class = TacheSerializer
     
+class TacheDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Tache.objects.all()
+    serializer_class = TacheSerializer
 #class TechnicienTacheListCreateView(generics.ListCreateAPIView):
 #    queryset = TechnicienTache.objects.all()
 #    serializer_class = TechnicienTacheSerializer

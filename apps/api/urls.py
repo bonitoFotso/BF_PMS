@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import TacheListCreateView, CategorieListCreateView, CategorieDetailView, ActiviteListCreateView, ActiviteDetailView, AppelantListCreateView, AppelantDetailView
+from .views import TacheListCreateView, TacheDetailView, CategorieListCreateView, CategorieDetailView, ActiviteListCreateView, ActiviteDetailView, AppelantListCreateView, AppelantDetailView
 
 urlpatterns = [
     path('taches/', TacheListCreateView.as_view(), name='tache-list-create'),
-    
+    path('taches/<int:pk>', TacheDetailView.as_view(), name='taches-detail'),
+
     path('categories/', CategorieListCreateView.as_view(), name='categorie-list-create'),
     path('categories/<int:pk>/', CategorieDetailView.as_view(), name='categorie-detail'),
 
