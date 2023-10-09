@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from apps.project.models import Tache,Categorie, Activite
-from apps.clients.models import  Appelant
+from apps.clients.models import  Appelant,Client,Agence
 
 class TacheSerializer(serializers.ModelSerializer):
     activite_nom = serializers.CharField(source='activite.nom')
@@ -25,4 +25,15 @@ class ActiviteSerializer(serializers.ModelSerializer):
 class AppelantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appelant
+        fields = '__all__'
+
+class ClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = '__all__'  # Incluez tous les champs du modèle dans la sérialisation
+
+
+class AgenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agence
         fields = '__all__'
