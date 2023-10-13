@@ -31,5 +31,5 @@ urlpatterns = [
     path('apil/', include('apps.api_clients.urls')),
     path('api/', include('apps.api.urls')),
 ]
-#if bool(settings.DEBUG):
-#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if bool(settings.DEBUG):
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

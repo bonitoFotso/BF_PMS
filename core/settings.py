@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from datetime import timedelta
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -179,11 +181,11 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(CORE_DIR, 'apps/static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(CORE_DIR, 'apps/media/')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
+print(CORE_DIR)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #print(BASE_DIR)
 #print(T_DIR)
@@ -196,8 +198,30 @@ REST_FRAMEWORK = {
     #'DEFAULT_PERMISSION_CLASSES': [
     #    'rest_framework.permissions.IsAuthenticated',
     #],
-    #'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     #    'rest_framework.authentication.SessionAuthentication',
     #    'rest_framework.authentication.TokenAuthentication',
-    #],
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Durée de validité du jeton d'accès
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),  # Durée de validité du rafraîchissement automatique
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=7),  # Durée de validité du rafraîchissement
+    'SLIDING_TOKEN_REFRESH_LIFETIME_MULTIPLIER': 1,
+    'SLIDING_TOKEN_LIFETIME_MULTIPLIER': 1,
+    'SLIDING_TOKEN_REFRESH_LIFETIME_ALLOW_LATE_RENEWAL': False,
+    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_RENEWAL_DELTA': timedelta(minutes=10),
+    'SLIDING_TOKEN_LIFETIME_LATE_RENEWAL_DELTA': timedelta(minutes=10),
+    'ALGORITHM': 'HS256',  # Algorithme de chiffrement
+    'SIGNING_KEY': SECRET_KEY,  # Clé de signature
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_REFRESH_LIFETIME_CLAIM': 'refresh_iat',
 }

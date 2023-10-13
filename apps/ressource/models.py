@@ -6,7 +6,7 @@ from apps.authentication.models import User
 
 class Technicien(models.Model):
     user = models.OneToOneField(User, verbose_name=_("User"), on_delete=models.CASCADE,null=True)
-    photo = models.ImageField(_("profile"), upload_to='media/profile', )
+    photo = models.ImageField(_("profile"), upload_to='profile', )
     nom  = models.CharField(_("nom"), max_length=50)
     prenom = models.CharField(_("prenom"), max_length=50)
     tel = models.CharField(_("telephone"),max_length=20)

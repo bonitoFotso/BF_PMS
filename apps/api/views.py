@@ -1,7 +1,11 @@
 from rest_framework import generics
 from apps.project.models import Tache,Categorie, Activite
 from apps.clients.models import  Appelant,Client,Agence
-from .serializers import TacheSerializer,CategorieSerializer, ActiviteSerializer, AppelantSerializer,ClientSerializer,AgenceSerializer
+from .serializers import (TacheSerializer,CategorieSerializer, 
+                          ActiviteSerializer, AppelantSerializer,
+                          ClientSerializer,AgenceSerializer,
+                          TechnicienSerializer)
+from apps.ressource.models import Technicien
 
 
 class TacheListCreateView(generics.ListCreateAPIView):
@@ -61,3 +65,13 @@ class AgenceListCreateView(generics.ListCreateAPIView):
 class AgenceDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Agence.objects.all()
     serializer_class = AgenceSerializer
+
+# Liste et création de techniciens
+class TechnicienListCreateView(generics.ListCreateAPIView):
+    queryset = Technicien.objects.all()
+    serializer_class = TechnicienSerializer
+
+# Récupération, mise à jour et suppression d'un technicien par ID
+class TechnicienDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Technicien.objects.all()
+    serializer_class = TechnicienSerializer

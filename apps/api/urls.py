@@ -1,6 +1,9 @@
 from django.urls import path
 from .views import (TacheListCreateView, TacheDetailView, CategorieListCreateView, CategorieDetailView, ActiviteListCreateView, ActiviteDetailView, AppelantListCreateView, AppelantDetailView,
-ClientListCreateView, ClientDetailView, AgenceListCreateView, AgenceDetailView)
+ClientListCreateView, ClientDetailView, AgenceListCreateView, AgenceDetailView,TechnicienListCreateView,TechnicienDetailView
+)
+from .auth_views import *
+
 urlpatterns = [
     path('taches/', TacheListCreateView.as_view(), name='tache-list-create'),
     path('taches/<int:pk>', TacheDetailView.as_view(), name='taches-detail'),
@@ -22,5 +25,10 @@ urlpatterns = [
     path('agences/', AgenceListCreateView.as_view(), name='agence-list-create'),
     path('agences/<int:pk>/', AgenceDetailView.as_view(), name='agence-detail'),
     
+    path('techniciens/', TechnicienListCreateView.as_view(), name='technicien-list-create'),
+    path('techniciens/<int:pk>/', TechnicienDetailView.as_view(), name='technicien-detail'),
+    
+    path('login/', LoginApi.as_view()),
+    path('register/', RegisterApi.as_view()),
     # Ajoutez des URL similaires pour les modèles Agence et Appelant si nécessaire
 ]
