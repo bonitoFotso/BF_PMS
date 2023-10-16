@@ -27,8 +27,8 @@ urlpatterns = [
     
     path('techniciens/', TechnicienListCreateView.as_view(), name='technicien-list-create'),
     path('techniciens/<int:pk>/', TechnicienDetailView.as_view(), name='technicien-detail'),
-    
-    path('login/', LoginApi.as_view()),
-    path('register/', RegisterApi.as_view()),
+    #
+    #path('login/', LoginApi.as_view()),
+    #path('register/', RegisterApi.as_view()),
     # Ajoutez des URL similaires pour les modèles Agence et Appelant si nécessaire
 ]

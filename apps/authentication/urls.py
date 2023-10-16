@@ -1,5 +1,5 @@
 from django.contrib.auth import views as auth_views
-from django.urls import path,re_path
+from django.urls import path,include
 #from . import consumers
 from . import views
 
@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('check_user_exists/', views.check_user_exists, name='check_user_exists'),
 
+    path('apis/', include('apps.authentication.routers'))
     
 ]
 # routing.py

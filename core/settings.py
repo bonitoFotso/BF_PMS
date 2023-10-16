@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.ressource',
     'apps.api_clients',
     'apps.api',
+    
 
     'corsheaders',
     
